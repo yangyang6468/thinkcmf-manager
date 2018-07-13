@@ -18,7 +18,6 @@
                 <th width=""></th>
                 <th width="50">ID</th>
                 <th>幻灯片标题</th>
-                <th>描述</th>
                 <th>链接</th>
                 <th>图片</th>
                 <th>状态</th>
@@ -26,21 +25,21 @@
             </tr>
             </thead>
             <tbody>
-            <foreach name="result" item="vo">
+            <foreach name="result" item="vo" key="k">
                 <tr>
                     <td>{$k+1}</td>
                     <td>{$vo.id}</td>
                     <td>{$vo.title}</td>
-                    <td>{$description = mb_substr($vo['description'], 0, 48,'utf-8')}</td>
                     <td>{$vo.url}</td>
                     <td>
                         <if condition="!empty($vo['image'])">
+
                             <a href="javascript:imagePreviewDialog('{:cmf_get_image_preview_url($vo.image)}');">
-                                <i class="fa fa-photo fa-fw"></i>
+                                <i class="fa fa-photo fa-fw" style="color: rgb(76, 166, 255);"></i>
                             </a>
                         </if>
                     </td>
-                    <td></td>
+                    <td>{$vo.status}</td>
                     <td>
                         <a href="{:url('add',['id'=>$vo['id']])}">{:lang('EDIT')}</a>
                         <a href="{:url('delete',['id'=>$vo['id']])}" class="js-ajax-delete">{:lang('DELETE')}</a>

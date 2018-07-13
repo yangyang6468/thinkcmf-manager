@@ -19,11 +19,9 @@ class SlideController extends AdminBaseController
      */
     public function index()
     {
-        $id      = $this->request->param('slide_id');
-        $slideId = !empty($id) ? $id : 1;
-        $result  = Db::name('slide')->where(['slide_id' => $slideId])->select()->toArray();
 
-        $this->assign('slide_id', $id);
+        $result  = Db::name('slide')->where(['isdelete' => 0])->select();
+
         $this->assign('result', $result);
         return $this->fetch();
     }
@@ -43,9 +41,35 @@ class SlideController extends AdminBaseController
      */
     public function add()
     {
-        $slideId = $this->request->param('slide_id');
-        $this->assign('slide_id', $slideId);
-        return $this->fetch();
+        if($this->request->isGet()){
+//            $id = $this->request->param('id');
+//            $this->assign('slide_id', $id);
+            return $this->fetch();
+        }else{
+            $param = $this->request->param();
+
+            $rule = ["title|标题" => "require|length:6,16|unique:slide",
+                     "url|链接" => "require|url"
+                    ];
+
+            $result = $this->validate($param , $rule);
+            if($result !== true){
+                return json(["code"=>-1 , "msg"=>"$result"]);
+            }
+
+            if(isset($param["id"])){
+                $res = Db::name('slide')->where(["id"=>$param["id"]])->update($param);
+            }else{
+                $param["createtime"] = time();
+                $res = Db::name('slide')->insertGetId($param);
+            }
+
+
+            $res = $res > 0 ? 1 :0 ;
+            return json($res);
+
+        }
+
     }
 
 

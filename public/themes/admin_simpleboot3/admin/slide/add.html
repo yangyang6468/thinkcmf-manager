@@ -12,16 +12,6 @@
         </td>
     </tr>
     <tr>
-        <th>描述</th>
-        <td><input class="form-control" type="text" name="description"  value="" style="width: 400px" placeholder="请输入描述"></td>
-    </tr>
-    <tr>
-        <th>幻灯片内容</th>
-        <td>
-            <textarea class="form-control" name="content"  style="width: 400px; height: 150px;resize:none" placeholder="请填写幻灯片内容"></textarea>
-        </td>
-    </tr>
-    <tr>
         <th><b>缩略图</b></th>
         <td>
             <div style="text-align:left;">
@@ -31,6 +21,13 @@
                 </a>
                 <input type="button" class="btn btn-sm" onclick="$('#thumb-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
             </div>
+        </td>
+    </tr>
+    <tr>
+        <th>链接</th>
+        <td  style="text-align:left;">
+            &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="status"  value="0" > &times;&nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="status"  value="1" > &radic;&nbsp; &nbsp; &nbsp; &nbsp;
         </td>
     </tr>
 </table>
