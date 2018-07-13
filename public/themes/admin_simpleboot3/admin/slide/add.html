@@ -1,32 +1,38 @@
-<include file="public@header"/>
-</head>
-<body>
-<div class="wrap">
-    <ul class="nav nav-tabs">
-        <li><a href="{:url('slide/index')}">幻灯片列表</a></li>
-        <li class="active"><a href="{:url('slide/add')}">添加幻灯片</a></li>
-    </ul>
-    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('slide/addPost')}">
-        <div class="form-group">
-            <label for="input-name" class="col-sm-2 control-label">名称<span class="form-required">*</span></label>
-            <div class="col-md-6 col-sm-10">
-                <input type="text" class="form-control" id="input-name" name="name">
+<table class="table table-bordered">
+    <tr>
+        <th>标题<span class="form-required">*</span></th>
+        <td>
+            <input class="form-control" type="text" style="width:400px;" name="title" required value="" placeholder="请输入标题"/>
+        </td>
+    </tr>
+    <tr>
+        <th>链接</th>
+        <td>
+            <input class="form-control" type="text" name="url"  value="" style="width: 400px" placeholder="请输入链接">
+        </td>
+    </tr>
+    <tr>
+        <th>描述</th>
+        <td><input class="form-control" type="text" name="description"  value="" style="width: 400px" placeholder="请输入描述"></td>
+    </tr>
+    <tr>
+        <th>幻灯片内容</th>
+        <td>
+            <textarea class="form-control" name="content"  style="width: 400px; height: 150px;resize:none" placeholder="请填写幻灯片内容"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th><b>缩略图</b></th>
+        <td>
+            <div style="text-align:left;">
+                <input type="hidden" name="image" id="thumb" value="">
+                <a href="javascript:uploadOneImage('图片上传','#thumb');">
+                    <img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumb-preview" width="300" height="135" style="cursor: hand"/>
+                </a>
+                <input type="button" class="btn btn-sm" onclick="$('#thumb-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="input-remark" class="col-sm-2 control-label">{:lang('DESCRIPTION')}</label>
-            <div class="col-md-6 col-sm-10">
-                <textarea class="form-control" id="input-remark" name="remark"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
-                <a class="btn btn-default" href="{:url('slide/index')}">{:lang('BACK')}</a>
-            </div>
-        </div>
-    </form>
-</div>
-<script src="__STATIC__/js/admin.js"></script>
-</body>
-</html>
+        </td>
+    </tr>
+</table>
+
+

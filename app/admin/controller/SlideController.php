@@ -2,169 +2,118 @@
 // +----------------------------------------------------------------------
 // | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 小夏 < 449134904@qq.com>
-// +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\SlideModel;
-use cmf\controller\AdminBaseController;
 use think\Db;
+use cmf\controller\AdminBaseController;
+use app\admin\model\SlideModel as Slide;
 
 class SlideController extends AdminBaseController
 {
 
     /**
-     * 幻灯片列表
-     * @adminMenu(
-     *     'name'   => '幻灯片管理',
-     *     'parent' => 'admin/Setting/default',
-     *     'display'=> true,
-     *     'hasView'=> true,
-     *     'order'  => 40,
-     *     'icon'   => '',
-     *     'remark' => '幻灯片管理',
-     *     'param'  => ''
-     * )
+     * 幻灯片页面列表
+     * @author  yy
+     * @date 2018/07、13
+     * @return mixed
      */
     public function index()
     {
-        $slidePostModel = new SlideModel();
-        $slides         = $slidePostModel->where(['delete_time' => ['eq', 0]])->select();
-        $this->assign('slides', $slides);
-        return $this->fetch();
-    }
+        $id      = $this->request->param('slide_id');
+        $slideId = !empty($id) ? $id : 1;
+        $result  = Db::name('slide')->where(['slide_id' => $slideId])->select()->toArray();
 
-    /**
-     * 添加幻灯片
-     * @adminMenu(
-     *     'name'   => '添加幻灯片',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加幻灯片',
-     *     'param'  => ''
-     * )
-     */
-    public function add()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     * 添加幻灯片提交
-     * @adminMenu(
-     *     'name'   => '添加幻灯片提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加幻灯片提交',
-     *     'param'  => ''
-     * )
-     */
-    public function addPost()
-    {
-        $data           = $this->request->param();
-        $slidePostModel = new SlideModel();
-        $result         = $slidePostModel->validate(true)->save($data);
-        if ($result === false) {
-            $this->error($slidePostModel->getError());
-        }
-        $this->success("添加成功！", url("slide/index"));
-    }
-
-    /**
-     * 编辑幻灯片
-     * @adminMenu(
-     *     'name'   => '编辑幻灯片',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑幻灯片',
-     *     'param'  => ''
-     * )
-     */
-    public function edit()
-    {
-        $id             = $this->request->param('id');
-        $slidePostModel = new SlideModel();
-        $result         = $slidePostModel->where('id', $id)->find();
+        $this->assign('slide_id', $id);
         $this->assign('result', $result);
         return $this->fetch();
     }
 
     /**
-     * 编辑幻灯片提交
+     * 幻灯片页面添加
      * @adminMenu(
-     *     'name'   => '编辑幻灯片提交',
+     *     'name'   => '幻灯片页面添加',
      *     'parent' => 'index',
      *     'display'=> false,
-     *     'hasView'=> false,
+     *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '编辑幻灯片提交',
+     *     'remark' => '幻灯片页面添加',
      *     'param'  => ''
      * )
      */
-    public function editPost()
+    public function add()
     {
-        $data           = $this->request->param();
-        $slidePostModel = new SlideModel();
-        $result         = $slidePostModel->validate(true)->save($data, ['id' => $data['id']]);
-        if ($result === false) {
-            $this->error($slidePostModel->getError());
-        }
-        $this->success("保存成功！", url("slide/index"));
+        $slideId = $this->request->param('slide_id');
+        $this->assign('slide_id', $slideId);
+        return $this->fetch();
     }
 
+
+
+
+
+
     /**
-     * 删除幻灯片
+     * 幻灯片页面删除
      * @adminMenu(
-     *     'name'   => '删除幻灯片',
+     *     'name'   => '幻灯片页面删除',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '删除幻灯片',
+     *     'remark' => '幻灯片页面删除',
      *     'param'  => ''
      * )
      */
     public function delete()
     {
-        $id             = $this->request->param('id', 0, 'intval');
-        $slidePostModel = new SlideModel();
-        $result       = $slidePostModel->where(['id' => $id])->find();
-        if (empty($result)){
-            $this->error('幻灯片不存在!');
+        $id     = $this->request->param('id', 0, 'intval');
+
+        $slideItem = Db::name('slideItem')->find($id);
+
+        $result = Db::name('slideItem')->delete($id);
+        if ($result) {
+            //删除图片。
+//            if (file_exists("./upload/".$slideItem['image'])){
+//                @unlink("./upload/".$slideItem['image']);
+//            }
+            $this->success("删除成功！", url("SlideItem/index",["slide_id"=>$slideItem['slide_id']]));
+        } else {
+            $this->error('删除失败！');
         }
 
-        //如果存在页面。则不能删除。
-        $slidePostCount = Db::name('slide_item')->where('slide_id', $id)->count();
-        if ($slidePostCount > 0) {
-            $this->error('此幻灯片有页面无法删除!');
-        }
-
-        $data         = [
-            'object_id'   => $id,
-            'create_time' => time(),
-            'table_name'  => 'slide',
-            'name'        => $result['name']
-        ];
-
-        $resultSlide = $slidePostModel->save(['delete_time' => time()], ['id' => $id]);
-        if ($resultSlide) {
-            Db::name('recycleBin')->insert($data);
-        }
-        $this->success("删除成功！", url("slide/index"));
     }
+
+    /**
+     * 幻灯片页面隐藏
+     * @adminMenu(
+     *     'name'   => '幻灯片页面隐藏',
+     *     'parent' => 'index',
+     *     'display'=> false,
+     *     'hasView'=> false,
+     *     'order'  => 10000,
+     *     'icon'   => '',
+     *     'remark' => '幻灯片页面隐藏',
+     *     'param'  => ''
+     * )
+     */
+    public function ban()
+    {
+        $id = $this->request->param('id', 0, 'intval');
+        if ($id) {
+            $rst = Db::name('slideItem')->where(['id' => $id])->update(['status' => 0]);
+            if ($rst) {
+                $this->success("幻灯片隐藏成功！");
+            } else {
+                $this->error('幻灯片隐藏失败！');
+            }
+        } else {
+            $this->error('数据传入失败！');
+        }
+    }
+
+
+
+
 }
