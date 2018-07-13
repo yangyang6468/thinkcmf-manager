@@ -1,0 +1,90 @@
+
+<input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+<table class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
+	<tr>
+		<th width="100">用户名</th>
+		<td style="text-align:left;padding-left:5px">
+			<input type="text" name="nickname" style="width: 250px"  required class="form-control" value="{$data.nickname|default=''}">
+		</td>
+	</tr>
+    <tr>
+        <th width="100">密码</th>
+        <td style="text-align:left;padding-left:5px">
+            <input type="password" name="userpwd" style="width: 250px"  required class="form-control" value="{$data.userpwd|default=''}">
+        </td>
+    </tr>
+	<tr>
+		<th width="100">图像</th>
+		<td style="text-align:left;padding-left:5px">
+            <input type="hidden" name="headimage" id="thumb" value="">
+            <a href="javascript:uploadOneImage('图片上传','#thumb');">
+                <img src="__TMPL__/public/assets/images/default-thumbnail.png" class="img-circle"  id="thumb-preview" width="135" style="cursor: pointer"/>
+            </a>
+            <input type="button" class="btn btn-sm btn-danger btn-cancel-thumbnail" value="取消图片">
+        </td>
+	</tr>
+    <tr>
+        <th width="100">电话号码</th>
+        <td style="text-align:left;padding-left:5px">
+            <input type="text" name="phone" style="width: 250px"  class="form-control" value="{$data.phone|default=''}">
+        </td>
+    </tr>
+	<tr>
+		<th width="100">个性签名</th>
+		<td style="text-align:left;padding-left:5px">
+			<input type="text" name="signature" class="form-control" value="{$data.signature|default=''}">
+		</td>
+	</tr>
+    <tr>
+        <th width="100">性别</th>
+        <td style="text-align:left;padding-left:5px">
+            <input type="radio" name="gender" value="0">保密&nbsp;&nbsp;
+            <input type="radio" name="gender" value="1">男&nbsp;&nbsp;
+            <input type="radio" name="gender"  value="2">女&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <th width="100">省市</th>
+        <td style="text-align:left;padding-left:5px">
+            <select name="province" class="provinces form-control" onchange="selectCity()"  style="width: 100px;display: inline">
+                <option value="0">--请选择--</option>
+                <foreach name="provinces" item="vo">
+                    <option value="{$vo.provinceid}">{$vo.province}</option>
+                </foreach>
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;
+            <select name="city" class="city form-control" item="vo"  style="width: 100px;display: inline">
+                <option value="0">--请选择--</option>
+            </select>
+        </td>
+    </tr>
+</table>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+
+    var gender = "{$data.gender|default=0}";
+    var img = "{$data.headimage|default=''}";
+    $(function(){
+        $(".provinces").val("{$data.province|default=0}");
+        $('input[type="radio"][value="'+ gender +'"]').prop("checked","checked");
+        if(img){
+            $("#thumb-preview").attr("src" , "{:Config('INDEX')}/upload/"+ img);
+            $("#thumb").val(img)
+        }else{
+            $("#thumb-preview").attr("src" , "__TMPL__/public/assets/images/default-thumbnail.png");
+
+        }
+
+        selectCity("{$data.city|default=0}")
+    })
+
+
+    //二级联动 省市
+    function selectCity(cityid) {
+        cityid = cityid || 0;
+        var provinceid = $(".provinces").val();
+        $.post("{:url('city')}" , {"provinceid":provinceid,"cityid":cityid} , function(redata) {
+            $(".city").append(redata);
+        } , "text")
+    }
+</script>

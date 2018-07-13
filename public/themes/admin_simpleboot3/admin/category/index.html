@@ -1,0 +1,70 @@
+<include file="public@header" />
+
+</head>
+<body>
+	<div class="wrap">
+
+        <div class="col-md-8">
+            <div class="table-actions">
+                <button type="submit" class="btn btn-primary btn-sm  glyphicon glyphicon-plus" onclick=addSaveAddOrder("{:url('add')}")>{:lang('ADD')}</button>
+            </div>
+            <form method="post" class="js-ajax-form" action="{:url('Category/index')}">
+                <table class="table table-hover table-bordered table-list ">
+                    <thead>
+                        <tr class="table-background">
+                            <th width="50"></th>
+                            <th width="50">ID</th>
+                            <th>添加时间</th>
+                            <th>分类名称</th>
+                            <th>描述</th>
+                            <th>状态</th>
+                            <th width="180">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <foreach name="categorys" key="k" item="vo">
+                            <tr >
+                                <th width="50">{$k+1}</th>
+                                <th width="50">{$vo.id}</th>
+                                <th>{:date('Y-m-d' , $vo.create_at)}</th>
+                                <th>{$vo.name}</th>
+                                <th>{$vo.description}</th>
+                                <th>
+                                    <if condition="$vo.status eq 1" >
+                                        <span class="badge badge-success badge-md">启用</span>
+                                    <else/>
+                                        <span class="badge badge-danger badge-md">关闭</span>
+                                    </if>
+                                </th>
+
+                                <th>
+                                    <a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>编辑</a> |
+                                    <a href="{:url('delete' , ['id'=>$vo.id , 'type'=>'delete'])}" class="js-ajax-delete"> 删除</a> |
+                                    <if condition="$vo.status eq 1" >
+                                        <a href="{:url('delete' , ['id'=>$vo.id , 'status'=>0 , 'type'=>'open'])}" data-msg="确定执行这项操作吗？" class="js-ajax-delete"> 关闭</a>
+                                    <else/>
+                                        <a href="{:url('delete' , ['id'=>$vo.id , 'status'=>1 , 'type'=>'open'])}" data-msg="确定执行这项操作吗？" class="js-ajax-delete"> 开启</a>
+                                    </if>
+
+                                </th>
+                            </tr>
+                        </foreach>
+                    </tbody>
+                </table>
+            </form>
+            <div class="pagination">{$categorys->render()}<li class="page-item"><span >共{$categorys->total()}条记录</span></li></div>
+        </div>
+	</div>
+</body>
+</html>
+
+<include file="public@modal" />
+
+<script>
+    $(".pagination li a").each(function(){
+
+//            $(this).removeAttr("href");
+//            $(this).attr("onclick" , "page()");
+
+    })
+</script>

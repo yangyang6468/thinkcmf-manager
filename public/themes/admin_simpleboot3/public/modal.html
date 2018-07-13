@@ -1,0 +1,123 @@
+<!-- 修改模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加/编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div id="editSuccess" class="alert alert-success alert-dismissible navbar-fixed-top" role="alert" style="display:none">操作成功！</div>
+                <div id="editFail" class="alert alert-danger alert-dismissible navbar-fixed-top" role="alert" style="display:none">操作失败！</div>
+                <form class="editForm form-horizontal" id="editForm" name="editForm">
+                    <!--<input type="hidden" name="id" id="id" value="">-->
+                    <!--<table class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">-->
+                        <!--<tr>-->
+                            <!--<th width="100">分类名称</th>-->
+                            <!--<td style="text-align:left;padding-left:5px">-->
+                                <!--<input type="text" name="name" id="name" required class="form-control">-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th width="100">描述</th>-->
+                            <!--<td style="text-align:left;padding-left:5px">-->
+                                <!--<input type="text" name="description" id="description"  class="form-control">-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th width="100">排序</th>-->
+                            <!--<td style="text-align:left;padding-left:5px">-->
+                                <!--<input type="text" name="list_order" id="list_order" value="1000" class="form-control">-->
+                            <!--</td>-->
+                        <!--</tr>-->
+
+                    <!--</table>-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="check-button" class="btn btn-info" onclick="javascript:butSaveAddOrder();return false;">保存</button>
+                <button type="button" class="btn btn-default" onclick="javascript:butCloseEditWindows();return false;">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+
+    /**
+     * 打开静态模态框
+     * @param url    ajax提交的路径
+     * @param id     表中对应的自增ID
+     */
+    function addSaveAddOrder(url , id) {
+        id = id || 0;
+
+        $.ajax({
+            type:"GET",
+            url: url,
+            data: {"id" : id},
+            dataType:"html",
+            success:function(redata){
+                $("#editForm").html(redata)
+            }
+        });
+
+        if(id > 0){
+            $("#myModalLabel").html("编辑");
+        }else{
+            $("#myModalLabel").html("添加");
+        }
+
+        $("#check-button").attr("onclick" , "javascript:butSaveAddOrder('"+ url +"');return false;")
+        $("#myModal").modal("show");
+    }
+
+
+    /**
+     * 保存已经修改过的内容
+     * @param url
+     * @param method
+     * @param options
+     */
+    function butSaveAddOrder(url){
+        $.ajax({
+            type:"POST",
+            url: url,
+            data: $("#editForm").serialize(),
+            dataType:"json",
+            success:function(jsonObj){
+                console.log(jsonObj);
+                if(jsonObj==1){
+                    $("#editSuccess").css("display","");
+                    $("#editSuccess").slideUp(1000,reloadPageTo);
+                }else if(jsonObj.code == -1){
+                    artdialogAlert(jsonObj.msg)
+                } else{
+                    $("#editFail").css("display","");
+                    $("#editFail").slideUp(1000);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 关闭静态模态框
+     */
+    function butCloseEditWindows(){
+        $("#myModal").modal("hide");
+    }
+
+
+    /**
+     * 操作成功后重新装载页面
+     */
+    function reloadPageTo(){
+        window.location.reload();
+    }
+
+</script>
