@@ -2,13 +2,13 @@
     <tr>
         <th>标题<span class="form-required">*</span></th>
         <td>
-            <input class="form-control" type="text" style="width:400px;" name="title" required value="" placeholder="请输入标题"/>
+            <input class="form-control" type="text" style="width:400px;" name="title" required value="{$result.title|default=''}" placeholder="请输入标题"/>
         </td>
     </tr>
     <tr>
         <th>链接</th>
         <td>
-            <input class="form-control" type="text" name="url"  value="" style="width: 400px" placeholder="请输入链接">
+            <input class="form-control" type="text" name="url"  value="{$result.url|default=''}" style="width: 400px" placeholder="请输入链接">
         </td>
     </tr>
     <tr>
@@ -32,4 +32,17 @@
     </tr>
 </table>
 
+<script type="text/javascript">
 
+    var img = "{$result.image|default=''}";
+    if(img){
+        $("#thumb").val(img);
+        $("#thumb-preview").attr("src" , "{:config('INDEX')}/upload/"+img);
+    }else{
+        $("#thumb-preview").attr("src" , "__TMPL__/public/assets/images/default-thumbnail.png");
+    }
+
+    var showOrHide = "{$result.status|default=1}"
+    alert(showOrHide);
+    $("input[name='status'][val='"+ showOrHide +"']]").attr("checked" , true);
+</script>

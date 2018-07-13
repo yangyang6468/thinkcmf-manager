@@ -41,7 +41,7 @@
                     </td>
                     <td>{$vo.status}</td>
                     <td>
-                        <a href="{:url('add',['id'=>$vo['id']])}">{:lang('EDIT')}</a>
+                        <a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>{:lang('EDIT')}</a>
                         <a href="{:url('delete',['id'=>$vo['id']])}" class="js-ajax-delete">{:lang('DELETE')}</a>
                         <if condition="$vo['status'] eq 0">
                             <a href="{:url('delete',['id'=>$vo['id'],'status'=>1])}" class="js-ajax-delete" data-msg="确定显示此幻灯片吗？">显示</a>

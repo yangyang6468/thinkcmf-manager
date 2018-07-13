@@ -14,43 +14,35 @@ class SlideController extends AdminBaseController
     /**
      * 幻灯片页面列表
      * @author  yy
-     * @date 2018/07、13
+     * @date 2018/07/13
      * @return mixed
      */
     public function index()
     {
 
-        $result  = Db::name('slide')->where(['isdelete' => 0])->select();
-
+        $result  = Db::name('slide')->where(['isdelete' => 0])->order("id desc")->select();
         $this->assign('result', $result);
         return $this->fetch();
     }
 
     /**
      * 幻灯片页面添加
-     * @adminMenu(
-     *     'name'   => '幻灯片页面添加',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '幻灯片页面添加',
-     *     'param'  => ''
-     * )
+     * @author  yy
+     * @date 2018/07/13
+     * @return mixed|\think\response\Json
      */
     public function add()
     {
         if($this->request->isGet()){
-//            $id = $this->request->param('id');
-//            $this->assign('slide_id', $id);
+            $id = $this->request->param('id');
+            $result = Db::name("slide")->where(["id"=>$id])->find();
+            $this->assign("result" , $result);
             return $this->fetch();
         }else{
             $param = $this->request->param();
 
             $rule = ["title|标题" => "require|length:6,16|unique:slide",
-                     "url|链接" => "require|url"
-                    ];
+                     "url|链接" => "require|url"];
 
             $result = $this->validate($param , $rule);
             if($result !== true){
@@ -63,7 +55,6 @@ class SlideController extends AdminBaseController
                 $param["createtime"] = time();
                 $res = Db::name('slide')->insertGetId($param);
             }
-
 
             $res = $res > 0 ? 1 :0 ;
             return json($res);
