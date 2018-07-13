@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-07-13 16:34:17
+Date: 2018-07-13 18:52:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -118,7 +118,7 @@ INSERT INTO `cmf_admin_menu` VALUES ('74', '73', '2', '0', '10000', 'admin', 'Se
 INSERT INTO `cmf_admin_menu` VALUES ('75', '6', '1', '1', '10000', 'admin', 'Setting', 'upload', '', '上传设置', '', '上传设置');
 INSERT INTO `cmf_admin_menu` VALUES ('76', '75', '2', '0', '10000', 'admin', 'Setting', 'uploadPost', '', '上传设置提交', '', '上传设置提交');
 INSERT INTO `cmf_admin_menu` VALUES ('77', '6', '1', '0', '10000', 'admin', 'Setting', 'clearCache', '', '清除缓存', '', '清除缓存');
-INSERT INTO `cmf_admin_menu` VALUES ('78', '6', '1', '1', '40', 'admin', 'Slide', 'index', '', '幻灯片管理', '', '幻灯片管理');
+INSERT INTO `cmf_admin_menu` VALUES ('78', '0', '1', '1', '40', 'admin', 'Slide', 'index', '', '幻灯片管理', '', '幻灯片管理');
 INSERT INTO `cmf_admin_menu` VALUES ('79', '78', '1', '0', '10000', 'admin', 'Slide', 'add', '', '添加幻灯片', '', '添加幻灯片');
 INSERT INTO `cmf_admin_menu` VALUES ('80', '78', '2', '0', '10000', 'admin', 'Slide', 'addPost', '', '添加幻灯片提交', '', '添加幻灯片提交');
 INSERT INTO `cmf_admin_menu` VALUES ('81', '78', '1', '0', '10000', 'admin', 'Slide', 'edit', '', '编辑幻灯片', '', '编辑幻灯片');
@@ -269,7 +269,7 @@ CREATE TABLE `cmf_asset` (
   `suffix` varchar(10) NOT NULL DEFAULT '' COMMENT '文件后缀名,不包括点',
   `more` text COMMENT '其它详细信息,JSON格式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of cmf_asset
@@ -283,6 +283,9 @@ INSERT INTO `cmf_asset` VALUES ('6', '1', '52405', '1531202065', '1', '0', '5be6
 INSERT INTO `cmf_asset` VALUES ('7', '1', '47323', '1531216346', '1', '0', 'c79813c763dfa7d128b45391a51d3bc6ac993b2cf4f9fa5b04fd3e97d4ec1e4e', 'Y6.jpg', 'admin/20180710/fca27c5eea37a9f0c79303dfccc014a6.jpg', 'c79813c763dfa7d128b45391a51d3bc6', '82c7b6886a40a5f36ec2d6faaaabb2724fcfef43', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('8', '1', '65587', '1531216588', '1', '0', 'b0045ade7ead8513a71d3117e74e7a31113bf34551fe55be188ad6716f686713', 'Y12.jpg', 'admin/20180710/74fef40545e671a16006d4cd258a0762.jpg', 'b0045ade7ead8513a71d3117e74e7a31', 'b71b57c2fa933df73bdbf006381e0bfac61697b3', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('9', '1', '8519093', '1531372311', '1', '0', '521affbb98044bb78f2798c4446eb5f07a4b8da52fe6d8a08f1ed78b97ea592d', '8e980379f2977a43df1d2803c71dc190.png', 'admin/20180712/b14bc38c6104f1266caf706e8f776d2f.png', '521affbb98044bb78f2798c4446eb5f0', '8ac4b18456470c1048d8ed5b41ca233b3abf4268', 'png', null);
+INSERT INTO `cmf_asset` VALUES ('10', '1', '426909', '1531478640', '1', '0', '73e86ecb54c8d087e5917c6ed1752bc90ff64970e87f0a378838f624211b608d', '1.jpg', 'admin/20180713/9224dd39effff6bae2b55b5f17937039.jpg', '73e86ecb54c8d087e5917c6ed1752bc9', '8f2a4389d3238242f0dbecdeb847f0f98b5079dc', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('11', '1', '415234', '1531479015', '1', '0', '15ca102f6c0f3d581d6e5693de1c6404bf7bad514d22ec51491ce069d494450f', '2.jpg', 'admin/20180713/1b721d5852370d9bd1679db14e830a34.jpg', '15ca102f6c0f3d581d6e5693de1c6404', '597bc344d67fdb4837c52b26327f778d3e8b8b7c', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('12', '1', '312513', '1531479029', '1', '0', 'c894b8d34ee0a13033aa46648ed247e0fe5023391e033fe561189a8d43ece472', '3.jpg', 'admin/20180713/08c4028fe85c589875398033a7f74148.jpg', 'c894b8d34ee0a13033aa46648ed247e0', 'd2d4bce0a22d360d9d9a118a2f23d3b1d2538fb9', 'jpg', null);
 
 -- ----------------------------
 -- Table structure for cmf_auth_access
@@ -1396,23 +1399,22 @@ CREATE TABLE `cmf_route` (
 DROP TABLE IF EXISTS `cmf_slide`;
 CREATE TABLE `cmf_slide` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `slide_id` int(11) NOT NULL DEFAULT '0' COMMENT '幻灯片id',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态,1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `createtime` int(10) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `title` varchar(50) NOT NULL DEFAULT '' COMMENT '幻灯片名称',
   `image` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '幻灯片图片',
   `url` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '幻灯片链接',
-  `target` varchar(10) NOT NULL DEFAULT '' COMMENT '友情链接打开方式',
-  `description` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '幻灯片描述',
-  `content` text CHARACTER SET utf8 COMMENT '幻灯片内容',
-  `more` text COMMENT '链接打开方式',
-  PRIMARY KEY (`id`),
-  KEY `slide_id` (`slide_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='幻灯片子项表';
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态,1:显示;0:隐藏',
+  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `isdelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='幻灯片子项表';
 
 -- ----------------------------
 -- Records of cmf_slide
 -- ----------------------------
+INSERT INTO `cmf_slide` VALUES ('1', '1531478709', '幻灯片123', 'admin/20180713/9224dd39effff6bae2b55b5f17937039.jpg', 'http://www.think.cn', '1', '10000', '0');
+INSERT INTO `cmf_slide` VALUES ('2', '1531479019', '幻灯片456', 'admin/20180713/1b721d5852370d9bd1679db14e830a34.jpg', 'http://club.xywy.com/static/20131022/29626193.htm', '1', '10000', '0');
+INSERT INTO `cmf_slide` VALUES ('3', '1531479036', 'Highcharts Demo', 'admin/20180713/08c4028fe85c589875398033a7f74148.jpg', 'http://club.xywy.com/static/20160710/112311299.htm', '1', '10000', '0');
 
 -- ----------------------------
 -- Table structure for cmf_theme
