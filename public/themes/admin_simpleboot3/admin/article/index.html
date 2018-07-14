@@ -7,10 +7,6 @@
 </head>
 <body>
 <div class="wrap js-check-wrap col-md-12">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="javascript:;">所有文章</a></li>
-        <li><a href="{:url('Article/add')}">添加文章</a></li>
-    </ul>
     <form class="well form-inline margin-top-20" method="post" action="{:url('Article/index')}">
         分类:
         <select class="form-control" id="category" name="category" style="width: 140px;">
@@ -22,10 +18,10 @@
         时间:
         <input type="text" class="form-control js-bootstrap-date" name="start_time"
                value="{$Think.request.start_time}"
-               style="width: 140px;" autocomplete="off">-
+               style="width: 140px;" autocomplete="off" placeholder="开始时间。。。">-
         <input type="text" class="form-control js-bootstrap-date" name="end_time"
                value="{$Think.request.end_time}"
-               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+               style="width: 140px;" autocomplete="off" placeholder="结束时间。。。"> &nbsp; &nbsp;
         标题关键字:
         <input type="text" class="form-control" name="title" style="width: 200px;"
                value="{$Think.request.title}" placeholder="请输入关键字...">
@@ -53,6 +49,7 @@
                     data-action="{:url('delete')}" data-subcheck="true" data-msg="您确定删除吗？">
                 {:lang('DELETE')}
             </button>
+            <a href="{:url('Article/add')}" class="btn btn-success btn-sm">{:lang('ADD')}</a>
         </div>
         <table class="table table-hover table-bordered table-list">
             <thead>
@@ -88,7 +85,13 @@
                     <td>{$vo.userid}</td>
                     <td>{$vo.click_count}</td>
                     <td>{$vo.comment_count}</td>
-                    <td style="cursor: pointer" onclick="photo(this)">{$vo.photo}</td>
+                    <td>
+                        <if condition="!empty($vo['photo'])">
+                            <a href="javascript:imagePreviewDialog('{$vo.photo}');">
+                                <img src="{$vo.photo}" width="150px">
+                            </a>
+                        </if>
+                    </td>
                     <td>{$vo.createtime}</td>
                     <td>{$vo.sticky}</td>
                     <td>{$vo.recommend}</td>
@@ -105,27 +108,8 @@
                 </tr>
             </foreach>
         </table>
-        <ul class="pagination">{$articles->render()}<li><span>共{$articles->total()}条记录</span></li></ul>
+        {:setPage($articles->render() , $articles->total())}
     </form>
-</div>
-
-
-<div id="page" style="display: none;">
-    <div id="pageContent">
-        <span onclick="closePhoto()" style="z-index: 100; position: relative;top:10px ;left:972px;color: #999;border:2px solid #999;border-radius: 50%;font-size: 16px;cursor: pointer" >X</span>
-        <div id="imgContainer">
-            <img id="imageFullScreen" src="{:config('INDEX')}/static/js/smartJQueryZoom/example/assets/zoomFullScreen.jpg"/>
-        </div>
-        <div id="positionButtonDiv">
-            <p>
-                <span>
-                    <img id="zoomInButton" class="zoomButton" src="{:config('INDEX')}/static/js/smartJQueryZoom/example/assets/zoomIn.png" title="zoom in" alt="zoom in" />
-                    <img id="zoomOutButton" class="zoomButton" src="{:config('INDEX')}/static/js/smartJQueryZoom/example/assets/zoomOut.png" title="zoom out" alt="zoom out" />
-                </span>
-            </p>
-
-        </div>
-    </div>
 </div>
 
 </body>
@@ -139,57 +123,9 @@
     })
 
 
-    //图片点击变大变小
-    function photo(obj){
-        Wind.use('__STATIC__/js/smartJQueryZoom/src/e-smart-zoom-jquery.min.js' , function () {
-            var imgSrc = $(obj).find("img").attr("src");
-
-            $('#imageFullScreen').attr("src" , imgSrc);
-            $("#page").show();
-
-            $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
-
-            $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
-            $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
-
-        })
-    }
 
 
-    //插件方法
-    function zoomButtonClickHandler(e){
-        var scaleToAdd = 0.8;
-        if(e.target.id == 'zoomOutButton')
-            scaleToAdd = -scaleToAdd;
-        $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
-    }
 
-    //插件方法
-    function moveButtonClickHandler(e){
-        var pixelsToMoveOnX = 0;
-        var pixelsToMoveOnY = 0;
-
-        switch(e.target.id){
-            case "leftPositionMap":
-                pixelsToMoveOnX = 50;
-                break;
-            case "rightPositionMap":
-                pixelsToMoveOnX = -50;
-                break;
-            case "topPositionMap":
-                pixelsToMoveOnY = 50;
-                break;
-            case "bottomPositionMap":
-                pixelsToMoveOnY = -50;
-                break;
-        }
-        $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
-    }
-
-    //关闭弹层
-    function closePhoto() {
-        reloadPage(window);
-    }
 
 
 

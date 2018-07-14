@@ -11,6 +11,7 @@ return array(
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\' => array($baseDir . '/simplewind/thinkphp/library/think', $vendorDir . '/topthink/think-image/src', $vendorDir . '/topthink/think-queue/src'),
     'mindplay\\annotations\\' => array($vendorDir . '/mindplay/annotations/src/annotations'),
+    'mailer\\' => array($vendorDir . '/yuan1994/tp-mailer/src/mailer'),
     'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
     'Michelf\\' => array($vendorDir . '/michelf/php-markdown/Michelf'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),

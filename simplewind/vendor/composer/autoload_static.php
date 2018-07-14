@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit929fb365b9981d29459d58f676689cf7
 {
     public static $files = array (
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -25,6 +26,7 @@ class ComposerStaticInit929fb365b9981d29459d58f676689cf7
         'm' => 
         array (
             'mindplay\\annotations\\' => 21,
+            'mailer\\' => 7,
         ),
         'Q' => 
         array (
@@ -66,6 +68,10 @@ class ComposerStaticInit929fb365b9981d29459d58f676689cf7
         'mindplay\\annotations\\' => 
         array (
             0 => __DIR__ . '/..' . '/mindplay/annotations/src/annotations',
+        ),
+        'mailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yuan1994/tp-mailer/src/mailer',
         ),
         'Qiniu\\' => 
         array (

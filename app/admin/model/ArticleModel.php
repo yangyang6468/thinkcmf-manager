@@ -42,7 +42,7 @@ class ArticleModel extends Model
 
     //封面图转换
     public function getPhotoAttr($value){
-        return $value ? "<img src=". config('INDEX') ."/upload/" .$value." width='80px' height='50px'>" : "";
+        return $value ?  config('INDEX') ."/upload/" .$value : "";
     }
 
     //内容转换

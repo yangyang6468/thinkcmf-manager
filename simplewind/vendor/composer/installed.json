@@ -574,6 +574,62 @@
         ]
     },
     {
+        "name": "swiftmailer/swiftmailer",
+        "version": "v5.4.9",
+        "version_normalized": "5.4.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/swiftmailer/swiftmailer.git",
+            "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+            "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9.1",
+            "symfony/phpunit-bridge": "~3.2"
+        },
+        "time": "2018-01-23T07:37:21+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/swift_required.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Chris Corbyn"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Swiftmailer, free feature-rich PHP mailer",
+        "homepage": "https://swiftmailer.symfony.com",
+        "keywords": [
+            "email",
+            "mail",
+            "mailer"
+        ]
+    },
+    {
         "name": "topthink/framework",
         "version": "v5.0.20",
         "version_normalized": "5.0.20.0",
@@ -833,5 +889,57 @@
             }
         ],
         "description": "The ThinkPHP5 Queue Package"
+    },
+    {
+        "name": "yuan1994/tp-mailer",
+        "version": "v0.2.4",
+        "version_normalized": "0.2.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yuan1994/tp-mailer.git",
+            "reference": "7fe9b64d69be67a325a2708368b99edf44d17981"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yuan1994/tp-mailer/zipball/7fe9b64d69be67a325a2708368b99edf44d17981",
+            "reference": "7fe9b64d69be67a325a2708368b99edf44d17981",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0",
+            "swiftmailer/swiftmailer": "^5.4"
+        },
+        "time": "2016-12-10T11:54:45+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "mailer\\": "src/mailer"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache 2.0"
+        ],
+        "authors": [
+            {
+                "name": "yuan1994",
+                "email": "tianpian0805@gmail.com",
+                "homepage": "https://github.com/yuan1994/tp-mailer/",
+                "role": "Owner"
+            }
+        ],
+        "description": "A powerful and beautiful php mailer for All of ThinkPHP and Other PHP Frameworks based SwiftMailer",
+        "homepage": "https://github.com/yuan1994/tp-mailer/",
+        "keywords": [
+            "mail",
+            "mailer",
+            "phpmailer",
+            "swiftmailer",
+            "thinkphp",
+            "tp",
+            "tp-mailer",
+            "tp5-mailer"
+        ]
     }
 ]
