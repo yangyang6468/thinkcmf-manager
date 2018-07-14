@@ -30,31 +30,30 @@
                     <td>{$k+1}</td>
                     <td>{$vo.id}</td>
                     <td>{$vo.title}</td>
-                    <td>{$vo.url}</td>
                     <td>
                         <if condition="!empty($vo['image'])">
-
-                            <a href="javascript:imagePreviewDialog('{:cmf_get_image_preview_url($vo.image)}');">
-                                <i class="fa fa-photo fa-fw" style="color: rgb(76, 166, 255);"></i>
+                            <a href="javascript:imagePreviewDialog('{:setImgUrl($vo.image)}');">
+                                <img src="{:setImgUrl($vo.image)}" width="150px">
                             </a>
                         </if>
                     </td>
+                    <td><a href="{$vo.url}">{$vo.url}</a></td>
                     <td>{$vo.status}</td>
-                    <td>
-                        <a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>{:lang('EDIT')}</a>
-                        <a href="{:url('delete',['id'=>$vo['id']])}" class="js-ajax-delete">{:lang('DELETE')}</a>
-                        <if condition="$vo['status'] eq 0">
+                    <th>
+                        <a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>{:lang('EDIT')}</a>|
+                        <a href="{:url('delete',['id'=>$vo['id']])}" class="js-ajax-delete">{:lang('DELETE')}</a>|
+                        <if condition="$vo['slideStatus'] eq '0'">
                             <a href="{:url('delete',['id'=>$vo['id'],'status'=>1])}" class="js-ajax-delete" data-msg="确定显示此幻灯片吗？">显示</a>
                         <else/>
                             <a href="{:url('delete',['id'=>$vo['id'],'status'=>0])}" class="js-ajax-delete" data-msg="确定隐藏此幻灯片吗？">隐藏</a>
                         </if>
-                    </td>
+                    </th>
                 </tr>
             </foreach>
             </tbody>
         </table>
     </form>
-
+    {:setPage($result->render() ,$result->total() )}
 </div>
 
 </body>

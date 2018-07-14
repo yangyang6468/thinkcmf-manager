@@ -42,7 +42,6 @@
         $("#thumb-preview").attr("src" , "__TMPL__/public/assets/images/default-thumbnail.png");
     }
 
-    var showOrHide = "{$result.status|default=1}"
-    alert(showOrHide);
-    $("input[name='status'][val='"+ showOrHide +"']]").attr("checked" , true);
+    var showOrHide = "{$result.status|default=1}";
+    $(":radio[name='status'][value='"+ showOrHide +"']").prop("checked" , "checked");
 </script>

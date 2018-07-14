@@ -933,10 +933,10 @@ function imagePreviewDialog(img) {
                     }
                 ]
             } //格式见API文档手册页
-            , anim: 5, //0-6的选择，指定弹出图片动画类型，默认随机
+            , anim: 0, //0-6的选择，指定弹出图片动画类型，默认随机
             shadeClose: true,
-            // skin: 'layui-layer-nobg',
-            shade: [0.5, '#000000'],
+             //skin: 'layui-layer-nobg',
+            //shade: [0.5, '#000000'],
             shadeClose: true,
         })
     });

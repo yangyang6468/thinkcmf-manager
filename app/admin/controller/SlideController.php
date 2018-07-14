@@ -20,7 +20,10 @@ class SlideController extends AdminBaseController
     public function index()
     {
 
-        $result  = Db::name('slide')->where(['isdelete' => 0])->order("id desc")->select();
+        $result = Slide::where(['isdelete' => 0])->order("id desc")->paginate(3);
+        foreach ($result as  $v){
+            $v["slideStatus"] = $v->getData("status");
+        }
         $this->assign('result', $result);
         return $this->fetch();
     }
@@ -64,71 +67,28 @@ class SlideController extends AdminBaseController
     }
 
 
-
-
-
-
     /**
-     * 幻灯片页面删除
-     * @adminMenu(
-     *     'name'   => '幻灯片页面删除',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '幻灯片页面删除',
-     *     'param'  => ''
-     * )
+     *  幻灯片页面删除/隐藏
+     * @author yy
+     * @Date
      */
     public function delete()
     {
-        $id     = $this->request->param('id', 0, 'intval');
+        $param = $this->request->param();
 
-        $slideItem = Db::name('slideItem')->find($id);
+        if(isset($param["status"])){
+            $result = Db::name('slide')->where(['id'=>$param['id']])->update(["status"=>$param['status']]);
+        }else{
+            $result = Db::name('slide')->where(['id'=>$param['id']])->update(["isdelete"=>1]);
+        }
 
-        $result = Db::name('slideItem')->delete($id);
         if ($result) {
-            //删除图片。
-//            if (file_exists("./upload/".$slideItem['image'])){
-//                @unlink("./upload/".$slideItem['image']);
-//            }
-            $this->success("删除成功！", url("SlideItem/index",["slide_id"=>$slideItem['slide_id']]));
+            $this->success("操作成功！");
         } else {
-            $this->error('删除失败！');
+            $this->error('操作失败！');
         }
 
     }
-
-    /**
-     * 幻灯片页面隐藏
-     * @adminMenu(
-     *     'name'   => '幻灯片页面隐藏',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '幻灯片页面隐藏',
-     *     'param'  => ''
-     * )
-     */
-    public function ban()
-    {
-        $id = $this->request->param('id', 0, 'intval');
-        if ($id) {
-            $rst = Db::name('slideItem')->where(['id' => $id])->update(['status' => 0]);
-            if ($rst) {
-                $this->success("幻灯片隐藏成功！");
-            } else {
-                $this->error('幻灯片隐藏失败！');
-            }
-        } else {
-            $this->error('数据传入失败！');
-        }
-    }
-
-
 
 
 }
