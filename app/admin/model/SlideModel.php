@@ -10,4 +10,7 @@ class SlideModel extends Model
         $arr = ["0"=>"<span class='label label-danger'>隐藏</span>","1"=>"<span class='label label-success'>显示</span>"];
         return $arr[$value];
     }
+
+
+
 }
