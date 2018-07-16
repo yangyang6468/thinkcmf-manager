@@ -1,45 +1,79 @@
-<include file="public@header"/>
-</head>
-<body>
-<div class="wrap js-check-wrap">
-    <ul class="nav nav-tabs">
-        <li><a href="{:url('nav/index')}">{:lang('ADMIN_NAV_INDEX')}</a></li>
-        <li class="active"><a href="{:url('nav/add')}">{:lang('ADMIN_NAV_ADD')}</a></li>
-        <!--<li><a  href="{:url('nav/edit')}" >{:lang('ADMIN_NAV_EDIT')}</a></li>-->
-    </ul>
-    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('nav/addPost')}">
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label"><span class="form-required">*</span>名称:</label>
-            <div class="col-md-6 col-sm-10">
-                <input type="text" class="form-control" name="name" value="">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">备注:</label>
-            <div class="col-md-6 col-sm-10">
-                <textarea class="form-control" name="remark" rows="5" cols="57"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">主菜单:</label>
-            <div class="col-md-6 col-sm-10">
-                <div class="checkbox">
-                    <label>
-                        <input  type="checkbox" name="is_main" value="1" >
-                    </label>
-                </div>
+<if condition="isset($data)">
 
-            </div>
-        </div>
 
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary js-ajax-submit">{:lang("SAVE")}</button>
-            <a class="btn btn-default" href="{:url('Nav/index')}">返回</a>
-        </div>
-    </form>
+    <input type="hidden" name="id" id="id" value="{$data.id}">
+    <table class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
+        <tr>
+            <th width="100">一级菜单</th>
+            <td style="text-align:left;padding-left:5px">
+                <select class="form-control" style="width: 250px;display: inline-block"  name="parent_id" id="parent_id">
+                    <option value="0">--作为一级菜单--</option>
+                    <foreach name="nav" item="vo" key="k">
+                        <option value="{$k}">{$vo}</option>
+                    </foreach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th width="100">菜单名称</th>
+            <td style="text-align:left;padding-left:5px">
+                <input type="text" name="name" style="width: 250px"  required class="form-control" value="{$data.name|default=''}">
+            </td>
+        </tr>
+    </table>
 
-</div>
-<script src="__STATIC__/js/admin.js"></script>
-</body>
-</html>
+<else/>
+
+
+    <table id="editFormTable" class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
+        <tr>
+            <th width="100">一级菜单</th>
+            <td style="text-align:left;padding-left:5px">
+                <select onchange="firstNav(this)" class="form-control" style="width: 250px;display: inline-block"  name="parent_id" >
+                    <option value="0">--作为一级菜单--</option>
+                    <foreach name="nav" item="vo" key="k">
+                        <option value="{$k}">{$vo}</option>
+                    </foreach>
+                </select>
+
+                <a style="display: none" class="addSecondNav btn btn-primary" href="javascript:addSecondNav()">添加菜单</a>
+            </td>
+        </tr>
+        <tr class="inputName">
+            <th width="100">分类</th>
+            <td  style="text-align:left;">
+                &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="flag"  value="1" > 导航&nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="flag"  value="2" > 链接&nbsp; &nbsp; &nbsp; &nbsp;
+            </td>
+            </td>
+        </tr>
+        <tr class="inputName">
+            <th width="100">菜单名称</th>
+            <td style="text-align:left;padding-left:5px">
+                <input type="text" name="name[]" style="width: 250px" placeholder="请输入菜单名称" required class="form-control" value="">
+            </td>
+        </tr>
+    </table>
+
+</if>
+
+<script>
+
+    //select点击修改
+    function firstNav(obj) {
+        if($(obj).val() != 0){
+            $(".addSecondNav").fadeIn(1000);
+        }else {
+            $(".addSecondNav").fadeOut(1000);
+        }
+    }
+
+    //新增input框
+    function addSecondNav() {
+        var s = $(".inputName").size();
+        var str = '<tr class="inputName"><th width="100">菜单名称</th><td style="text-align:left;padding-left:5px"><input type="text" name="name[]" style="width: 250px" placeholder="请输入菜单名称" required class="form-control" value=""></td></tr>';
+        $("#editFormTable").append(str);
+
+    }
+</script>
