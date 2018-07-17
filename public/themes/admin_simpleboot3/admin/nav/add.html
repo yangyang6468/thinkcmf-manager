@@ -1,79 +1,52 @@
 
-<if condition="isset($data)">
+<input type="hidden" name="id" id="id" value="{$data.id|default=''}">
+<table id="editFormTable" class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
+    <tr>
+        <th width="100">一级菜单</th>
+        <td style="text-align:left;padding-left:5px">
+            <select  class="form-control" style="width: 250px;display: inline-block" id="parent_id"  name="parent_id" >
+                <option value="0">一级菜单</option>
+                <foreach name="nav" item="vo" key="k">
+                    <div class="nav_flag"><option value="{$k}">{$vo}</option></div>
+                </foreach>
+            </select>
+        </td>
+    </tr>
+    <tr class="inputName">
+        <th width="100">分类</th>
+        <td  style="text-align:left;">
+            <input  type="radio" name="flag"  value="1" > 头部导航&nbsp; &nbsp; &nbsp; &nbsp;
+            <input  type="radio" name="flag"  value="2" > 友情链接
+        </td>
+        </td>
+    </tr>
+    <tr class="inputName">
+        <th width="100">菜单名称</th>
+        <td style="text-align:left;padding-left:5px">
+            <input type="text"  name="name" style="width: 250px" placeholder="请输入菜单名称" required class="form-control" value="{$data.name|default=''}">
+        </td>
+    </tr>
+    <tr>
+        <th width="100">状态</th>
+        <td  style="text-align:left;">
+            <input  type="radio" name="status"  value="1" > 显示&nbsp; &nbsp; &nbsp; &nbsp;
+            <input  type="radio" name="status"  value="0" > 隐藏
+        </td>
+        </td>
+    </tr>
+</table>
 
-
-    <input type="hidden" name="id" id="id" value="{$data.id}">
-    <table class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
-        <tr>
-            <th width="100">一级菜单</th>
-            <td style="text-align:left;padding-left:5px">
-                <select class="form-control" style="width: 250px;display: inline-block"  name="parent_id" id="parent_id">
-                    <option value="0">--作为一级菜单--</option>
-                    <foreach name="nav" item="vo" key="k">
-                        <option value="{$k}">{$vo}</option>
-                    </foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th width="100">菜单名称</th>
-            <td style="text-align:left;padding-left:5px">
-                <input type="text" name="name" style="width: 250px"  required class="form-control" value="{$data.name|default=''}">
-            </td>
-        </tr>
-    </table>
-
-<else/>
-
-
-    <table id="editFormTable" class="table table-bordered" style="margin-bottom:1px;border-top-right-radius: 0px;border-top-left-radius:0px;">
-        <tr>
-            <th width="100">一级菜单</th>
-            <td style="text-align:left;padding-left:5px">
-                <select onchange="firstNav(this)" class="form-control" style="width: 250px;display: inline-block"  name="parent_id" >
-                    <option value="0">--作为一级菜单--</option>
-                    <foreach name="nav" item="vo" key="k">
-                        <option value="{$k}">{$vo}</option>
-                    </foreach>
-                </select>
-
-                <a style="display: none" class="addSecondNav btn btn-primary" href="javascript:addSecondNav()">添加菜单</a>
-            </td>
-        </tr>
-        <tr class="inputName">
-            <th width="100">分类</th>
-            <td  style="text-align:left;">
-                &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="flag"  value="1" > 导航&nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp;<input  type="radio" name="flag"  value="2" > 链接&nbsp; &nbsp; &nbsp; &nbsp;
-            </td>
-            </td>
-        </tr>
-        <tr class="inputName">
-            <th width="100">菜单名称</th>
-            <td style="text-align:left;padding-left:5px">
-                <input type="text" name="name[]" style="width: 250px" placeholder="请输入菜单名称" required class="form-control" value="">
-            </td>
-        </tr>
-    </table>
-
-</if>
 
 <script>
+    $(function () {
+        var flag = '{$data.flag|default=1}';
+        $(":radio[name='flag'][value='"+ flag +"']").attr("checked" , true);
+        $("#parent_id").val("{$data.parent_id|default=0}");
 
-    //select点击修改
-    function firstNav(obj) {
-        if($(obj).val() != 0){
-            $(".addSecondNav").fadeIn(1000);
-        }else {
-            $(".addSecondNav").fadeOut(1000);
-        }
-    }
+        var status = "{$data.status|default=1}";
+        $(":radio[name='status'][value='"+ status +"']").attr("checked" , true);
 
-    //新增input框
-    function addSecondNav() {
-        var s = $(".inputName").size();
-        var str = '<tr class="inputName"><th width="100">菜单名称</th><td style="text-align:left;padding-left:5px"><input type="text" name="name[]" style="width: 250px" placeholder="请输入菜单名称" required class="form-control" value=""></td></tr>';
-        $("#editFormTable").append(str);
+    })
 
-    }
+
 </script>

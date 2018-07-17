@@ -24,7 +24,7 @@ class CategoryController extends AdminBaseController
      */
     public function index()
     {
-        $categorys = Db::name("category")->order("id desc")->paginate(10);
+        $categorys = Db::name("category")->where(['isdelete'=>0])->order("id desc")->paginate(10);
         $this->assign("categorys" , $categorys);
         return $this->fetch();
     }

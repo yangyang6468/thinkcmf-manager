@@ -1,7 +1,7 @@
 <?php
 return array (
   'ADMIN_ARTICLE_INDEX' => '文章管理',
-  'ADMIN_CATEGORY_INDEX' => '分类管理',
+  'ADMIN_CATEGORY_INDEX' => '标签管理',
   'ADMIN_HOOK_INDEX' => '钩子管理',
   'ADMIN_HOOK_PLUGINLISTORDER' => '钩子插件排序',
   'ADMIN_HOOK_PLUGINS' => '钩子插件管理',

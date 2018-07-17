@@ -1,7 +1,7 @@
 <include file="public@header"/>
 </head>
 <body>
-<div class="wrap js-check-wrap col-md-12">
+<div class="wrap js-check-wrap col-md-10 col-md-offset-1">
 
     <form class="js-ajax-form margin-top-20" action="{:url('index')}" method="post">
         <div class="table-actions">
@@ -10,15 +10,17 @@
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <th width="50">排序</th>
-                <th width="50">ID</th>
+                <th width="50"></th>
                 <th>菜单名称</th>
+                <th>创建时间</th>
+                <th>链接</th>
                 <th width="80">状态</th>
-                <th width="180">{:lang('ACTIONS')}</th>
+                <th width="80">标志</th>
+                <th >{:lang('ACTIONS')}</th>
             </tr>
             </thead>
             <tbody>
-            {$categories}
+                {$categories}
             </tbody>
         </table>
     </form>

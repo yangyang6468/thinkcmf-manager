@@ -21,8 +21,8 @@ class NavModel extends Model
     protected $table = "cmf_nav";
     protected $pk = "id";
 
-    protected $createTime = "int";
-    protected $updateTime = false;
+    protected $dateFormat = "Y-m-d H:i";
+
     /**
      * 获取某导航下所有菜单树形结构数组
      * @param int $navId 导航id

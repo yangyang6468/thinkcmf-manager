@@ -14,6 +14,7 @@ use app\admin\model\NavModel;
 use cmf\controller\AdminBaseController;
 use tree\Tree;
 use think\Db;
+use think\Request;
 
 /**
  * Class NavMenuController 前台菜单管理控制器
@@ -36,82 +37,78 @@ class NavController extends AdminBaseController
      */
     public function index()
     {
-        $intNavId     = $this->request->param("nav_id");
 
-//        if (empty($intNavId)) {
-//            $this->error("请指定导航!");
-//        }
-
-        $objResult = navModel::where("id", $intNavId)->order(["list_order" => "ASC"])->select();
+        $objResult = NavModel::order(["list_order" => "ASC"])->select();
         $arrResult = $objResult ? $objResult->toArray() : [];
-
         $tree       = new Tree();
         $tree->icon = ['&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ '];
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
 
-        $array = [];
-        foreach ($arrResult as $r) {
-            $r['str_manage'] = '<a href="' . url("NavMenu/add", ["parent_id" => $r['id'], "nav_id" => $r['nav_id']]) . '">添加子菜单</a>  <a href="'
-                . url("NavMenu/edit", ["id" => $r['id'], "parent_id" => $r['parent_id'], "nav_id" => $r['nav_id']]) . '">编辑</a>  <a class="js-ajax-delete" href="' . url("NavMenu/delete", ["id" => $r['id'], 'nav_id' => $r['nav_id']]) . '">删除</a> ';
-            $r['status']     = $r['status'] ? "显示" : "隐藏";
-            $array[]         = $r;
+        foreach ($arrResult as $k=> $r) {
+            if($r["parent_id"] == 0){
+                $r['str_manage'] = '<a href=javascript:addSaveAddOrder("' . url("edit") . '",'. $r["id"] . ')>添加子菜单</a> | 
+                                    <a href=javascript:addSaveAddOrder("' . url("add") . '",'. $r["id"] . ')>编辑</a> | 
+                                    <a class="js-ajax-delete" href="' . url("Nav/delete", ["id" => $r['id']]) . '">删除</a> ';
+            }else{
+                $r['str_manage'] = '<a href=javascript:addSaveAddOrder("' . url("add") . '",'. $r["id"] . ')>编辑</a> | 
+                                    <a class="js-ajax-delete" href="' . url("Nav/delete", ["id" => $r['id']]) . '">删除</a> ';
+
+            }
+            $r["sort"] = $k+1;
+            $r['status'] = $r['status'] ? "<span class='label label-info label-sm'>显示</span>" : "<span class='label label-warning label-sm'>隐藏</span>";
+            $r["flag"] = $r['flag'] == 2 ? "<span class='label label-info label-sm'>友情链接</span>" : "<span class='label label-success label-sm'>首部导航</span>";
+            $array[] = $r;
         }
 
         $tree->init($array);
-        $str = "<tr>
-            <td><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
-            <td>\$id</td>
-            <td >\$spacer\$name</td>
-            <td>\$status</td>
-            <td>\$str_manage</td>
-        </tr>";
+        $str = "<tr>     
+                    <td>\$sort</td>
+                    <td>\$spacer\$name</td>
+                    <td>\$create_time</td>
+                    <td >\$href</td>
+                    <td>\$status</td>
+                    <td>\$flag</td>
+                    <td>\$str_manage</td>
+                </tr>";
 
         $categories = $tree->getTree(0, $str);
 
         $this->assign("categories", $categories);
-        $this->assign('nav_id', $intNavId);
+
 
         return $this->fetch();
     }
 
+
     /**
      * 添加导航菜单
-     * @adminMenu(
-     *     'name'   => '添加导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'order'  => 10000,
-     *     'hasView'=> true,
-     *     'icon'   => '',
-     *     'remark' => '添加导航菜单',
-     *     'param'  => ''
-     * )
+     * @author  yy
+     * @date 2018/7/17
+     * @return mixed|\think\response\Json
      */
     public function add()
     {
         if($this->request->isGet()){
+
             $id = $this->request->param('id' , 0);
-            if($id > 0){
-
-            }
-
+            $data = Db::name("nav")->where(["id"=>$id])->find();
             $nav = Db::name("nav")->where(["parent_id"=>0])->column('id,name');
+
             $this->assign("nav" , $nav);
+            $this->assign("data" , $data);
             return $this->fetch();
+
         }else{
             $data =  $this->request->param();
 
-            $name = $data["name"];
-
-            foreach ($name as $k=>$v){
-                $insertData[$k]['name'] = $v;
-                $insertData[$k]['flag'] = $data['flag'];
-                $insertData[$k]['parent_id'] = $data['parent_id'];
-                $insertData[$k]['create_time'] = time();
-                $insertData[$k]['update_time'] = time();
+            $data['create_time'] = time();
+            $data['update_time'] = time();
+            if($data["id"]){
+                $res = Db::name("nav")->where(['id'=>$data['id']])->update($data);
+            }else{
+                $res = Db::name("nav")->insertGetId($data);
             }
 
-            $res = Db::name("nav")->insertAll($insertData);
             $res = $res > 0 ? 1 : 0;
             return json($res);
         }
@@ -121,185 +118,63 @@ class NavController extends AdminBaseController
     }
 
     /**
-     * 添加导航菜单提交保存
-     * @adminMenu(
-     *     'name'   => '添加导航菜单提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '添加导航菜单提交保存',
-     *     'param'  => ''
-     * )
+     * 添加子菜单
+     * @author  yy
+     * @date  2018/7/17
+     * @return mixed
      */
-    public function addPost()
+    public function edit(Request $request)
     {
-        $navMenuModel = new NavMenuModel();
-        $arrData      = $this->request->post();
 
-        if (isset($arrData['external_href'])) {
-            $arrData['href'] = htmlspecialchars_decode($arrData['external_href']);
-        } else {
-            $arrData['href'] = htmlspecialchars_decode($arrData['href']);
-            $arrData['href'] = base64_decode($arrData['href']);
+        if($request->isGet()){
+            $id = $request->param("id");
+            $data = Db::name("nav")->where(["id"=>$id])->field(" id as parent_id")->find();
+
+            $nav = Db::name("nav")->where(["parent_id"=>0])->column('id,name');
+            $this->assign("nav" , $nav);
+            $this->assign("data" , $data);
+            return $this->fetch('nav/add');
+        }else{
+
+            $data =  $this->request->param();
+
+            $data['create_time'] = time();
+            $data['update_time'] = time();
+            $res = Db::name("nav")->insertGetId($data);
+
+            $res = $res > 0 ? 1 : 0;
+            return json($res);
+
         }
-
-        $navMenuModel->allowField(true)->isUpdate(false)->save($arrData);
-
-        $this->success(lang("EDIT_SUCCESS"), url("NavMenu/index", ['nav_id' => $arrData['nav_id']]));
 
     }
 
-    /**
-     * 编辑导航菜单
-     * @adminMenu(
-     *     'name'   => '编辑导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> true,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航菜单',
-     *     'param'  => ''
-     * )
-     */
-    public function edit()
-    {
-        $navMenuModel = new NavMenuModel();
-        $intNavId     = $this->request->param("nav_id");
-        $intId        = $this->request->param("id");
-        $intParentId  = $this->request->param("parent_id");
-        $objResult    = $navMenuModel->where(["nav_id" => $intNavId, "id" => ["neq", $intId]])->order(["list_order" => "ASC"])->select();
-        $arrResult    = $objResult ? $objResult->toArray() : [];
-
-        $tree       = new Tree();
-        $tree->icon = ['&nbsp;│ ', '&nbsp;├─ ', '&nbsp;└─ '];
-        $tree->nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-        $array      = [];
-        foreach ($arrResult as $r) {
-            $r['str_manage'] = '<a href="' . url("NavMenu/add", ["parent_id" => $r['id'], "nav_id" => $intNavId]) . '">添加子菜单</a> | <a href="'
-                . url("NavMenu/edit", ["id" => $r['id'], "nav_id" => $intNavId]) . '">编辑</a> | <a class="js-ajax-delete" href="'
-                . url("NavMenu/delete", ["id" => $r['id'], "nav_id" => $intNavId]) . '">删除</a> ';
-            $r['status']     = $r['status'] ? "显示" : "隐藏";
-            $r['selected']   = $r['id'] == $intParentId ? "selected" : "";
-            $array[]         = $r;
-        }
-
-        $tree->init($array);
-        $str       = "<option value='\$id' \$selected>\$spacer\$name</option>";
-        $nav_trees = $tree->getTree(0, $str);
-        $this->assign("nav_trees", $nav_trees);
-
-        $objNav = $navMenuModel->where("id", $intId)->find();
-        $arrNav = $objNav ? $objNav->toArray() : [];
-
-        $arrNav['href_old'] = $arrNav['href'];
-
-        if (strpos($arrNav['href'], "{") === 0 || $arrNav['href'] == 'home') {
-            $arrNav['href'] = base64_encode($arrNav['href']);
-        }
-
-        $this->assign($arrNav);
-
-        $navs = $navMenuModel->selectNavs();
-        $this->assign('navs', $navs);
-
-        $this->assign("nav_id", $intNavId);
-        $this->assign("parent_id", $intParentId);
-
-        return $this->fetch();
-    }
-
-    /**
-     * 编辑导航菜单提交保存
-     * @adminMenu(
-     *     'name'   => '编辑导航菜单提交保存',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '编辑导航菜单提交保存',
-     *     'param'  => ''
-     * )
-     */
-    public function editPost()
-    {
-        $navMenuModel = new NavMenuModel();
-        $intId        = $this->request->param('id', 0, 'intval');
-        $arrData      = $this->request->post();
-
-        if (isset($arrData['external_href'])) {
-            $arrData['href'] = htmlspecialchars_decode($arrData['external_href']);
-        } else {
-            $arrData['href'] = htmlspecialchars_decode($arrData['href']);
-            $arrData['href'] = base64_decode($arrData['href']);
-        }
-
-        $navMenuModel->update($arrData, ["id" => $intId], true);
-
-        $this->success(lang("EDIT_SUCCESS"), url("NavMenu/index", ['nav_id' => $arrData['nav_id']]));
-
-    }
 
     /**
      * 删除导航菜单
-     * @adminMenu(
-     *     'name'   => '删除导航菜单',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '删除导航菜单',
-     *     'param'  => ''
-     * )
+     * @author  yy
+     * @date 2018/7/17
+     *
      */
     public function delete()
     {
-        $navMenuModel = new NavMenuModel();
-
-        $intId    = $this->request->param("id", 0, "intval");
-        $intNavId = $this->request->param("nav_id", 0, "intval");
-
-        if (empty($intId)) {
-            $this->error(lang("NO_ID"));
+        $intId = $this->request->param("id", 0, "intval");
+        $status = $this->request->param("status" , "delete");
+        if($status == "update"){
+            $res = Db::name('nav')->where(["id" => $intId])->update(["status"=>0]);
+        }else{
+            $count = Db::name('nav')->where(["parent_id" => $intId])->count();
+            if ($count > 0) {
+                $this->error("该菜单下还有子菜单，无法删除！");
+            }
+            $res = Db::name('nav')->where(["id" => $intId])->delete();;
         }
 
-        $count = $navMenuModel->where(["parent_id" => $intId])->count();
-        if ($count > 0) {
-            $this->error("该菜单下还有子菜单，无法删除！");
-        }
-
-        $navMenuModel->where(["id" => $intId])->delete();
-        $this->success(lang("DELETE_SUCCESS"), url("NavMenu/index", ['nav_id' => $intNavId]));
-
-    }
-
-    /**
-     * 导航菜单排序
-     * @adminMenu(
-     *     'name'   => '导航菜单排序',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '导航菜单排序',
-     *     'param'  => ''
-     * )
-     */
-    public function listOrder()
-    {
-        $navMenuModel = new NavMenuModel();
-        $status       = parent::listOrders($navMenuModel);
-        if ($status) {
-            $this->success("排序更新成功！");
-        } else {
-            $this->error("排序更新失败！");
+        if($res){
+            $this->success("操作成功！！！");
+        }else{
+            $this->error("操作失败!!!");
         }
     }
-
 
 }
