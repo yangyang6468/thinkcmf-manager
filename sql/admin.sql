@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-07-13 18:52:15
+Date: 2018-07-17 19:10:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,7 +69,7 @@ INSERT INTO `cmf_admin_menu` VALUES ('25', '20', '2', '0', '10000', 'admin', 'Me
 INSERT INTO `cmf_admin_menu` VALUES ('26', '20', '2', '0', '10000', 'admin', 'Menu', 'delete', '', '后台菜单删除', '', '后台菜单删除');
 INSERT INTO `cmf_admin_menu` VALUES ('27', '20', '2', '0', '10000', 'admin', 'Menu', 'listOrder', '', '后台菜单排序', '', '后台菜单排序');
 INSERT INTO `cmf_admin_menu` VALUES ('28', '20', '1', '0', '10000', 'admin', 'Menu', 'getActions', '', '导入新后台菜单', '', '导入新后台菜单');
-INSERT INTO `cmf_admin_menu` VALUES ('29', '6', '1', '1', '30', 'admin', 'Nav', 'index', '', '导航管理', '', '导航管理');
+INSERT INTO `cmf_admin_menu` VALUES ('29', '0', '1', '1', '30', 'admin', 'Nav', 'index', '', '导航管理', 'calendar', '导航管理');
 INSERT INTO `cmf_admin_menu` VALUES ('30', '29', '1', '0', '10000', 'admin', 'Nav', 'add', '', '添加导航', '', '添加导航');
 INSERT INTO `cmf_admin_menu` VALUES ('31', '29', '2', '0', '10000', 'admin', 'Nav', 'addPost', '', '添加导航提交保存', '', '添加导航提交保存');
 INSERT INTO `cmf_admin_menu` VALUES ('32', '29', '1', '0', '10000', 'admin', 'Nav', 'edit', '', '编辑导航', '', '编辑导航');
@@ -201,7 +201,7 @@ INSERT INTO `cmf_admin_menu` VALUES ('159', '158', '1', '0', '10000', 'user', 'A
 INSERT INTO `cmf_admin_menu` VALUES ('160', '158', '2', '0', '10000', 'user', 'AdminUserAction', 'editPost', '', '编辑用户操作提交', '', '编辑用户操作提交');
 INSERT INTO `cmf_admin_menu` VALUES ('161', '158', '1', '0', '10000', 'user', 'AdminUserAction', 'sync', '', '同步用户操作', '', '同步用户操作');
 INSERT INTO `cmf_admin_menu` VALUES ('162', '0', '1', '1', '10000', 'admin', 'Article', 'index', '', '文章管理', '', '');
-INSERT INTO `cmf_admin_menu` VALUES ('164', '0', '1', '1', '10000', 'admin', 'Category', 'index', '', '分类管理', '', '');
+INSERT INTO `cmf_admin_menu` VALUES ('164', '0', '1', '1', '10000', 'admin', 'Category', 'index', '', '标签管理', '', '');
 INSERT INTO `cmf_admin_menu` VALUES ('165', '0', '1', '1', '10000', 'admin', 'userinfo', 'index', '', '用户中心', '', '');
 
 -- ----------------------------
@@ -568,7 +568,7 @@ INSERT INTO `cmf_auth_rule` VALUES ('160', '1', 'user', 'admin_url', 'user/Admin
 INSERT INTO `cmf_auth_rule` VALUES ('161', '1', 'user', 'admin_url', 'user/AdminUserAction/sync', '', '同步用户操作', '');
 INSERT INTO `cmf_auth_rule` VALUES ('162', '1', 'admin', 'admin_url', 'admin/Article/default', '', '文章管理', '');
 INSERT INTO `cmf_auth_rule` VALUES ('163', '1', 'admin', 'admin_url', 'admin/Article/index', '', '文章管理', '');
-INSERT INTO `cmf_auth_rule` VALUES ('164', '1', 'admin', 'admin_url', 'admin/Category/index', '', '分类管理', '');
+INSERT INTO `cmf_auth_rule` VALUES ('164', '1', 'admin', 'admin_url', 'admin/Category/index', '', '标签管理', '');
 INSERT INTO `cmf_auth_rule` VALUES ('165', '1', 'admin', 'admin_url', 'admin/userinfo/index', '', '用户中心', '');
 
 -- ----------------------------
@@ -592,10 +592,10 @@ CREATE TABLE `cmf_category` (
 -- ----------------------------
 -- Records of cmf_category
 -- ----------------------------
-INSERT INTO `cmf_category` VALUES ('1', '0', '0', '1', '0', '1000', 'php', 'php', '1', '0');
+INSERT INTO `cmf_category` VALUES ('1', '0', '0', '1', '0', '1000', 'php', 'php', '0', '0');
 INSERT INTO `cmf_category` VALUES ('2', '0', '0', '0', '0', '1001', 'java', '测试', '0', '1530517985');
 INSERT INTO `cmf_category` VALUES ('3', '0', '0', '1', '0', '1000', 'mysql', 'mysql', '0', '1530698324');
-INSERT INTO `cmf_category` VALUES ('4', '0', '0', '1', '0', '1000', 'php', '分类名称', '0', '1531448939');
+INSERT INTO `cmf_category` VALUES ('4', '0', '0', '1', '0', '1000', 'php', '分类名称', '1', '1531448939');
 
 -- ----------------------------
 -- Table structure for cmf_city
@@ -1066,69 +1066,30 @@ CREATE TABLE `cmf_hook_plugin` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for cmf_link
--- ----------------------------
-DROP TABLE IF EXISTS `cmf_link`;
-CREATE TABLE `cmf_link` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态;1:显示;0:不显示',
-  `rating` int(11) NOT NULL DEFAULT '0' COMMENT '友情链接评级',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '友情链接描述',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '友情链接地址',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '友情链接名称',
-  `image` varchar(100) NOT NULL DEFAULT '' COMMENT '友情链接图标',
-  `target` varchar(10) NOT NULL DEFAULT '' COMMENT '友情链接打开方式',
-  `rel` varchar(50) NOT NULL DEFAULT '' COMMENT '链接与网站的关系',
-  PRIMARY KEY (`id`),
-  KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='友情链接表';
-
--- ----------------------------
--- Records of cmf_link
--- ----------------------------
-INSERT INTO `cmf_link` VALUES ('1', '1', '1', '8', 'thinkcmf官网', 'http://www.thinkcmf.com', 'ThinkCMF', '', '_blank', '');
-
--- ----------------------------
 -- Table structure for cmf_nav
 -- ----------------------------
 DROP TABLE IF EXISTS `cmf_nav`;
 CREATE TABLE `cmf_nav` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `is_main` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否为主导航;1:是;0:不是',
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '导航位置名称',
-  `remark` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '备注',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
+  `href` varchar(100) DEFAULT '' COMMENT '链接',
+  `flag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '标志 1 首页导航 2 友情链接',
+  `parent_id` int(11) NOT NULL COMMENT '父 id',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态;1:显示;0:隐藏',
+  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `isdelete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='前台导航位置表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='前台导航菜单表';
 
 -- ----------------------------
 -- Records of cmf_nav
 -- ----------------------------
-INSERT INTO `cmf_nav` VALUES ('1', '1', '主导航', '主导航');
-INSERT INTO `cmf_nav` VALUES ('2', '0', '底部导航', '');
-
--- ----------------------------
--- Table structure for cmf_nav_menu
--- ----------------------------
-DROP TABLE IF EXISTS `cmf_nav_menu`;
-CREATE TABLE `cmf_nav_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nav_id` int(11) NOT NULL COMMENT '导航 id',
-  `parent_id` int(11) NOT NULL COMMENT '父 id',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态;1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `target` varchar(10) NOT NULL DEFAULT '' COMMENT '打开方式',
-  `href` varchar(100) NOT NULL DEFAULT '' COMMENT '链接',
-  `icon` varchar(20) NOT NULL DEFAULT '' COMMENT '图标',
-  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '层级关系',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='前台导航菜单表';
-
--- ----------------------------
--- Records of cmf_nav_menu
--- ----------------------------
-INSERT INTO `cmf_nav_menu` VALUES ('1', '1', '0', '1', '0', '首页', '', 'home', '', '0-1');
+INSERT INTO `cmf_nav` VALUES ('1531825058', '1531825058', '6', '技术', '', '1', '0', '0', '10000', '0');
+INSERT INTO `cmf_nav` VALUES ('1531819270', '1531819270', '7', '生活', '', '1', '0', '1', '10000', '0');
+INSERT INTO `cmf_nav` VALUES ('1531822482', '1531822482', '8', 'php', '', '1', '6', '1', '10000', '0');
+INSERT INTO `cmf_nav` VALUES ('1531824812', '1531824812', '9', 'java', '', '1', '6', '1', '10000', '0');
 
 -- ----------------------------
 -- Table structure for cmf_option
@@ -1509,7 +1470,7 @@ CREATE TABLE `cmf_user` (
 -- ----------------------------
 -- Records of cmf_user
 -- ----------------------------
-INSERT INTO `cmf_user` VALUES ('1', '1', '0', '0', '1531447663', '0', '0', '0.00', '1530501418', '1', 'admin', '###3b0cb953921789a5d42f998e1c9f6a48', 'admin', 'admin@163.com', '', '', '', '127.0.0.1', '', '', null);
+INSERT INTO `cmf_user` VALUES ('1', '1', '0', '0', '1531814932', '0', '0', '0.00', '1530501418', '1', 'admin', '###1d15478ff12e51291474198554b090c0', 'admin', 'admin@163.com', '', '', '', '127.0.0.1', '', '', null);
 
 -- ----------------------------
 -- Table structure for cmf_userinfos
