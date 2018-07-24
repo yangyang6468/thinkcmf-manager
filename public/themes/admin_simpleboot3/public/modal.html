@@ -95,7 +95,9 @@
                     $("#editSuccess").css("display","");
                     $("#editSuccess").slideUp(1000,reloadPageTo);
                 }else if(jsonObj.code == -1){
-                    artdialogAlert(jsonObj.msg)
+                    Wind.use("layer" ,function () {
+                        layer.msg(jsonObj.msg);
+                    })
                 } else{
                     $("#editFail").css("display","");
                     $("#editFail").slideUp(1000);
