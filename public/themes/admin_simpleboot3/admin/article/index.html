@@ -63,7 +63,7 @@
                 <th>分类</th>
                 <th width="50">作者</th>
                 <th width="65">点击量</th>
-                <th width="65">评论量</th>
+                <th width="100">评论量</th>
                 <th width="160">缩略图</th>
                 <th width="120">创建时间</th>
                 <th>推荐状态</th>
@@ -84,7 +84,12 @@
                     <td>{$vo.category_id}</td>
                     <td>{$vo.userid}</td>
                     <td>{$vo.click_count}</td>
-                    <td>{$vo.comment_count}</td>
+                    <td>
+                        {$vo.comment_count}
+                        <if condition="$vo.comment_count gt 0">
+                            | <a href="{:url('comment/index' , ['article_id'=>$vo.id])}">点击查看</a>
+                        </if>
+                    </td>
                     <td>
                         <if condition="!empty($vo['photo'])">
                             <a href="javascript:imagePreviewDialog('{$vo.photo}');">

@@ -9,12 +9,12 @@ class CommentModel extends Model
 
     protected $table = "cmf_comments";
 
-    protected $autoWriteTimestamp = true;
-
     // 定义时间戳字段名
-    protected $createTime = 'create_time';
     protected $dateFormat = "Y-m-d H:i";
 
+    protected $autoWriteTimestamp = true;
+
+    protected $updateTime = false;
 
     public function getStatusAttr($v){
         $arr = [

@@ -15,10 +15,36 @@ class CommentController extends AdminBaseController
      *
      * @return \think\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $start_time = $request->param('start_time');
+        $end_time = $request->param('end_time');
+        $title = $request->param('title');
+        $article_id = $request->param('article_id');
 
-        $comments = Comment::order("id" , "desc")->paginate(10);
+        // 搜索条件
+        if($start_time && !$end_time){
+            $where["create_time"] = [">=" , strtotime($start_time . " 00:00:00")];
+        }elseif(!$start_time && $end_time){
+            $where["create_time"] = [ "<=" , strtotime($end_time . " 23:59:59")];
+        }elseif($start_time && $end_time){
+            $where["create_time"] = ["between" , [strtotime($start_time . " 00:00:00") , strtotime($end_time . " 23:59:59")]];
+        }
+
+        if($title){
+            $where["content"] = ["like" ,"%$title%"];
+        }
+
+        if($article_id){
+            $where["article_id"] = $article_id;
+        }
+
+        $where["parent_id"] = 0;
+        $where["isdelete"] = 0;
+        $comments = Comment::order("id" , "desc")->where($where)->paginate(10);
+        foreach ($comments as $k=>$v){
+            $v->count = Comment::where(["parent_id"=>$v->id , "isdelete"=>0])->count();
+        }
 
         return view('index' , compact('comments'));
     }
@@ -38,87 +64,165 @@ class CommentController extends AdminBaseController
                      "content|评论内容" => "require|min:5",
                      "user_id|用户" => 'require'
             ];
-
+            //数据验证
             $result = $this->validate($data , $rule);
             if($result !== true){
                 return json(["code"=>-1 , "msg"=>$result]);
             }
 
             $comment = new Comment();
-            $res = $comment->insertGetId($data);
-            if($res > 0){
-                DB::name("articles")->where(["id"=>$data['article_id']])->setInc("comment_count");
+            $comment->startTrans(); //开启事务
+            $res = $comment->save($data);
+            $incNum = DB::name("articles")->where(["id"=>$data['article_id']])->setInc("comment_count");
+            if($incNum && $res){
+                $comment->commit();
+                return json(1);
+            }else{
+                $comment->rollback();
+                return json(0);
             }
-
-            $res = $res > 0 ? 1 : 0;
-            return json($res);
         }
 
-        
+
         $article  = DB::name("articles")->where(["isdelete"=>0])->order(["id"=>"desc"])->column('id,title');
         $userinfo = DB::name("userinfos")->where(["isdelete"=>0])->order(["id"=>"desc"])->column("id,nickname");
 
         return view("add" , compact("article" , "userinfo"));
     }
 
-    public function create()
-    {
-        //
+
+    /**
+     * 添加子评论
+     * @author  yy
+     * @date 2018/7/25
+     *
+     */
+    public function childrenComment(){
+        $id = input("id");
+
+        if($this->request->isPost()){
+            $data = $this->request->param();
+            // 验证
+            $result = $this->validate($data , ["content|评论内容" => "require|min:5"]);
+            if($result !== true){
+                return json(["code"=>-1 , "msg"=>$result]);
+            }
+            unset($data["id"]);
+            $data['parent_id'] = $id;
+            //开启事务
+            $comment = new Comment();
+            $comment->startTrans();
+
+            $commentId = $comment->save($data);
+            $commentResult = DB::name("articles")->where(["id"=>$data['article_id']])->setInc("comment_count");
+            if($commentId && $commentResult){
+                $comment->commit();
+                return json(1);
+            }else{
+                $comment->rollback();
+                return json(0);
+            }
+
+        }
+
+        $comment = Comment::find($id);
+        $userinfo = DB::name("userinfos")->where(["isdelete"=>0])->order(["id"=>"desc"])->column("id,nickname");
+
+        return view('childrenComment' ,compact("comment" , "userinfo"));
+    }
+
+
+    /**
+     * 查看子级评论
+     * @author  yy
+     * @date 2018/7/25
+     */
+    public function showChildContent(){
+        $id = input("id");
+        $article_id = Comment::where(["id" => $id])->value('article_id');
+
+        $result = Comment::where(["article_id"=>$article_id , "parent_id"=>$id , "isdelete"=>0])
+                    ->select();
+
+        $str = '';
+        foreach ($result as $k=>$v){
+            $nickname = $v->nickname ? $v->nickname->nickname : "匿名";
+            if($k == count($result)-1){
+                $icon = "└─ ";
+            }else{
+                $icon ="|—";
+            }
+
+            $str .=" <tr class='appendComment'>
+                        <td></td>
+                        <td><b>$icon</b></td>
+                        <td></td>
+                        <td>$v->content</td>
+                        <td>$nickname</td>
+                        <td>$v->create_time</td>
+                        <td>$v->status</td>
+                        <th>
+                            <a href=javascript:shenhe('$v->id')>审核</a>|
+                            <a href=>删除</a>
+                        </th>
+                    </tr>";
+        }
+
+
+        echo $str;
+
+
     }
 
     /**
-     * 保存新建的资源
+     * 审核+删除
+     * @author  yy
+     * @date 2018/7/25
      *
-     * @param  \think\Request  $request
-     * @return \think\Response
      */
-    public function save(Request $request)
+    public function delete()
     {
-        //
+        $id = $this->request->param("id");
+        $type = $this->request->param("type");
+        if (isset($type) && $type == "status") {
+            $status = $this->request->param("status");
+            $res = Comment::where(["id" => $id])->setField("status", $status);
+
+            if($res){
+                $this->success("操作成功！！！");
+            }else{
+                $this->error("操作失败！！！");
+            }
+
+        }
+
+
+        $article_id = Comment::where(["id"=>$id])->value("article_id");
+
+        $childern_id = Comment::where(["parent_id"=>$id,"article_id"=>$article_id])->column("id");
+        array_push($childern_id , $id);
+
+        Comment::startTrans();
+
+        $res = Comment::where('id' , 'in' , $childern_id)->setField(["isdelete" =>1 , "delete_time"=>time()]);
+
+        $comment_count = DB::name("articles")->where(["id"=>$article_id])->value("comment_count");
+
+        //判断是否会有脏数据 影响数据的完整性
+        $setNum = $comment_count > count($childern_id) ? (int)$comment_count - (int)count($childern_id) : 0;
+        $decNum = DB::name("articles")->where(["id"=>$article_id])->setDec("comment_count" , $comment_count);
+
+        if($res && $decNum){
+            Comment::commit();
+            $this->success("操作成功！！！");
+        }else{
+            Comment::rollback();
+            $this->error("操作失败！！！");
+        }
+
+
     }
 
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

@@ -1,0 +1,42 @@
+<input type="hidden" name="id" value="{$comment->id}">
+<input type="hidden" name="article_id" value="{$comment->article_id}">
+<table class="table table-bordered" >
+    <tr >
+        <th class="text-center col-md-2" >文章标题<span class="form-required">*</span></th>
+        <td>
+            <input class="form-control"  value="{$comment->title->title}" readonly>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-center" >父级评论</th>
+        <td>
+            <input class="form-control"  value="{$comment->content}" readonly>
+        </td>
+    </tr>
+    <tr>
+        <th class="text-center" >子级评论</th>
+        <td>
+            <textarea class="form-control" name="content" style="width: 100%;height:100px;resize: none"></textarea>
+        </td>
+    </tr>
+    <tr >
+        <th class=" text-center">用户</th>
+        <td>
+            <select name="user_id" id="user_id"  class="form-control" style="width: 120px">
+                <option value="0">匿名</option>
+                <foreach name="userinfo" item="vo" key="k">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </td>
+    </tr>
+    <tr >
+        <th class=" text-center">状态</th>
+        <td style="text-align: left">
+            &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status" checked value="1">通过
+            &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="status"  value="2">驳回
+        </td>
+    </tr>
+</table>
+
+

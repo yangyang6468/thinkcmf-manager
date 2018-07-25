@@ -4,11 +4,13 @@
 <style>
     table tr th,td {text-align: center ;vertical-align: middle!important;}
     .fa{ color: white;}
+
+    .glyphicon{font-size: 16px;cursor: pointer; }
 </style>
 </head>
 <body>
 <div class="wrap js-check-wrap col-md-12">
-    <form class="well form-inline margin-top-20" method="post" action="{:url('Article/index')}">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
         时间:
         <input type="text" class="form-control js-bootstrap-date" name="start_time"
                value="{$Think.request.start_time}"
@@ -26,7 +28,7 @@
 
     <form class="js-ajax-form" action="" method="post">
         <div >
-           <a href=javascript:addSaveAddOrder("{:url('add')}"); class="btn btn-primary btn-md"><i class="fa fa-plus">评论</i></a>
+            <a href=javascript:addSaveAddOrder("{:url('add')}"); class="btn btn-primary btn-md"><i class="fa fa-plus">评论</i></a>
         </div>
         <table class="table table-hover table-bordered table-list">
             <thead>
@@ -38,7 +40,7 @@
                 <th width="120">评论用户</th>
                 <th width="150">评论时间</th>
                 <th>状态</th>
-                <th width="120">操作</th>
+                <th width="200">操作</th>
             </tr>
             </thead>
             <foreach name="comments" item="vo" key="k">
@@ -46,13 +48,18 @@
                     <td>{$k+1}</td>
                     <td><b>{$vo.id}</b></td>
                     <td>{$vo.title->title}</td>
-                    <td>{$vo.content}</td>
+                    <td>
+                        <if condition="$vo.count gt 0"><i class="glyphicon glyphicon-triangle-right" onclick="showChildContent('{$vo->id}',this)"></i></if>
+                        {$vo.content}
+                    </td>
                     <td><if condition="$vo.nickname neq null">{$vo.nickname->nickname}<else/>匿名</if></td>
                     <td>{$vo.create_time}</td>
                     <td>{$vo.status}</td>
-                    <td>
-
-                    </td>
+                    <th>
+                        <a href=javascript:addSaveAddOrder("{:url('childrenComment')}",'{$vo.id}')>添加子评论</a>|
+                        <a href="javascript:shenhe('{$vo.id}')">审核</a>|
+                        <a href="{:url('delete' ,['id'=>$vo.id])} " class="js-ajax-delete">删除</a>
+                    </th>
                 </tr>
             </foreach>
         </table>
@@ -66,15 +73,62 @@
 <include file="public@modal" />
 
 <script>
-    $(function () {
 
+    $(function () {
+        //动态加载的元素，需要委派处理
+        $("body").delegate(".appendComment","click",function(){
+
+        });
     })
 
 
+    //查看子级评论
+    function showChildContent(id , obj) {
+        if($(obj).hasClass("glyphicon-triangle-right")) {
+            $(obj).removeClass("glyphicon-triangle-right");
+            $(obj).addClass("glyphicon-triangle-bottom");
+
+            $.post("{:url('showChildContent')}" , {"id" : id} , function (redata) {
+                $(obj).parent().parent().after(redata).fadeIn(3000);
+            })
+
+        }else{
+            $(obj).addClass("glyphicon-triangle-right");
+            $(obj).removeClass("glyphicon-triangle-bottom");
+            $("table").find(".appendComment").remove();
+        }
+    }
 
 
+    //审核
+    function shenhe(id) {
+        Wind.use("layer" ,function () {
+            layer.open({
+                title : "审核"
+                ,content: "<div style='text-align: center'>" +
+                                "<input type='radio' name='shenhe' checked value='1'>通过&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                "<input type='radio' name='shenhe' value='2'>驳回&nbsp;&nbsp;&nbsp;&nbsp;" +
+                           "</div>"
+                ,btn: ['审核', '取消']
+                ,yes: function(index, layero){
+                    var status = $(":radio[name='shenhe']:checked").val();
+                   $.get("{:url('delete')}" , {"id":id , 'status':status , "type":'status'} , function (redata) {
+                       layer.msg(redata.msg);
+                       if(redata.code == 1){
+                           setTimeout(function(){
+                               window.location.reload();
+                           } , 2000)
+                       }
+                   })
+                }
+                ,btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    layer.close(index);
+                }
 
-
+            });
+        })
+    }
 
 
 </script>

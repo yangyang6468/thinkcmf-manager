@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-07-24 18:49:18
+Date: 2018-07-25 18:50:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `cmf_comments` (
   KEY `status` (`status`) USING BTREE,
   KEY `parent_id` (`parent_id`) USING BTREE,
   KEY `create_time` (`create_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='评论表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='评论表';
 
 -- ----------------------------
 -- Records of cmf_comments
@@ -44,4 +44,11 @@ CREATE TABLE `cmf_comments` (
 INSERT INTO `cmf_comments` VALUES ('1', '0', '3', '0', '0', '1', '测试评论123', '0', '0', '0');
 INSERT INTO `cmf_comments` VALUES ('2', '0', '3', '0', '0', '1', '这是什么？？？', '0', '0', '0');
 INSERT INTO `cmf_comments` VALUES ('3', '0', '3', '0', '0', '1', '这是什么？？？', '0', '0', '0');
-INSERT INTO `cmf_comments` VALUES ('4', '0', '3', '0', '0', '1', '测试评论数据+1', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('4', '0', '3', '0', '0', '2', '测试评论数据+1', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('5', '0', '3', '4', '0', '1', '测试子级评论数据+1', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('6', '0', '3', '4', '0', '1', '测试子级评论数据+2', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('7', '0', '3', '4', '0', '2', '测试子级评论数据+2', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('8', '2', '1', '0', '0', '2', '测试时间自动写入', '0', '0', '0');
+INSERT INTO `cmf_comments` VALUES ('9', '4', '1', '0', '0', '1', '时间会自动写入吧？？？', '1532513260', '1532515368', '0');
+INSERT INTO `cmf_comments` VALUES ('10', '2', '1', '9', '0', '1', '会自动加+1吗', '1532513947', '1532515368', '0');
+INSERT INTO `cmf_comments` VALUES ('12', '4', '1', '9', '0', '1', '+1吧。。。', '1532514111', '1532515368', '0');
