@@ -48,7 +48,7 @@ class UserinfoController extends AdminBaseController
 
         $this->assign("page", $page);
         $this->assign("users", $users);
-
+        $this->assign("start" , ($users->currentPage()-1)*$users->listRows());
         return $this->fetch();
     }
 
@@ -75,13 +75,20 @@ class UserinfoController extends AdminBaseController
             //数据保存
             $data = $this->request->param();
 
-            $result = $this->validate($data , "userinfo");
+            if($data["id"]){
+                $result = $this->validate($data , "userinfo.update");
+            }else{
+                $result = $this->validate($data , "userinfo.insert");
+            }
+
+
             if($result !== true){
                 return json(["code"=>-1 , "msg"=>$result]);
             }
 
             if($data["id"]){
                 $user = UserinfoModel::get($data["id"]);
+                unset($data["userpwd"]);
             }else{
                 $user = new UserinfoModel;
             }

@@ -20,7 +20,14 @@
                style="width: 140px;" autocomplete="off" placeholder="结束时间。。。"> &nbsp; &nbsp;
         标题关键字:
         <input type="text" class="form-control" name="title" style="width: 200px;"
-               value="{$Think.request.title}" placeholder="请输入关键字...">
+               value="{$Think.request.title}" placeholder="请输入关键字...">&nbsp;&nbsp;&nbsp;&nbsp;
+        标题:
+        <select  class="form-control" id="article_id" name="article_id" style="width: 200px;">
+                <option value="">--请选择--</option>
+            <foreach name="articles" item="v" key="k">
+                <option value="{$k}">{$v}</option>
+            </foreach>
+        </select> &nbsp; &nbsp;
         <input type="submit" class="btn btn-primary" value="搜索"/>
         <a class="btn btn-danger" href="{:url('AdminArticle/index')}">清空</a>
     </form>
@@ -45,14 +52,14 @@
             </thead>
             <foreach name="comments" item="vo" key="k">
                 <tr>
-                    <td>{$k+1}</td>
-                    <td><b>{$vo.id}</b></td>
-                    <td>{$vo.title->title}</td>
+                    <td>{$start+$k+1}</td>
+                    <th>{$vo.id}</th>
+                    <td>{:addSuffix($vo.article->title , 20)}</td>
                     <td>
-                        <if condition="$vo.count gt 0"><i class="glyphicon glyphicon-triangle-right" onclick="showChildContent('{$vo->id}',this)"></i></if>
-                        {$vo.content}
+                        <if condition="$vo.count gt 0"><i class="glyphicon glyphicon-triangle-right" onclick="showChildContent(this , '{$k}')"></i></if>
+                        {:addSuffix($vo.content , 20)}
                     </td>
-                    <td><if condition="$vo.nickname neq null">{$vo.nickname->nickname}<else/>匿名</if></td>
+                    <td><if condition="$vo.user neq null">{$vo.user->nickname}<else/>匿名</if></td>
                     <td>{$vo.create_time}</td>
                     <td>{$vo.status}</td>
                     <th>
@@ -61,6 +68,25 @@
                         <a href="{:url('delete' ,['id'=>$vo.id])} " class="js-ajax-delete">删除</a>
                     </th>
                 </tr>
+                <if condition="$vo.count gt 0">
+                    <foreach name="$vo.children" item="child" key="i">
+                    <tr class="commentChild_{$k}" style="display: none">
+                        <td></td>
+                        <th><if condition=" $i eq count($vo['children'])-1">└─<else/>|—</if></th>
+                        <td></td>
+                        <td>{$child.content}</td>
+                        <td><if condition="$child.user neq null">{$child.user->nickname}<else/>匿名</if></td>
+                        <td>{$vo.create_time}</td>
+                        <td>{$vo.status}</td>
+                        <th>
+                            <a href="javascript:shenhe('{$vo.id}')">审核</a>|
+                            <a href="{:url('delete' ,['id'=>$vo.id])} " class="js-ajax-delete">删除</a>
+                        </th>
+                    </tr>
+                    </foreach>
+                </if>
+
+
             </foreach>
         </table>
         {:setPage($comments->render() , $comments->total())}
@@ -75,27 +101,26 @@
 <script>
 
     $(function () {
-        //动态加载的元素，需要委派处理
-        $("body").delegate(".appendComment","click",function(){
 
-        });
+        $("#article_id").val("{$article_id}")
+
+        //动态加载的元素，需要委派处理
+        $("body").delegate(".appendComment","click",function(){});
     })
 
 
     //查看子级评论
-    function showChildContent(id , obj) {
+    function showChildContent(obj,k) {
         if($(obj).hasClass("glyphicon-triangle-right")) {
             $(obj).removeClass("glyphicon-triangle-right");
             $(obj).addClass("glyphicon-triangle-bottom");
 
-            $.post("{:url('showChildContent')}" , {"id" : id} , function (redata) {
-                $(obj).parent().parent().after(redata).fadeIn(3000);
-            })
 
+            $(".commentChild_"+k).fadeIn(1000);
         }else{
             $(obj).addClass("glyphicon-triangle-right");
             $(obj).removeClass("glyphicon-triangle-bottom");
-            $("table").find(".appendComment").remove();
+            $(".commentChild_"+k).fadeOut(1000);
         }
     }
 

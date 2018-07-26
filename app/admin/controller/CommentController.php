@@ -2,7 +2,6 @@
 
 namespace app\admin\controller;
 
-
 use think\Request;
 use cmf\controller\AdminBaseController;
 use app\admin\model\CommentModel as Comment;
@@ -10,10 +9,12 @@ use think\DB;
 
 class CommentController extends AdminBaseController
 {
+
     /**
-     * 显示资源列表
-     *
-     * @return \think\Response
+     * @author  yy
+     * @date 评论列表
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
      */
     public function index(Request $request)
     {
@@ -41,12 +42,16 @@ class CommentController extends AdminBaseController
 
         $where["parent_id"] = 0;
         $where["isdelete"] = 0;
-        $comments = Comment::order("id" , "desc")->where($where)->paginate(10);
+        $comments = Comment::order("id" , "desc")->where($where)->paginate(15);
         foreach ($comments as $k=>$v){
+            $v->children = Comment::where(["parent_id"=>$v->id , "isdelete"=>0])->select();
             $v->count = Comment::where(["parent_id"=>$v->id , "isdelete"=>0])->count();
         }
 
-        return view('index' , compact('comments'));
+        $articles = Db::name("articles")->where(["isdelete"=>0])->column("id,concat(left(title,20) , '...') as title");
+        $start = ($comments->currentPage()-1)*$comments->listRows(); //每页起始位置
+
+        return view('index' , compact('comments' , 'articles' , "article_id" ,"start"));
     }
 
 
@@ -132,47 +137,6 @@ class CommentController extends AdminBaseController
     }
 
 
-    /**
-     * 查看子级评论
-     * @author  yy
-     * @date 2018/7/25
-     */
-    public function showChildContent(){
-        $id = input("id");
-        $article_id = Comment::where(["id" => $id])->value('article_id');
-
-        $result = Comment::where(["article_id"=>$article_id , "parent_id"=>$id , "isdelete"=>0])
-                    ->select();
-
-        $str = '';
-        foreach ($result as $k=>$v){
-            $nickname = $v->nickname ? $v->nickname->nickname : "匿名";
-            if($k == count($result)-1){
-                $icon = "└─ ";
-            }else{
-                $icon ="|—";
-            }
-
-            $str .=" <tr class='appendComment'>
-                        <td></td>
-                        <td><b>$icon</b></td>
-                        <td></td>
-                        <td>$v->content</td>
-                        <td>$nickname</td>
-                        <td>$v->create_time</td>
-                        <td>$v->status</td>
-                        <th>
-                            <a href=javascript:shenhe('$v->id')>审核</a>|
-                            <a href=>删除</a>
-                        </th>
-                    </tr>";
-        }
-
-
-        echo $str;
-
-
-    }
 
     /**
      * 审核+删除

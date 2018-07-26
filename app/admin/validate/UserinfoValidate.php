@@ -27,6 +27,7 @@ class UserinfoValidate extends Validate
     ];
 
     protected $scene = [
-
+        'insert' => ["nickname" , "phone" , "signature" , "userpwd"],
+        'update' => ["nickname" , "phone" , "signature"]
     ];
 }

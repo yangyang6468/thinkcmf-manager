@@ -52,10 +52,13 @@
 			<tbody>
 				<foreach name="users" item="vo" key="k">
 				<tr>
-                    <td></i>{$k+1}</td>
+                    <td>{$start+$k+1}</td>
 					<td>{$vo.id}</td>
 					<td>{$vo.nickname}{$vo.gender}</td>
-                    <td><img src="{:Config('INDEX')}/upload/{$vo.headimage}" width="70px" height="70px" class="img-circle"></td>
+                    <td><if condition="$vo.headimage">
+						    <img src="{:showImage($vo.headimage, $vo.flag)}" width="70px" height="70px" class="img-circle">
+                        </if>
+                    </td>
 					<td>{$vo.phone}</td>
 					<td>{$vo.signature}</td>
                     <td>{$vo.createtime}</td>

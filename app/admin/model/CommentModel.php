@@ -32,13 +32,13 @@ class CommentModel extends Model
      * @date 2018/7/24
      * @return \think\model\relation\BelongsTo
      */
-    public function nickname(){
-        return $this->belongsTo("app\admin\model\UserinfoModel" , "user_id")->field('nickname');
+    public function user(){
+        return $this->belongsTo("UserinfoModel" , "user_id")->field('nickname');
     }
 
 
-    public function title(){
-        return $this->belongsTo("app\admin\model\ArticleModel" , "article_id")->field('title');
+    public function article(){
+        return $this->belongsTo("ArticleModel" , "article_id")->field('title');
     }
 
 

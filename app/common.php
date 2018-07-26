@@ -1,20 +1,6 @@
 <?php
 
 /**
- * 设置图片显示路径
- * @author yy
- * @Date 2018/07/14
- * @param $img
- * @return string
- */
-function setImgUrl($img){
-    if($img){
-       $img = config('INDEX') . "/upload/" . $img;
-    }
-    return $img;
-}
-
-/**
  * 设置分页格式
  * @author yy
  * @Date 2018/07/14
@@ -152,3 +138,53 @@ function tranTime($time) {
     return $str;
 }
 
+
+/**
+ * 字符串截取添加后缀
+ * @author  yy
+ * @date 2018/7/26
+ * @param $str 字符串
+ * @param $length 长度
+ * @param string $suffix 添加的后缀
+ * @param bool $isStr 中文 or 字母 默认中文
+ */
+function addSuffix($str , $length , $suffix='...' ,$isStr = true ){
+    if(empty($str)){
+        return;
+    }
+
+    if($isStr == true){
+        if(mb_strlen($str , "utf-8") >= $length){
+            $str = mb_substr($str , 0 , $length , 'utf-8') . $suffix;
+        }else{
+            $str = mb_substr($str , 0 , $length , 'utf-8');
+        }
+    }else{
+        if(strlen($str) >= $length){
+            $str = substr($str , 0 , $length) . $suffix;
+        }else{
+            $str = substr($str , 0 , $length);
+        }
+    }
+
+    return $str;
+}
+
+/**
+ * 设置图片路径
+ * @author  yy
+ * @date 2018/7/26
+ * @param $img 图片路径
+ * @param $flag 1 后台上传图片 2前台上传图片
+ */
+function showImage($img , $flag){
+    if(!empty($img)){
+        if($flag == 1){
+            $img = config("HOME").$img;
+        }else{
+            $img = config("MANAGER").$img;
+        }
+    }
+
+    return $img;
+}
