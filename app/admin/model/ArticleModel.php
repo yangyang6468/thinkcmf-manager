@@ -36,9 +36,9 @@ class ArticleModel extends Model
     }
 
     //获取用户
-    public function getUseridAttr($value){
-        return Db::name("userinfos")->where(["id"=>$value])->value("nickname");
-    }
+//    public function getUseridAttr($value){
+//        return Db::name("userinfos")->where(["id"=>$value])->value("nickname");
+//    }
 
     //封面图转换
     public function getPhotoAttr($value){
@@ -63,6 +63,11 @@ class ArticleModel extends Model
     public function getRecommendAttr($value){
         $arr = ["0"=>"<span class='fa fa-close'></span>" ,"1"=>"<span class='fa fa-check'></span>"];
         return $arr[$value];
+    }
+
+
+    public function user(){
+        return $this->belongsTo("UserinfoModel" , "userid" , "id");
     }
 
 }

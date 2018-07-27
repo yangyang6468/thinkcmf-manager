@@ -9,10 +9,9 @@
 // | Author: Dean <zxxjjforever@163.com>
 // +----------------------------------------------------------------------
 
-if (file_exists(CMF_ROOT . "data/conf/route.php")) {
-    $runtimeRoutes = include CMF_ROOT . "data/conf/route.php";
-} else {
-    $runtimeRoutes = [];
-}
+use think\Route;
 
-return $runtimeRoutes;
+
+Route::rule("collect/index/:id" , "admin/CollectController/index");
+
+

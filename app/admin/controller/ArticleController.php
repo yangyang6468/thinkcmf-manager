@@ -53,6 +53,7 @@ class ArticleController extends AdminBaseController
 
         $articles = Article::order("id desc")->where($where)->paginate(10);
         foreach ($articles as $k=>$v){
+
             $v["article_status"] = $v->getData("status");
         }
 

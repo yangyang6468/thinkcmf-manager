@@ -9,46 +9,15 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
-
-    <link href="__STATIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
     <!-- 最新的 Bootstrap  JavaScript 文件  css 文件-->
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" >
-    <script src="/static/bootstrap/js/bootstrap.min.js" ></script>
-
     <!--自己写的css文件-->
-    <link href="__STATIC__/css/myself.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/css/common.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-    <style>
-        form .input-order {
-            margin-bottom: 0px;
-            padding: 0 2px;
-            width: 42px;
-            font-size: 12px;
-        }
-
-        form .input-order:focus {
-            outline: none;
-        }
-
-        .table-actions {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            padding: 0px;
-        }
-
-        .table-list {
-            margin-bottom: 0px;
-        }
-
-        .form-required {
-            color: red;
-        }
-    </style>
     <script type="text/javascript">
         //全局变量
         var GV = {
@@ -58,9 +27,9 @@
             APP: '{$Request.module}'/*当前应用名*/
         };
     </script>
-    <script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+    <script src="__STATIC__/bootstrap/js/bootstrap.min.js" ></script>
     <script src="__STATIC__/js/wind.js"></script>
-    <script src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
     <script>
         Wind.css('artDialog');
         Wind.css('layer');

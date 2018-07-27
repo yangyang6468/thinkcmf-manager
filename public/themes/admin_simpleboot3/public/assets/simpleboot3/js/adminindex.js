@@ -9,6 +9,8 @@ $(function () {
     $content         = $("#content");
     $loading         = $("#loading");
     var headerHeight = 48;
+
+    //设置iframe框架的高度
     $content.height($(window).height() - headerHeight);
 
     $navWraper.height($(window).height() - 48 - 40);

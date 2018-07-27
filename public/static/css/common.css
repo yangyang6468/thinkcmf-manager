@@ -1,0 +1,35 @@
+.table-background{
+    background-color: #F0F0F0;padding-top:1px;
+}
+
+table tr th,td {text-align: center ;vertical-align: middle!important;}
+
+.fa{
+    color: #4CA6FF;!important
+    font-size: 20px;
+}
+
+form .input-order {
+    margin-bottom: 0px;
+    padding: 0 2px;
+    width: 42px;
+    font-size: 12px;
+}
+
+form .input-order:focus {
+    outline: none;
+}
+
+.table-actions {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px;
+}
+
+.table-list {
+    margin-bottom: 0px;
+}
+
+.form-required {
+    color: red;
+}

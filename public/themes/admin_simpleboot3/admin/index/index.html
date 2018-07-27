@@ -2,20 +2,20 @@
 <html lang="zh_CN" style="overflow: hidden;">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
     <meta charset="utf-8">
     <title>博客管理系统</title>
     <meta name="description" content=" ">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
-    <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/bootstrap.min.css" rel="stylesheet">
-    <link href="__TMPL__/public/assets/simpleboot3/css/simplebootadmin.css" rel="stylesheet">
+    <link href="__STATIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/css/admin.css" rel="stylesheet">
     <link href="__STATIC__/font-awesome/css/font-awesome.min.css?page=index" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/simplebootadminindex.min.css">
+    <link href="__STATIC__/css/adminindex.min.css" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -54,6 +54,10 @@
 
         .navbar-default {
             background-color: #3facd4;
+        }
+
+        #task-content ul .active{
+            background-color: black !important; ;
         }
 
         /*----------------导航hack--------------------*/
@@ -316,11 +320,11 @@
     </div>
 </div>
 
-<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
 <script src="__STATIC__/js/wind.js"></script>
-<script src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
 <script src="__STATIC__/js/admin.js"></script>
-<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+<script src="__STATIC__/js/adminindex.js"></script>
 <script>
     $(function () {
         $("[data-toggle='tooltip']").tooltip();

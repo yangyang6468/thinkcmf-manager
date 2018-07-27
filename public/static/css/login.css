@@ -1,0 +1,41 @@
+/*背景图*/
+.events_sec {
+    background: url("../images/bg_1.jpg") no-repeat center top;
+}
+
+.events_sec .content {
+    background: url("../images/main_1.jpg") no-repeat center top;
+    padding-top: 136px;
+}
+
+/*输入框背景*/
+.events_sec .content .container{
+    margin-top: 55px;
+}
+
+.events_sec .content .container .row .bg{
+    background: rgba(233,233,233,0.72);
+    padding-bottom: 30px;
+}
+
+.events_sec .content .container .row .bg h1{
+    padding: 20px 20px 0px 20px;
+}
+
+.events_sec .content .container .row .bg form{
+    padding: 20px 10px
+}
+
+.form-control{
+    margin-bottom: 20px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    height: 40px;
+    font-size: 16px;
+    border-radius: 7px;
+}
+
+.btn {
+    height: 40px;
+    font-size: 16px;
+
+}
