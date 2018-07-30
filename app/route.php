@@ -14,4 +14,4 @@ use think\Route;
 
 Route::rule("collect/index/:id" , "admin/CollectController/index");
 
-
+Route::rule("like/index/:id" , "admin/LikeController/index");

@@ -937,7 +937,6 @@ function imagePreviewDialog(img) {
             shadeClose: true,
              //skin: 'layui-layer-nobg',
             //shade: [0.5, '#000000'],
-            shadeClose: true,
         })
     });
 }

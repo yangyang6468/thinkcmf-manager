@@ -2,84 +2,34 @@
 
 namespace app\admin\controller;
 
-use think\Controller;
+use cmf\controller\AdminBaseController;
 use think\Request;
-
-class LikeController extends Controller
+use app\admin\model\CommentModel as Comment;
+use app\admin\model\LikeModel as Like;
+class LikeController extends AdminBaseController
 {
-    /**
-     * 显示资源列表
-     *
-     * @return \think\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * 显示创建资源表单页.
+     * 点赞列表
+     * @author  yy
+     * @date 2018/7/30
      *
-     * @return \think\Response
      */
-    public function create()
+    public function index($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        $where['islike'] = 1;
+        $where["comment_id"] = $id;
+        $likeData = Like::where($where)->select();
+
+        $cancelWhere['islike'] = -1;
+        $cancelWhere["comment_id"] = $id;
+        $cancelLikeData = Like::where($cancelWhere)->select();
+
+        return view("like/index" , compact('comment' , 'likeData' , 'cancelLikeData'));
+
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
 
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

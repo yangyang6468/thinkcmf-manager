@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-07-24 18:48:29
+Date: 2018-07-30 17:45:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `cmf_admin_menu` (
   KEY `status` (`status`),
   KEY `parent_id` (`parent_id`),
   KEY `controller` (`controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of cmf_admin_menu
@@ -174,3 +174,4 @@ INSERT INTO `cmf_admin_menu` VALUES ('162', '0', '1', '1', '10000', 'admin', 'Ar
 INSERT INTO `cmf_admin_menu` VALUES ('164', '0', '1', '1', '10000', 'admin', 'Category', 'index', '', '标签管理', '', '');
 INSERT INTO `cmf_admin_menu` VALUES ('165', '152', '1', '1', '10000', 'admin', 'userinfo', 'index', '', '用户中心', '', '');
 INSERT INTO `cmf_admin_menu` VALUES ('166', '0', '1', '1', '10000', 'admin', 'comment', 'index', '', '评论管理', 'star', '');
+INSERT INTO `cmf_admin_menu` VALUES ('167', '0', '1', '1', '10000', 'admin', 'message', 'index', '', '留言管理', 'envelope-o', '');

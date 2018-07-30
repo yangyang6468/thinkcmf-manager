@@ -32,8 +32,8 @@
                     <td>{$vo.title}</td>
                     <td>
                         <if condition="!empty($vo['image'])">
-                            <a href="javascript:imagePreviewDialog('{:setImgUrl($vo.image)}');">
-                                <img src="{:setImgUrl($vo.image)}" width="150px">
+                            <a href="javascript:imagePreviewDialog('{:showImage($vo.image , 1)}');">
+                                <img src="{:showImage($vo.image , 1)}" width="150px">
                             </a>
                         </if>
                     </td>

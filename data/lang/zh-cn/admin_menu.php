@@ -29,6 +29,7 @@ return array (
   'ADMIN_MENU_INDEX' => '后台菜单',
   'ADMIN_MENU_LISTORDER' => '后台菜单排序',
   'ADMIN_MENU_LISTS' => '所有菜单',
+  'ADMIN_MESSAGE_INDEX' => '留言管理',
   'ADMIN_NAV_ADD' => '添加导航',
   'ADMIN_NAV_ADDPOST' => '添加导航提交保存',
   'ADMIN_NAV_DELETE' => '删除导航',

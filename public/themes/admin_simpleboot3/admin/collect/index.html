@@ -56,17 +56,19 @@
                 <tr>
                     <td>{$k+1}</td>
                     <td><b>{$vo.user->nickname}</b></td>
-                    <td><img src="{:showImage($vo.user->headimage , $vo.user->flag )}" width="40px" class="img-circle"></td>
+                    <td>
+                        <a href="javascript:imagePreviewDialog('{:showImage($vo.user->headimage , $vo.user->flag )}');">
+                            <img src="{:showImage($vo.user->headimage , $vo.user->flag )}" width="40px" class="img-circle">
+                        </a>
+                    </td>
                     <td>{$vo.create_time}</td>
                 </tr>
             </foreach>
         </table>
     </div>
-
-
-
-
 </div>
 
 </body>
 </html>
+
+<script src="__STATIC__/js/admin.js"></script>

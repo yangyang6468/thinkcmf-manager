@@ -41,11 +41,11 @@
             <thead>
             <tr>
                 <th width="15"></th>
-                <th width="15">ID</th>
                 <th>标题</th>
                 <th >评论内容</th>
                 <th width="120">评论用户</th>
                 <th width="150">评论时间</th>
+                <th>点赞量</th>
                 <th>状态</th>
                 <th width="200">操作</th>
             </tr>
@@ -53,7 +53,7 @@
             <foreach name="comments" item="vo" key="k">
                 <tr>
                     <td>{$start+$k+1}</td>
-                    <th>{$vo.id}</th>
+
                     <td>{:addSuffix($vo.article->title , 20)}</td>
                     <td>
                         <if condition="$vo.count gt 0"><i class="glyphicon glyphicon-triangle-right" onclick="showChildContent(this , '{$k}')"></i></if>
@@ -61,6 +61,10 @@
                     </td>
                     <td><if condition="$vo.user neq null">{$vo.user->nickname}<else/>匿名</if></td>
                     <td>{$vo.create_time}</td>
+                    <td>
+                        {$vo.like_count}
+                        <if condition="$vo.like_count"> | <a href="{:url('like/index',['id'=>$vo['id']])}" class="btn-sm btn-info">查看</a></if>
+                    </td>
                     <td>{$vo.status}</td>
                     <th>
                         <a href=javascript:addSaveAddOrder("{:url('childrenComment')}",'{$vo.id}')>添加子评论</a>|
@@ -73,10 +77,13 @@
                     <tr class="commentChild_{$k}" style="display: none">
                         <td></td>
                         <th><if condition=" $i eq count($vo['children'])-1">└─<else/>|—</if></th>
-                        <td></td>
                         <td>{$child.content}</td>
                         <td><if condition="$child.user neq null">{$child.user->nickname}<else/>匿名</if></td>
                         <td>{$vo.create_time}</td>
+                        <td>
+                            {$vo.like_count}
+                            <if condition="$vo.like_count"> | <a href="{:url('like/index',['id'=>$vo['id']])}">查看</a></if>
+                        </td>
                         <td>{$vo.status}</td>
                         <th>
                             <a href="javascript:shenhe('{$vo.id}')">审核</a>|
