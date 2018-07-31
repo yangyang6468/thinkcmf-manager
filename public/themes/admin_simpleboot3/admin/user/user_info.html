@@ -6,49 +6,45 @@
 			<li class="active"><a href="{:url('user/userInfo')}">{:lang('ADMIN_USER_USERINFO')}</a></li>
 			<li><a href="{:url('setting/password')}">{:lang('ADMIN_SETTING_PASSWORD')}</a></li>
 		</ul>
-		<form class="form-horizontal js-ajax-form margin-top-20 col-md-8 col-md-offset-3" role="form" method="post" action="{:url('User/userinfoPost')}">
+		<form class="form-horizontal js-ajax-form margin-top-20 col-md-8 col-md-offset-3" role="form" method="post" action="{:url('User/userinfo')}">
 			<div class="form-group">
 				<label for="input-user-nickname" class="col-md-2 control-label">{:lang('NICKNAME')}</label>
 				<div class="col-md-2">
-					<input type="text" class="form-control" id="input-user-nickname" name="user_nickname" value="{$user_nickname}">
+					<input type="text" class="form-control" id="input-user-nickname" name="user_nickname" value="{$user.user_nickname}">
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="input-user-nickname" class="col-md-2 control-label" style="vertical-align: middle">缩略图</label>
-				<div class="col-md-2">
-					<div >
-						<input type="hidden" name="photo" id="thumbnail" value="">
+				<label  class="col-md-2 control-label" style="margin-top: 50px;">缩略图</label>
+				<div class="col-md-4">
+					<div id="imgUrl">
+						<input type="hidden" name="avatar" id="thumbnail" value="">
 						<a href="javascript:uploadOneImage('图片上传','#thumbnail');">
-							<img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" width="135" style="cursor: pointer"/>
+							<img src="__TMPL__/public/assets/images/default-thumbnail.png" id="thumbnail-preview" width="135" class="img-circle"  style="cursor: pointer"/>
 						</a>
-						<input type="button" class="btn btn-danger btn-cancel-thumbnail" value="取消图片">
+						<input type="button" class="btn btn-danger btn-cancel-thumbnail"  value="取消图片">
 					</div>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="input-gender" class="col-md-2 control-label">{:lang('GENDER')}</label>
-				<div class="col-md-2">
-					<select class="form-control" name="sex" id="input-gender">
-						<php>$sexs=array("0"=>lang('GENDER_SECRECY'),"1"=>lang('MALE'),"2"=>lang('FEMALE'));</php>
-						<foreach name="sexs" item="vo">
-							<php>$sexselected=$key==$sex?"selected":"";</php>
-							<option value="{$key}" {$sexselected}>{$vo}</option>
-						</foreach>
-					</select>
+				<label class="col-md-2 control-label">{:lang('GENDER')}</label>
+				<div class="col-md-4">
+                    <input type="radio" name="sex"  value="0"><i class="fa fa-genderless fa-2x" style="color: #0A0A0A;margin-right: 10px"></i>
+                    <input type="radio" name="sex"  value="1"><i class="fa fa-mars fa-2x" style="margin-right: 10px"></i>
+                    <input type="radio" name="sex"  value="2"><i class="fa fa-venus fa-2x" style="color: #ff0000"></i>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="input-birthday" class="col-md-2 control-label">{:lang('BIRTHDAY')}</label>
 				<div class="col-md-2">
-					<input type="text" class="form-control js-bootstrap-date" id="input-birthday" name="birthday" value="{:date('Y-m-d',$birthday)}" placeholder="2013-01-04">
+					<input type="text" class="form-control js-bootstrap-date" id="input-birthday" name="birthday" value="{:date('Y-m-d',$user['birthday'])}" placeholder="2013-01-04">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="input-signature" class="col-md-2 control-label">{:lang('SIGNATURE')}</label>
 				<div class="col-md-7">
-					<textarea style="width: 100%;height: 100px;resize: none" class="form-control" id="input-signature" name="signature" placeholder="{:lang('SIGNATURE')}">{$signature}</textarea>
+					<textarea style="width: 100%;height: 100px;resize: none" class="form-control" id="input-signature" name="signature" placeholder="{:lang('SIGNATURE')}">{$user.signature}</textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -58,6 +54,24 @@
 			</div>
 		</form>
 	</div>
-	<script src="__STATIC__/js/admin.js"></script>
+
 </body>
 </html>
+
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    //设置用户图像
+    var img = '{$user.avatar}';
+    if(img){
+        $("#imgUrl img").attr("src" , "{:config('MANAGER')}"+img);
+        $("#thumbnail").val("{:config('MANAGER')}"+img);
+    }else{
+        $("#imgUrl img").attr("src" , "__TMPL__/public/assets/images/default-thumbnail.png");
+    }
+
+    //设置性别
+    var sex = '{$user.sex|default=0}';
+    $("input[type='radio'][name='sex'][value='"+ sex +"']").attr("checked" , true);
+
+
+</script>

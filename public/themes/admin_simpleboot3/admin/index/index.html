@@ -61,6 +61,13 @@
         }
 
         /*----------------导航hack--------------------*/
+
+        /*----------------用户个人信息--------------------*/
+
+        .user-menu li{margin: 10px;font-size: 14px}
+
+        /*----------------用户个人信息--------------------*/
+
     </style>
 
     <script>
@@ -214,8 +221,8 @@
                 <li class="light-blue dropdown" style="border-left:none;">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <if condition="isset($admin['avatar']) && $admin['avatar']">
-                            <img class="nav-user-photo" width="30" height="30"
-                                 src="{:cmf_get_user_avatar_url($admin['avatar'])}" alt="{$admin.user_login}">
+                            <img class="nav-user-photo" width="40" height="40"
+                                 src="{:config('MANAGER')}{$admin['avatar']}" alt="{$admin.user_login}">
                         <else/>
                             <img class="nav-user-photo" width="30" height="30"
                                  src="__TMPL__/public/assets/images/logo-18.png" alt="{$admin.user_login|default=''}">
@@ -225,13 +232,7 @@
 							</span>
                         <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
-                        <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/Setting/site')">
-                            <li>
-                                <a href=javascript:openapp("{:url('setting/site')}",'index_site',"{:lang('ADMIN_SETTING_SITE')}");><i
-                                        class="fa fa-cog"></i> {:lang('ADMIN_SETTING_SITE')}</a>
-                            </li>
-                        </if>
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer" >
                         <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/user/userinfo')">
                             <li>
                                 <a href=javascript:openapp("{:url('user/userinfo')}",'index_userinfo',"{:lang('ADMIN_USER_USERINFO')}");><i
@@ -325,6 +326,7 @@
 <script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
 <script src="__STATIC__/js/admin.js"></script>
 <script src="__STATIC__/js/adminindex.js"></script>
+<script src="__STATIC__/js/canvas-nest.min.js"></script>
 <script>
     $(function () {
         $("[data-toggle='tooltip']").tooltip();

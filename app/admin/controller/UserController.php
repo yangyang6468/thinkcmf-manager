@@ -234,30 +234,17 @@ class UserController extends AdminBaseController
      */
     public function userInfo()
     {
-        $id   = cmf_get_current_admin_id();
-        $user = Db::name('user')->where(["id" => $id])->find();
-        $this->assign($user);
-        return $this->fetch();
-    }
+        if($this->request->isPost()){
+            $data = $this->request->post();
+            $rules = [
+                'user_nickname|昵称' => 'require|length:4,12',
+                'signature|个性签名' => 'require|min:5'
+            ];
+            $result = $this->validate($data ,$rules);
+            if($result !== true){
+                $this->error($result);
+            }
 
-    /**
-     * 管理员个人信息修改提交
-     * @adminMenu(
-     *     'name'   => '管理员个人信息修改提交',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '管理员个人信息修改提交',
-     *     'param'  => ''
-     * )
-     */
-    public function userInfoPost()
-    {
-        if ($this->request->isPost()) {
-
-            $data             = $this->request->post();
             $data['birthday'] = strtotime($data['birthday']);
             $data['id']       = cmf_get_current_admin_id();
             $create_result    = Db::name('user')->update($data);;
@@ -267,6 +254,11 @@ class UserController extends AdminBaseController
                 $this->error("保存失败！");
             }
         }
+
+
+        $id   = session('ADMIN_ID');
+        $user = Db::name('user')->where(["id" => $id])->find();
+        return view("user/user_info" , compact('user'));
     }
 
     /**

@@ -1,20 +1,13 @@
-﻿<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
+﻿<include file="public@header"/>
 
-    <link rel="stylesheet" type="text/css" href="css/total.css">
     <style type="text/css">
 
         #Barrage {
-            width: 500px;
-            height: 400px;
-            /* border:1px solid rgba(204, 204, 204,.2); */
+            width: 85%;
+            max-height: 530px;
+            border:1px solid #ccc9a4;
             border-radius: 11px;
-            position: absolute;
-
+            margin-top: 10px;
             overflow: hidden;
         }
 
@@ -24,22 +17,36 @@
             border: 1px solid rgba(204, 204, 204,.2);
             padding: 0 10px;
             height: 40px;
-            display: table;
-            /* 文字自适应 */
-            float: right;
+            display: inline-block;
+            cursor: pointer;
+            max-width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        ul {
+        .time {
+            border-radius: 5px;
+            background-color: rgba(205, 204, 204,.4);
+            border: 1px solid rgba(204, 204, 204,.2);
+            padding: 0 10px;
+            height: 40px;
+            display: inline-block;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #Barrage ul {
             display: block;
-            margin-top: 0px;
+
         }
 
         li {
             border-radius: 5px;
             list-style-type: none;
             width: 100%;
-            display: inline-block;
-            text-align: center;
+            display: block;
+            text-align: left;
             line-height: 38px;
             font-family: '仿宋';
             margin-top: 10px;
@@ -48,282 +55,108 @@
             white-space: nowrap;
             /* 不换行 */
             overflow: hidden;
-            /* 内容超出宽度时隐藏超出部分的内容 */
+        }
+
+        #Barrage ul li .nickname{
+            border-radius: 5px;
+            background-color: #5cb85c;
+            border: 1px solid rgba(204, 204, 204,.2);
+            padding: 0 10px;
+            height: 40px;
+            display: inline-block;
+            cursor: pointer;
+            width: 150px;
+            text-align: center;
+            overflow: hidden;
             text-overflow: ellipsis;
-            /*溢出时显示省略标记...；需与overflow:hidden;一起使用*/
-            /* border: 1px solid #000; */
         }
 
-        @-webkit-keyframes anim1 {
-            0% {
-                top: 48px;
-                opacity: 1
-            }
-
-            50% {
-                top: -48px;
-                opacity: 1
-            }
-
-            75% {
-                top: -48px;
-                opacity: 0
-            }
-
-            100% {
-                top: 48px;
-                opacity: 0
-            }
+        #Barrage ul li img{
+            vertical-align: top;
+            cursor: pointer;
         }
 
-        @-webkit-keyframes anim2 {
-            0% {
-                top: 0px
-            }
-
-            25% {
-                top: -20px
-            }
-
-            50% {
-                top: -35px
-            }
-
-            75% {
-                top: -45px
-            }
-
-            100% {
-                top: -55px
-            }
-        }
-
-        .BarMes1:nth-child(n+1) {
-            -webkit-animation: anim2  1s  linear;
-            /* linear infinite */
-            animation-fill-mode: forwards;
-        }
-
-        /**/
+        /*文本框*/
         .txt{
             border: 2px solid #CCCCCC;
             outline-style:none;
             border-radius:5px;
             padding-left:4px;
             background-color: #F0F0F0;
+            margin-top: 10px;
         }
         .txt:focus{
             border: 2px solid #66CCFF;
         }
-        .small{
-            height:25px;
-            width:177px;
-            font-size:20px;
-        }
-        .medium{
-            height:30px;
-            width:177px;
-            font-size:20px;
-        }
-        .large{
-            height:40px;
-            width:177px;
-            font-size:20px;
-        }
-        /*
-        ����ͼ���TXT����?
-        **/
-        .txt_img{
-            width: 250px;
-            height: 35px;
-            border: 2px solid #cccccc;
-            border-radius:5px;
-
-        }
-        .txt_img:focus{
-            border: 2px solid #66CCFF;
-            background-color: #66CCFF;
-        }
-        .txt_img_i{
-            width: 72%;
-            font-size: 20px;
-            padding-left:4px;
-            height: 100%;
-            float: left;
-        }
-        .txt_img_i,.txt_img_i input{
-            border: 0;
-            outline-style: none;
-        }
-        .txt_img_s{
-            display:block;
-            float:right;
-            text-align:center;
-            color:#FFF;
-            width: 20%;
-            border-right-radius:5px;
-            font-size: 20px;
-            padding-left:4px;
-            height: 100%;
-            background-color: #CCCCCC;
-        }
-        .txt_focus{
-            border: 2px solid #99CCFF;
-        }
-        .txt_img_se{
-            background-color: #99CCFF;
-        }
-        /*
-        *��ť��ʽ
-        *cursor:pointer����Ϊ��
-        */
-        .button_ita{
-            margin-top:5px;
-            outline-style:none;
-            text-align:center;
-            cursor:pointer;
-            width: 70px;
-            height: 40px;
-            border-radius:5px;
-            border: 0px solid #99CCFF;
-            background-color: rgba(72, 201, 176,0.4);
-        }
-        .button_ita:hover{
-            background-color: rgba(72, 201, 176,0.7);
-        }
-        .button_ita:focus{
-            background-color: rgba(72, 201, 176,1);
-        }
-        .chec_i{
-
-            border:2px solid #000;
-            outline-style:none;
-            width: 40px;
-            height: 40px;
-        }
-
-        input[type="checkbox"] + label::before {
-            content: "\a0";  /*�����пո�*/
-            display: inline-block;
-            vertical-align: 25px;
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-            border-radius: 4px;
-            border:2px solid #CCCCCC;
-            background-color: #FFF;
-            text-indent: 10px;
-            line-height: 25px;
-        }
-        input[type="checkbox"]:checked + label::before {
-            content: "\2713";
-            width:30px;
-            height:30px;
-            font-size:20px;
-            font-weight:900;
-            background-color: yellowgreen;
-        }
-        input[type="checkbox"]:hover + label::before {
-            content: "\2713";
-            width:30px;
-            height:30px;
-            background-color:rgba(204,204,204,0.6);
-            color:#FFF;
-            font-weight:bolder;
-
-        }
-        table { border-collapse: collapse;}
-
-        .tab{
-            width:800px;
-            height: 400px;
-            margin: 0 auto;
-        }
-
-
 
     </style>
 
-<body>
-<div>
-    <input type="button" value="test" onClick="bar()" class="button_ita" />
-    <form action="" method="post" id="f2">
-        <input type="text" name="name" placeholder="输入内容" class="txt large" id="txtbar" />
-        <input type="button" class="button_ita" value="发送" onClick="pub()" />
-    </form>
-    <div id="Barrage">
-        <ul>
-            <li>
-                <div class="BarMes">
-                    但愿人长久，千里共嫦娟
-                </div></li>
+<body >
+<div >
+
+    <div id="Barrage" class=" col-md-offset-1">
+        <input type="hidden" id="message_count" value="0">
+        <ul onmouseenter="stopInterval()" onmouseleave="beginInterval()">
+            <include file="message/detail" />
         </ul>
     </div>
+
+    <div class=" col-md-offset-1" style="margin-top: 20px">
+        <form action="" method="post" id="f2">
+            <select name="user_id" class=" form-control"  style="width: 150px;display: inline-block">
+                <option value="0">匿名</option>
+                <foreach name="user" item="vo">
+                    <option value="{$vo.id}">{$vo.nickname}</option>
+                </foreach>
+            </select>
+            <input type="text" name="message" placeholder="输入内容" class=" form-control"  style="width: 850px;display: inline-block" />
+            <button type="button" class="btn btn-success"  onClick="pub()" />发送</button
+        </form>
+    </div>
+
 </div>
 </body>
-<script src="__STATIC__/js/jquery.min.js"></script>
+
 
 <script type="text/javascript">
+    var interval = setInterval(bar, 2000);
 
-    setInterval(function() {bar();}, 2000);
-    var a = $(".BarMes").size();
     function bar() {
-        $("ul li:eq(0)").animate({"margin-top": "-42px"}, "slow");
+        $("ul li:eq(0)").animate({"margin-top": "-75px"}, "slow");
         setTimeout(function() {$("ul li:eq(0)").remove();}, 1000);
-        if ($("li").size() <= 8) {
-            add();
+        if ($("#Barrage ul li").size() < 10) {
+            $.get("{:url('detail')}" , {'num' : $("#message_count").val()} , function(redata){
+                $("#Barrage ul").append(redata);
+            })
         }
-
     }
 
-    var data = [
-        {
-            url: "javascript:void(0)",
-            text: "北国冰封，千里冰封，万里雪飘"
-        },
-        {
-            url: "javascript:void(0)",
-            text: "待从头收拾旧山河，朝天阙"
-        },
-        {
-            url: "javascript:void(0)",
-            text: "但愿人长久千里共婵娟"
-        },
-        {
-            url: "javascript:void(0)",
-            text: "才下船头却上心头"
-        }];
-    //从后台取数据
-    $.ajax({
-        url: "http://localhost/Ehcache/baraage",//服务器端应改为服务器端的地址
-        type: "post",
-        async: false,
-        success: function(st) {
-            $.extend(true, data, st); //st覆盖data
-        }
-    });
-    var num = data.length;
-    for (var i = 0; i < num; i++) {
-        $("ul").append("<li><div class='BarMes'>" + data[i].text + "</div></li>");
+
+    function pub() {
+        $.post("{:url('add')}" , $("#f2").serialize() , function(redata){
+            if(redata.code == 1){
+                $("#Barrage ul").prepend(redata.msg);
+            }else{
+                Wind.use('layer' , function () {
+                    layer.msg(redata.msg);
+                })
+            }
+        })
     }
 
-    function add() {
-//        $.ajax({
-//            url: "****",
-//            type: "post",
-//            async: false,
-//            success: function(st) {
-//                $.extend(true, data, st);
-//
-//            }
-//        });
-        var num = data.length;
-        for (var i = 0; i < num; i++) {
-            $("ul").append("<li><div class='BarMes'>" + data[i].text + "</div></li>");
-        }
 
+
+    function stopInterval() {
+        clearInterval(interval);
     }
 
+    function beginInterval() {
+        interval = setInterval(bar, 2000);
+    }
+
+    function showBtn(obj) {
+        $(obj).find('span').eq(3).toggle(1000);
+    }
 
 </script>
 

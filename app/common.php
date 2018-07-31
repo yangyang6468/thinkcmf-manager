@@ -188,3 +188,51 @@ function showImage($img , $flag){
 
     return $img;
 }
+
+/**
+ * @author  yy
+ * @date 2018/7/31
+ * 调接口获取参数
+ * @param $curl 接口url
+ * @param bool $https 是否https
+ * @param string $method 请求方式 post/get
+ * @param null $data post请求是的传值
+ * @return mixed
+ */
+function _request($curl , $method='GET' , $data=null , $https=false){
+
+    $ch=  curl_init();
+    curl_setopt($ch,CURLOPT_URL,$curl);
+    //参数为0表示不带头文件，为1表示带头文件
+    curl_setopt($ch,CURLOPT_HEADER,false);
+
+    //参数为1表示传输数据，为0表示直接输出显示。
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+    if($https){
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,TRUE);
+    }
+
+    if($method=='POST'){
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+    }
+
+    $content=  curl_exec($ch);
+
+    curl_close($ch);
+
+    return json_decode($content);
+}
+
+/**
+ * @author  yy
+ * @date 2018/7/31
+ * 设置默认图像
+ * @return string
+ */
+function setDefaultIcon(){
+    return "//cdn.9dcj.com/aliyun/2018-07-31/5b601452b87f1.png";
+}
