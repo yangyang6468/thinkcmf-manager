@@ -59,7 +59,6 @@
 
         #Barrage ul li .nickname{
             border-radius: 5px;
-            background-color: #5cb85c;
             border: 1px solid rgba(204, 204, 204,.2);
             padding: 0 10px;
             height: 40px;
@@ -76,23 +75,12 @@
             cursor: pointer;
         }
 
-        /*文本框*/
-        .txt{
-            border: 2px solid #CCCCCC;
-            outline-style:none;
-            border-radius:5px;
-            padding-left:4px;
-            background-color: #F0F0F0;
-            margin-top: 10px;
-        }
-        .txt:focus{
-            border: 2px solid #66CCFF;
-        }
-
     </style>
 
 <body >
 <div >
+
+
 
     <div id="Barrage" class=" col-md-offset-1">
         <input type="hidden" id="message_count" value="0">
@@ -121,8 +109,9 @@
 <script type="text/javascript">
     var interval = setInterval(bar, 2000);
 
+    //定时请求留言信息
     function bar() {
-        $("ul li:eq(0)").animate({"margin-top": "-75px"}, "slow");
+        $("ul li:eq(0)").animate({"margin-top": "-57px"}, "slow");
         setTimeout(function() {$("ul li:eq(0)").remove();}, 1000);
         if ($("#Barrage ul li").size() < 10) {
             $.get("{:url('detail')}" , {'num' : $("#message_count").val()} , function(redata){
@@ -131,7 +120,7 @@
         }
     }
 
-
+    //添加留言信息
     function pub() {
         $.post("{:url('add')}" , $("#f2").serialize() , function(redata){
             if(redata.code == 1){
@@ -145,18 +134,32 @@
     }
 
 
-
+    //清除定时
     function stopInterval() {
         clearInterval(interval);
     }
 
+    //开启定时
     function beginInterval() {
         interval = setInterval(bar, 2000);
     }
 
+    //显示查看按钮
     function showBtn(obj) {
-        $(obj).find('span').eq(3).toggle(1000);
+        $(".btn-color").hide(1000);
+        $(obj).find('span').eq(3).show(1000);
     }
+
+    function showInfo(obj){
+        var info = $(obj).siblings(".BarMes").text();
+        Wind.use('layer' , function () {
+            layer.open({
+                title: '留言信息'
+                ,content: info
+            });
+        })
+    }
+
 
 </script>
 

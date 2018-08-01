@@ -1266,7 +1266,8 @@ Wind.ready(function () {
             imagesloaded: 'masonry/imagesloaded.pkgd.min',
             masonry: 'masonry/masonry.pkgd.min',
             masonry3: 'masonry/masonry-3.3.2.pkgd',
-            ueditor:'ueditor/ueditor.all.min'
+            ueditor:'ueditor/ueditor.all.min',
+            highcharts:'Highcharts/code/highcharts.js'
         },
         //CSS路径
         alias_css = {

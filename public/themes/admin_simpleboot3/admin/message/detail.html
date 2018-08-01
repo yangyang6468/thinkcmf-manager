@@ -1,20 +1,36 @@
-﻿<foreach name="message" item="vo">
+﻿
+<foreach name="message" item="vo">
+
+    <?php $bgColor = [
+                        'style="background-color: #009688"',
+                        'style="background-color: #1E9FFF"',
+                        'style="background-color: #FFB800"',
+                        'style="background-color: #FF5722"',
+                        'style="background-color: #5cb85c"'
+                    ];
+
+         $style = $bgColor[rand(0,4)];
+        ?>
+
     <li onclick="showBtn(this)">
         <if condition="$vo['user_id'] gt 0">
             <img width="40px" height="40px" class="img-circle"  src="{:showImage($vo->user->headimage , $vo->user->flag)}">
         <else/>
             <img width="40px" height="40px" class="img-circle" src="{:setDefaultIcon()}">
         </if>
+
         <if condition="$vo['user_id'] gt 0">
-            <span class="nickname">{$vo->user->nickname}</span>
+            <span class="nickname" {$style}>{$vo->user->nickname}</span>
         <else/>
-            <span class="nickname">来自{$vo->from}的用户</span>
+            <span class="nickname" {$style}>来自{$vo->from}的用户</span>
         </if>
         <span class="BarMes">{$vo->message}</span>
         <span class="time">{$vo->create_time}</span>
-        <span class="time btn-color" style="background-color: #5bc0de;display: none">查看</span>
+        <span class="time btn-color" style="background-color: #5bc0de;display: none" onclick="showInfo(this)">查看</span>
     </li>
 </foreach>
+
+
 
 <script>
     var new_message_count = '{:count($message)}';
