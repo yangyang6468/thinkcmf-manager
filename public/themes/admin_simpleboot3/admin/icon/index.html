@@ -1,0 +1,149 @@
+<include file="public@header" />
+
+<style>
+    .table tr {height: 200px}
+    .table tr th{width: 200px;cursor: pointer;position: relative}
+    .table tr th:hover{background-color: #ccc ;opacity: 0.8;}
+    .showTips{position:absolute;top:7%;display:none;line-height: 40px;height: 40px; ;opacity: 0.8;border-radius: 5px}
+    .showTips .iconEdit,.iconAble{margin-left: 50px;cursor: pointer}
+    .fa{color: white!important;}
+    .info{position:absolute;top:80%;display: none}
+    .info span{margin-left: 20px}
+</style>
+
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('index')}">{:lang('ADMIN_USER_INDEX')}</a></li>
+        <li><a href="{:url('add')}">{:lang('ADMIN_USER_ADD')}</a></li>
+    </ul>
+
+    <div class="row col-md-10 col-md-offset-1">
+        <div class="table-actions " style="margin:10px 20px">
+            <button type="submit" class="btn-primary btn-sm fa fa-plus " data-toggle="modal" data-target="#myModal">{:lang('ADD')}</button>
+        </div>
+        <table class="table table-hover table-bordered " style="margin:0 20px">
+
+            <tr>
+                <foreach name="list" item="icon" offset="0" length="4">
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
+                        <div class="showTips">
+                            <a class="btn-sm btn-success iconEdit js-ajax-delete" data-msg="确定执行此操作吗？？？" href="{:url('delete' , ['id' => $icon->id])}" >编辑</a>
+                            <a class="btn-sm btn-warning iconAble js-ajax-delete" href="{:url('delete' , ['id' => $icon->id])}" >删除</a>
+                        </div>
+                        <div class="info">
+                            <span class="label label-danger">{$icon->create_time}</span>
+                            <span class="label label-info">前台</span>
+                            <span class="label label-success">启用</span>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
+
+            <tr>
+                <foreach name="list" item="icon" offset="4" length="4">
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
+                        <div class="showTips">
+                            <span class="btn-sm btn-success iconEdit">编辑</span>
+                            <span class="btn-sm btn-warning iconAble">禁用</span>
+                        </div>
+                        <div class="info">
+                            <span class="label label-danger">2018-8-10</span>
+                            <span class="label label-info">前台</span>
+                            <span class="label label-success">启用</span>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
+            <tr>
+                <foreach name="list" item="icon" offset="8" length="4" >
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
+                        <div class="showTips">
+                            <span class="btn-sm btn-success iconEdit">编辑</span>
+                            <span class="btn-sm btn-warning iconAble">禁用</span>
+                        </div>
+                        <div class="info">
+                            <span class="label label-danger">{$vo->create_time}</span>
+                            <span class="label label-info">前台</span>
+                            <span class="label label-success">启用</span>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
+            </for>
+        </table>
+    </div>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    上传图像
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div style="width: 200px;height: 200px;margin: auto;text-align: center">
+                    <input type="hidden" name="headimage" id="thumb" value="" style="margin:10px 0px">
+                    <a href="javascript:uploadOneImage('图片上传','#thumb');">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png" class="img-circle"  id="thumb-preview" width="135" style="cursor: pointer"/>
+                    </a>
+                    <input type="button" class="btn-sm btn-danger btn-cancel-thumbnail" value="取消图片" style="margin:10px 0px">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="uploadImg()">确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+</body>
+</html>
+
+<script src="__STATIC__/js/admin.js?20180803"></script>
+<script>
+    //存储图片图片
+    function uploadImg() {
+        $.post("{:url('add')}" , {'img': $("#thumb").val()} , function (redata) {
+            if(redata>0){
+                $("#myModal").modal("hide");
+                Wind.use("layer" , function(){
+                    layer.msg("添加成功!");
+                })
+                setTimeout(function () {
+                    window.location.reload();
+                },3000)
+            }else{
+                Wind.use("layer" , function(){
+                    layer.msg("添加失败!");
+                })
+            }
+        })
+    }
+
+    //操作按钮显示
+    function showBtn(obj) {
+        $(".showTips").fadeOut(500);
+        $(".info").fadeOut(500);
+        $(obj).find("div").fadeIn(1000);
+    }
+
+    function hideBtn() {
+        $(".showTips").fadeOut(1000);
+        $(".info").fadeOut(500);
+    }
+
+</script>

@@ -1,0 +1,73 @@
+
+#Barrage {
+    width: 85%;
+    max-height: 530px;
+    border:1px solid #ccc9a4;
+    border-radius: 11px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.BarMes {
+    border-radius: 5px;
+    background-color: rgba(205, 204, 204,.4);
+    border: 1px solid rgba(204, 204, 204,.2);
+    padding: 0 10px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.time {
+    border-radius: 5px;
+    background-color: rgba(205, 204, 204,.4);
+    border: 1px solid rgba(204, 204, 204,.2);
+    padding: 0 10px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#Barrage ul {
+    display: block;
+
+}
+
+li {
+    border-radius: 5px;
+    list-style-type: none;
+    width: 100%;
+    display: block;
+    text-align: left;
+    line-height: 38px;
+    font-family: '仿宋';
+    margin-top: 10px;
+    word-break: keep-all;
+    /* 不换行 */
+    white-space: nowrap;
+    /* 不换行 */
+    overflow: hidden;
+}
+
+#Barrage ul li .nickname{
+    border-radius: 5px;
+    border: 1px solid rgba(204, 204, 204,.2);
+    padding: 0 10px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#Barrage ul li img{
+    vertical-align: top;
+    cursor: pointer;
+}
