@@ -15,13 +15,13 @@
 
     <div class=" col-md-offset-1" style="margin-top: 20px">
         <form action="" method="post" id="f2">
-            <select name="user_id" class=" form-control"  style="width: 150px;display: inline-block">
+            <select name="user_id" id="user_id" class=" form-control"  style="width: 150px;display: inline-block">
                 <option value="0">匿名</option>
                 <foreach name="user" item="vo">
                     <option value="{$vo.id}">{$vo.nickname}</option>
                 </foreach>
             </select>
-            <input type="text" name="message" placeholder="输入内容" class=" form-control"  style="width: 850px;display: inline-block" />
+            <input type="text" name="message" id="message" placeholder="输入内容" class=" form-control"  style="width: 850px;display: inline-block" />
             <button type="button" class="btn btn-success"  onClick="pub()" />发送</button
         </form>
     </div>
@@ -49,6 +49,8 @@
         $.post("{:url('add')}" , $("#f2").serialize() , function(redata){
             if(redata.code == 1){
                 $("#Barrage ul").prepend(redata.msg);
+                $("#message").val('');
+                $("#user_id").val(0);
             }else{
                 Wind.use('layer' , function () {
                     layer.msg(redata.msg);

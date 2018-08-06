@@ -184,6 +184,8 @@ function showImage($img , $flag){
         }else{
             $img = config("MANAGER").$img;
         }
+    }else{
+        return "//cdn.9dcj.com/aliyun/2018-07-31/5b601452b87f1.png";
     }
 
     return $img;

@@ -60,7 +60,7 @@ class MessageController extends AdminBaseController
             $data = MessageModel::order(["id"=>'desc'])->find();
             if($data->user){
                 $img = '<img width="40px" height="40px" class="img-circle" src="'. showImage($data->user->headimage , $data->user->flag) .'">
-                        <span class="nickname">'. $data->user-nickname .'</span> ';
+                        <span class="nickname">'. $data->user->nickname .'</span> ';
             }else{
                 $img = '<img width="40px" height="40px" class="img-circle" src="'. setDefaultIcon() .'">
                         <span class="nickname">来自'. $data->from .'的用户</span> ';
@@ -85,12 +85,9 @@ class MessageController extends AdminBaseController
      */
     public function detail(){
         $num  = $this->request->param('num');
-        $message = MessageModel::order(["id"=>'desc'])->limit($num,8)->select()->toArray();
-
-        if(!$message){
-            $message = MessageModel::order(["id"=>'desc'])->limit(8)->select();
-        }
-
+        $all = MessageModel::count();
+        $num = $all > $num ? $num : 0;
+        $message = MessageModel::order(["id"=>'desc'])->limit($num,8)->select();
         return view("message/detail" , compact('message'));
     }
 
