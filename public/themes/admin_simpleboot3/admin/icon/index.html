@@ -7,75 +7,103 @@
     .showTips{position:absolute;top:7%;display:none;line-height: 40px;height: 40px; ;opacity: 0.8;border-radius: 5px}
     .showTips .iconEdit,.iconAble{margin-left: 50px;cursor: pointer}
     .fa{color: white!important;}
-    .info{position:absolute;top:80%;display: none}
-    .info span{margin-left: 20px}
+    .info{position:absolute;top:80%;}
+    .info span{margin-left: 5px}
+    .table tr th img{z-index: 10;}
 </style>
 
 </head>
 <body>
 <div class="wrap js-check-wrap">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="{:url('index')}">{:lang('ADMIN_USER_INDEX')}</a></li>
-        <li><a href="{:url('add')}">{:lang('ADMIN_USER_ADD')}</a></li>
-    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
 
+        <!--时间:-->
+        <!--<input type="text" class="form-control js-bootstrap-date" name="start_time" value="{$Think.request.start_time}"-->
+               <!--style="width: 140px;" placeholder="开始时间。。。">- -->
+        <!--<input type="text" class="form-control js-bootstrap-date" name="end_time" value="{$Think.request.end_time}"-->
+               <!--style="width: 140px;margin-right: 20px"  placeholder="结束时间。。。"> &nbsp; &nbsp;-->
+        类型:
+        <select name="imgType" id="imgType" class="form-control" style="width: 140px">
+            <option value="">--请选择--</option>
+            <option value="1">图像</option>
+            <option value="2">照片</option>
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+    </form>
     <div class="row col-md-10 col-md-offset-1">
-        <div class="table-actions " style="margin:10px 20px">
+
+        <div class="table-actions " style="margin:10px 0px">
             <button type="submit" class="btn-primary btn-sm fa fa-plus " data-toggle="modal" data-target="#myModal">{:lang('ADD')}</button>
         </div>
-        <table class="table table-hover table-bordered " style="margin:0 20px">
+
+        <table class="table table-hover table-bordered " >
+            <tr>
+                <foreach name="list" item="icon" offset='0' length="4">
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()" style="width: 200px">
+
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle" onclick="imagePreviewDialog('{$icon->icon}')" title="点击查看大图">
+
+                        <div class="showTips">
+                            <a class="btn-sm btn-success iconEdit js-ajax-delete" data-msg="确定执行此操作吗？？？" href="{:url('delete' , ['id' => $icon->id ,'status'=>$icon->status])}" >
+                                <if condition="$icon.status eq 0">启用<else/>禁用</if>
+                            </a>
+                            <a class="btn-sm btn-warning iconAble js-ajax-delete" href="{:url('delete' , ['id' => $icon->id , 'type'=>'delete'] )}" >删除</a>
+                        </div>
+                        <div class="info">
+                            <span class="label label-primary">{$icon->create_time}</span>
+                            <span class="label label-info"><if condition="$icon.flag eq 1">前台<else/>后台</if></span>
+                            <span class="label <if condition='$icon.status eq 1'>label-success <else/>label-danger</if>"><if condition="$icon.status eq 1">启用<else/>禁用</if></span>
+                            <span class="label label-default"><if condition="$icon.type eq 1">图像<else/>照片</if></span>
+                        </div>
+                    </th>
+                </foreach>
+            </tr>
 
             <tr>
-                <foreach name="list" item="icon" offset="0" length="4">
-                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
-                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
+                <foreach name="list" item="icon" offset='4' length="4">
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()" style="width: 200px">
+
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle" onclick="imagePreviewDialog('{$icon->icon}')" title="点击查看大图">
+
                         <div class="showTips">
-                            <a class="btn-sm btn-success iconEdit js-ajax-delete" data-msg="确定执行此操作吗？？？" href="{:url('delete' , ['id' => $icon->id])}" >编辑</a>
-                            <a class="btn-sm btn-warning iconAble js-ajax-delete" href="{:url('delete' , ['id' => $icon->id])}" >删除</a>
+                            <a class="btn-sm btn-success iconEdit js-ajax-delete" data-msg="确定执行此操作吗？？？" href="{:url('delete' , ['id' => $icon->id ,'status'=>$icon->status])}" >
+                                <if condition="$icon.status eq 0">启用<else/>禁用</if>
+                            </a>
+                            <a class="btn-sm btn-warning iconAble js-ajax-delete" href="{:url('delete' , ['id' => $icon->id , 'type'=>'delete'] )}" >删除</a>
                         </div>
                         <div class="info">
-                            <span class="label label-danger">{$icon->create_time}</span>
-                            <span class="label label-info">前台</span>
-                            <span class="label label-success">启用</span>
+                            <span class="label label-primary">{$icon->create_time}</span>
+                            <span class="label label-info"><if condition="$icon.flag eq 1">前台<else/>后台</if></span>
+                            <span class="label <if condition='$icon.status eq 1'>label-success <else/>label-danger</if>"><if condition="$icon.status eq 1">启用<else/>禁用</if></span>
+                            <span class="label label-default"><if condition="$icon.type eq 1">图像<else/>照片</if></span>
                         </div>
                     </th>
                 </foreach>
             </tr>
 
             <tr>
-                <foreach name="list" item="icon" offset="4" length="4">
-                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
-                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
+                <foreach name="list" item="icon" offset='8' length="4">
+                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()" style="width: 200px">
+
+                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle" onclick="imagePreviewDialog('{$icon->icon}')" title="点击查看大图">
+
                         <div class="showTips">
-                            <span class="btn-sm btn-success iconEdit">编辑</span>
-                            <span class="btn-sm btn-warning iconAble">禁用</span>
+                            <a class="btn-sm btn-success iconEdit js-ajax-delete" data-msg="确定执行此操作吗？？？" href="{:url('delete' , ['id' => $icon->id ,'status'=>$icon->status])}" >
+                                <if condition="$icon.status eq 0">启用<else/>禁用</if>
+                            </a>
+                            <a class="btn-sm btn-warning iconAble js-ajax-delete" href="{:url('delete' , ['id' => $icon->id , 'type'=>'delete'] )}" >删除</a>
                         </div>
                         <div class="info">
-                            <span class="label label-danger">2018-8-10</span>
-                            <span class="label label-info">前台</span>
-                            <span class="label label-success">启用</span>
+                            <span class="label label-primary">{$icon->create_time}</span>
+                            <span class="label label-info"><if condition="$icon.flag eq 1">前台<else/>后台</if></span>
+                            <span class="label <if condition='$icon.status eq 1'>label-success <else/>label-danger</if>"><if condition="$icon.status eq 1">启用<else/>禁用</if></span>
+                            <span class="label label-default"><if condition="$icon.type eq 1">图像<else/>照片</if></span>
                         </div>
                     </th>
                 </foreach>
             </tr>
-            <tr>
-                <foreach name="list" item="icon" offset="8" length="4" >
-                    <th onmouseenter="showBtn(this)" onmouseleave="hideBtn()">
-                        <img src="{$icon->icon}" width="100px" height="100px" class="img-circle">
-                        <div class="showTips">
-                            <span class="btn-sm btn-success iconEdit">编辑</span>
-                            <span class="btn-sm btn-warning iconAble">禁用</span>
-                        </div>
-                        <div class="info">
-                            <span class="label label-danger">{$vo->create_time}</span>
-                            <span class="label label-info">前台</span>
-                            <span class="label label-success">启用</span>
-                        </div>
-                    </th>
-                </foreach>
-            </tr>
-            </for>
         </table>
+        <div>{:setPage($list->render() , $list->total())}</div>
     </div>
 </div>
 
@@ -100,6 +128,10 @@
                     </a>
                     <input type="button" class="btn-sm btn-danger btn-cancel-thumbnail" value="取消图片" style="margin:10px 0px">
                 </div>
+                <div style="width: 200px;margin: auto;text-align: center">
+                    <input type="radio" name="type"  value="1" checked style="margin:10px 10px">图像
+                    <input type="radio" name="type"  value="2" style="margin:10px 10px">照片
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -113,37 +145,60 @@
 </body>
 </html>
 
-<script src="__STATIC__/js/admin.js?20180803"></script>
+<script src="__STATIC__/js/admin.js?20180806"></script>
 <script>
+    $(function () {
+        $("#imgType").val("{$Think.request.imgType}")
+    })
+
+
     //存储图片图片
     function uploadImg() {
-        $.post("{:url('add')}" , {'img': $("#thumb").val()} , function (redata) {
-            if(redata>0){
-                $("#myModal").modal("hide");
-                Wind.use("layer" , function(){
-                    layer.msg("添加成功!");
-                })
-                setTimeout(function () {
-                    window.location.reload();
-                },3000)
-            }else{
-                Wind.use("layer" , function(){
-                    layer.msg("添加失败!");
-                })
-            }
-        })
+        if($("#thumb").val().length > 0){
+            var type = $(":radio[name='type']:checked").val();
+            $.post("{:url('add')}" , {'img': $("#thumb").val(),'type':type} , function (redata) {
+                if(redata>0){
+                    $("#myModal").modal("hide");
+                    Wind.use("layer" , function(){
+                        layer.msg("添加成功!");
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                    },3000)
+                }else if(redata == -2){
+                    Wind.use("layer" , function(){
+                        layer.msg("图片已存在!");
+                    })
+                }else {
+                    Wind.use("layer" , function(){
+                        layer.msg("添加失败!");
+                    })
+                }
+            })
+        }else{
+            Wind.use("layer" , function(){
+                layer.msg("请上传图像!");
+            })
+        }
+
     }
 
     //操作按钮显示
     function showBtn(obj) {
         $(".showTips").fadeOut(500);
-        $(".info").fadeOut(500);
         $(obj).find("div").fadeIn(1000);
     }
 
+    //关闭按钮
     function hideBtn() {
-        $(".showTips").fadeOut(1000);
-        $(".info").fadeOut(500);
+        $(".showTips").fadeOut(500);
     }
+
+    //点击取消图片
+    $('.btn-cancel-thumbnail').click(function () {
+        $('#thumb-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+        $('#thumb').val('');
+    });
+
 
 </script>

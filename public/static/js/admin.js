@@ -917,7 +917,6 @@ function uploadMultiFile(dialog_title, container_selector, item_tpl_wrapper_id, 
  */
 function imagePreviewDialog(img) {
     Wind.css('layer');
-
     Wind.use("layer", function () {
         layer.photos({
             photos: {

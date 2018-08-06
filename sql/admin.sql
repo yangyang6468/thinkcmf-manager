@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-08-03 18:43:33
+Date: 2018-08-06 15:31:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -206,7 +206,7 @@ CREATE TABLE `cmf_asset` (
   `suffix` varchar(10) NOT NULL DEFAULT '' COMMENT '文件后缀名,不包括点',
   `more` text COMMENT '其它详细信息,JSON格式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of cmf_asset
@@ -230,6 +230,12 @@ INSERT INTO `cmf_asset` VALUES ('16', '1', '55977', '1533288106', '1', '0', '749
 INSERT INTO `cmf_asset` VALUES ('17', '1', '59664', '1533288135', '1', '0', '2dfd4ca4637ac09d8eee7a4a5d65d710f6dae8c1553d11f91e7f54c6549d84b4', 'Y17.jpg', 'admin/20180803/653268292c34ad2d31911e7b7fa990d0.jpg', '2dfd4ca4637ac09d8eee7a4a5d65d710', 'a5d56ab62dbcbdf34df3bb05f093c766b0dd4d0d', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('18', '1', '45118', '1533288186', '1', '0', '7f6ae5cf8000a4524b70c9c2150255feca37bf258aa1e91b787a7e94d21e3a19', 'Y20.jpg', 'admin/20180803/62afbd965a25b765f4deca4c4ca21eb9.jpg', '7f6ae5cf8000a4524b70c9c2150255fe', 'bfd3039436a7e13652f567b88a7837f17d24f20c', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('19', '1', '76979', '1533288205', '1', '0', '91602d3fd69aabc55b3a51045034a13839095b3198cfeca986d88d776d2c674a', 'Y11.jpg', 'admin/20180803/3544272aa649d831bc9daebdf13dd5a5.jpg', '91602d3fd69aabc55b3a51045034a138', 'a7948091cbe968cd2c002b648ba512edce900319', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('20', '1', '101716', '1533538320', '1', '0', '11a1095b33d27fb397e758946d61aaf6a355ebb9f735cb3c1092cb7ee77177d4', 'gold.jpg', 'admin/20180806/72c7fea68edb0ceb1a960e4d9adba44a.jpg', '11a1095b33d27fb397e758946d61aaf6', 'f125ece993a537e83f580322ed1effb5f009cd41', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('21', '1', '49225', '1533538477', '1', '0', '112883d23dad7d50646595039bc952c11f3b49d378be0be66d73582d16985808', '4.jpg', 'admin/20180806/796845eb2f9db35b7f550e9c28978edd.jpg', '112883d23dad7d50646595039bc952c1', '99439800ce6c4d38df20790aaa18f774c807e612', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('22', '1', '55462', '1533540429', '1', '0', '0f3574b18fb5a39534bb100e438caf7669ffcca7f74e1c9a795b277d998d4a5e', 'Y5.jpg', 'admin/20180806/4dcef8585ca1885d3a4f2597e603af2e.jpg', '0f3574b18fb5a39534bb100e438caf76', 'bb54e902184dd8eb33a76494c487d22e0a690eb4', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('23', '1', '9122', '1533540453', '1', '0', '8aae68ded4aba63374b2150b41b97b50b094f673c8a5f6ba3cb1181f52782b35', 'QQ图片20170807152344.png', 'admin/20180806/79775c72bca91c6354c7b0e54950278c.png', '8aae68ded4aba63374b2150b41b97b50', 'e8478bbc263b0a7b0eef0e2d1788c3da54e2a5c6', 'png', null);
+INSERT INTO `cmf_asset` VALUES ('24', '1', '89062', '1533540486', '1', '0', 'eab0e30abbefd85539e486b8dc0b8cbae6a0dfea0a46d3d799a16e8378800e7d', 'Y30.jpg', 'admin/20180806/0e955f7a7bd17ca2ae10ed4e61fe8acc.jpg', 'eab0e30abbefd85539e486b8dc0b8cba', '7e769ae47c989b515e2c801930d0e354dc486f49', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('25', '1', '36195', '1533540509', '1', '0', '9e3ee823c0fa29192de985209a96cc061fe2dc9f72e2ad5c3a48663c3a192a08', 'Y10.jpg', 'admin/20180806/b1167a65c5b43a1cae45d6f7c31e913a.jpg', '9e3ee823c0fa29192de985209a96cc06', 'ca9495b5f296847bae752e365c3e4d1ea6a89e22', 'jpg', null);
 
 -- ----------------------------
 -- Table structure for cmf_auth_access
@@ -1024,10 +1030,10 @@ CREATE TABLE `cmf_icon` (
   `icon` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT '图像路径',
   `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1 启用 0 禁用',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '类型 1 图像',
+  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '类型 1 图像 2 照片',
   `flag` tinyint(2) NOT NULL DEFAULT '1' COMMENT '前后台标志 1 前台 2 后台',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of cmf_icon
@@ -1038,6 +1044,13 @@ INSERT INTO `cmf_icon` VALUES ('3', 'admin/20180803/e9a9e0daabd189bd759bddadaa0d
 INSERT INTO `cmf_icon` VALUES ('4', 'admin/20180803/653268292c34ad2d31911e7b7fa990d0.jpg', '1533288145', '1', '1', '2');
 INSERT INTO `cmf_icon` VALUES ('5', 'admin/20180803/62afbd965a25b765f4deca4c4ca21eb9.jpg', '1533288190', '1', '1', '2');
 INSERT INTO `cmf_icon` VALUES ('6', 'admin/20180803/3544272aa649d831bc9daebdf13dd5a5.jpg', '1533288207', '1', '1', '2');
+INSERT INTO `cmf_icon` VALUES ('9', 'admin/20180706/1463eba3997c703a8d6fb027eca23dc3.png', '1533537359', '1', '1', '2');
+INSERT INTO `cmf_icon` VALUES ('10', 'admin/20180806/72c7fea68edb0ceb1a960e4d9adba44a.jpg', '1533538323', '0', '2', '2');
+INSERT INTO `cmf_icon` VALUES ('11', 'admin/20180806/4dcef8585ca1885d3a4f2597e603af2e.jpg', '1533540433', '1', '1', '2');
+INSERT INTO `cmf_icon` VALUES ('12', 'admin/20180806/79775c72bca91c6354c7b0e54950278c.png', '1533540457', '1', '2', '2');
+INSERT INTO `cmf_icon` VALUES ('13', 'admin/20180806/0e955f7a7bd17ca2ae10ed4e61fe8acc.jpg', '1533540489', '1', '1', '2');
+INSERT INTO `cmf_icon` VALUES ('14', 'admin/20180806/b1167a65c5b43a1cae45d6f7c31e913a.jpg', '1533540511', '1', '1', '2');
+INSERT INTO `cmf_icon` VALUES ('15', 'admin/20180726/752190980860edcf7425c95506b6ad57.jpg', '1533540533', '1', '2', '2');
 
 -- ----------------------------
 -- Table structure for cmf_message
@@ -1281,7 +1294,7 @@ CREATE TABLE `cmf_user` (
 -- ----------------------------
 -- Records of cmf_user
 -- ----------------------------
-INSERT INTO `cmf_user` VALUES ('1', '1', '2', '815155200', '1533283738', '0', '0', '0.00', '1530501418', '1', 'admin', '###1d15478ff12e51291474198554b090c0', 'admin', 'admin@163.com', '', 'admin/20180702/9b43ac8c8845ef77e782490726d51cd0.jpg', '流着泪的孩子', '127.0.0.1', '', '', null);
+INSERT INTO `cmf_user` VALUES ('1', '1', '2', '815155200', '1533540415', '0', '0', '0.00', '1530501418', '1', 'admin', '###1d15478ff12e51291474198554b090c0', 'admin', 'admin@163.com', '', 'admin/20180702/9b43ac8c8845ef77e782490726d51cd0.jpg', '流着泪的孩子', '127.0.0.1', '', '', null);
 
 -- ----------------------------
 -- Table structure for cmf_userinfos
