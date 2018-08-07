@@ -1,150 +1,103 @@
-<inclue file="public@header" />
-
+<include file="public@header" />
+<script src="__STATIC__/js/Highcharts/code/highcharts.js"></script>
 <style type="text/css">
-    #container,#column {
-        min-width: 310px;
-        max-width: 800px;
-        height: 400px;
-        margin: 0 auto;
-        margin-top:20px;
-    }
+    #column {min-width: 310px;max-width: 800px;height: 400px;margin: 0 auto;margin-top:20px;  }
+    .table{margin: 0 auto;  margin-top:20px;  width:1200px  }
+    .search{width: 310px;height: 54px ;margin: 10px 20px;float: right;border-radius: 5px}
+    .search input{margin-left:10px;width: 100px;display: inline-block;margin-top:10px;cursor: pointer}
+    h3{text-align: center;margin-top: 10px}
 </style>
+
 </head>
 <body>
+<div class="row">
+    <h3>近15天数据统计</h3>
+    <table class=" table table-bordered">
+        <tr>
+            <th width="60px">统计类型</th>
 
-<div id="container"></div>
-<div id="column"></div>
+            <foreach name="table" item="th">
+                <th> {$th}</th>
+            </foreach>
+        </tr>
+        <tr>
+            <td>注册人数</td>
+            <?php $registerData = json_decode($register);?>
+            <foreach name="registerData" item="th">
+                <td> {$th[1]}</td>
+            </foreach>
+        </tr>
+        <tr>
+            <td>发表文章</td>
+            <?php $articleData = json_decode($article);?>
+            <foreach name="articleData" item="th">
+                <td> {$th[1]}</td>
+            </foreach>
+        </tr>
+    </table>
+</div>
 
-<script src="__STATIC__/js/Highcharts/code/highcharts.js"></script>
-<script type="text/javascript">
+<div class="graph">
+    <div class="search" >
+        <form id="timeForm">
+            <input type="text" name="start" id="start" class="form-control js-bootstrap-date" value="{$start}">
+            --
+            <input type="text" name="end" id="end" class="form-control js-bootstrap-date" value="{$end}">
+            <span class="btn btn-primary" onclick="moreData()">查询</span>
+        </form>
+    </div>
+    <div class="praph">
 
-    Highcharts.chart('container', {
+        <!--图标展示-->
+        <include file="main/statistics" />
 
-        title: {
-            text: '后台统计数据'
-        },
+    </div>
 
+</div>
 
-        yAxis: {
-            title: {
-                text: '统计数量'
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
-
-        plotOptions: {
-            series: {
-                label: {
-                    connectorAllowed: false
-                },
-                pointStart: 66666
-            }
-        },
-
-        series: [{
-            name: 'Installation',
-            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-        }, {
-            name: 'Manufacturing',
-            data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-        }, {
-            name: 'Sales & Distribution',
-            data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-        }, {
-            name: 'Project Development',
-            data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-        }, {
-            name: 'Other',
-            data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-        }],
-
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-
-    });
-
-
-    Highcharts.chart('column', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: '数据统计'
-        },
-
-        xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-            ],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Rainfall (mm)'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-        }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-        }]
-    });
-
-
-</script>
 </body>
 </html>
+
+
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //时间搜索
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    function moreData() {
+        var start = $("#start").val();
+        var end = $("#end").val();
+        if(end < start){
+            Wind.use("layer" , function () {
+                layer.msg('结束时间需大于开始时间！')
+            })
+            return false;
+        }
+        if(DateDiff(start, end) > 30){
+            Wind.use("layer" , function () {
+                layer.msg('查询时间应在30天之内！')
+            })
+            return false;
+        };
+        $.post("{:url('index')}" , {'start':start , 'end':end} , function (redata) {
+            $(".praph").html(redata);
+        })
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //计算两个日期天数差的函数，通用
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    function DateDiff(sDate1, sDate2) {  //sDate1和sDate2是yyyy-MM-dd格式
+
+        var aDate, oDate1, oDate2, iDays;
+        aDate = sDate1.split("-");
+        oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);  //转换为yyyy-MM-dd格式
+        aDate = sDate2.split("-");
+        oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+        iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+
+        return iDays;  //返回相差天数
+    }
+
+</script>

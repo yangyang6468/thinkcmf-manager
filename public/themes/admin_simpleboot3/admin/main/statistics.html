@@ -1,0 +1,77 @@
+<div id="column"></div>
+
+
+
+<script type="text/javascript">
+
+    Highcharts.chart('column', {
+        chart: {
+            zoomType: 'x' // 按照x轴缩放
+        },
+        title: {
+            text: '数据统计'
+        },
+        //版权显示
+        credits: {
+            enabled:false,    // 默认值，如果想去掉版权信息，设置为false即可
+        },
+
+        //x轴
+        xAxis: {
+            categories: {$x},
+        },
+        //y轴
+        yAxis: {
+            min: 0,
+            title: {
+                text: '统计 (人)'
+            }
+        },
+        //显示层
+        tooltip: {
+            headerFormat: '<span style="font-size:10px;margin-left: 10px">{point.key}</span><table width="100px">',
+            pointFormat:    '<tr>' +
+            '<td style="color:{series.color};padding:0;font-size:8px">{series.name}: </td>' +
+            '<td style="padding:0;font-size:8px"><b>{point.y} </b></td>' +
+            '</tr>',
+            footerFormat:   '</table>',
+            shared: true,
+            useHTML: true,
+            //十字准星
+//            crosshairs: [{            // 设置准星线样式
+//                width: 1,
+//                color: 'green'
+//            }, {
+//                width: 1,
+//                color: "#006cee",
+//                dashStyle: 'longdashdot',
+//                zIndex: 100
+//            }]
+        },
+        //设置数据源的动画
+        plotOptions: {
+            series: {
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutBounce'
+                }
+            }
+        },
+
+        series: [
+            {
+                type:'spline',
+                name:'注册数量',
+                data: {$register},
+                dashStyle: 'longdash'
+            },
+            {
+                type:'spline',
+                name:'文章数量',
+                data: {$article},
+                color : "red",
+            },
+        ]
+    });
+
+</script>
