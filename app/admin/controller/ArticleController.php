@@ -53,11 +53,10 @@ class ArticleController extends AdminBaseController
 
         $articles = Article::order("id desc")->where($where)->paginate(10);
         foreach ($articles as $k=>$v){
-
             $v["article_status"] = $v->getData("status");
         }
 
-        $category = Db::name("category")->where(['isdelete'=>0])->column('id,name');
+        $category = Db::name("category")->where(['isdelete'=>0 , 'status'=>1])->column('id,name');
 
         $this->assign("articles" , $articles);
         $this->assign("category" , $category);
@@ -82,7 +81,7 @@ class ArticleController extends AdminBaseController
         }
 
         $user = Db::name("userinfos")->where(["isdelete"=>0,"status"=>1])->column("id,nickname,phone");
-        $category = Db::name("category")->where(["isdelete"=>0])->column("id,name,status");
+        $category = Db::name("category")->where(["isdelete"=>0,'status'=>1])->column("id,name,status");
         $this->assign("userinfo" , $user);
         $this->assign("category" , $category);
         return $this->fetch();
@@ -101,38 +100,30 @@ class ArticleController extends AdminBaseController
             $data   = $this->request->param();
 
             $post   = $data['post'];
+            if(isset($data["id"])&&$data["id"]>0){
+                $result = $this->validate($post, 'app\admin\validate\ArticleValidate.update');
+            }else{
+                $result = $this->validate($post, 'app\admin\validate\ArticleValidate.insert');
+            }
 
-            $rule = [
-                'title|标题' => 'require|length:4,50|unique:articles',
-                'info|内容'  => 'require|unique:articles',
-                "category_id|标签" => 'require',
-                "userid|用户"=>'require',
-            ];
-
-            $msg =["userid.require" => "请选择用户！！！"];
-
-            $result = $this->validate($post, $rule , $msg);
             if ($result !== true) {
                 $this->error($result);
             }
 
-            if(isset($data["id"])){
+            $post['flag'] = 2;
+            if(isset($data["id"])&&$data["id"]>0){
                 $post["updatetime"] = time();
                 $res = Db::name("articles")->where(["id"=>$data["id"]])->update($post);
             }else{
                 $post["createtime"] = $post["updatetime"] = time();
-
                 $res = Db::name("articles")->insertGetId($post);
             }
-
 
             if($res){
                 $this->success('操作成功!', url('article/index'));
             }else{
                 $this->error('操作失败!');
             }
-
-
         }
 
     }

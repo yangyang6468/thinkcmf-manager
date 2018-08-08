@@ -34,7 +34,7 @@ class MainController extends AdminBaseController
         $end = $this->request->param('end');
         // 结束的时间戳
         if(!$end){
-            $endUnix = strtotime(date("Y-m-d 00:00:00" , time()));
+            $endUnix = strtotime(date("Y-m-d 00:00:00" , time()+86400));
         }else{
             $endUnix = strtotime($end ." 00:00:00");
         }
@@ -47,16 +47,24 @@ class MainController extends AdminBaseController
 
         $result = $this->statistics($startUnix , $endUnix);
 
-        $this->assign('start' , date("Y-m-d" , $startUnix));
-        $this->assign('end' , date("Y-m-d" , $endUnix));
 
-        $this->assign("table" , $result['y']);  //表格加载的数据
-        $this->assign('x' , json_encode($result['x']));
+        //总文章数
+        $articleAll = DB::name("articles")->where(["isdelete"=>0])->count();
+        //总用户数
+        $userAll = DB::name("userinfos")->where(["isdelete"=>0])->count();
+
+        $this->assign("articleAll" , $articleAll);
+        $this->assign("userAll" , $userAll);
+
+        $this->assign('start' , date("Y-m-d" , $startUnix)); //开始时间
+        $this->assign('end' , date("Y-m-d" , $endUnix));     //结束时间
+
+        $this->assign("table" , $result['y']);              //表格加载的数据时间
+        $this->assign('x' , json_encode($result['x']));     //表图标数据时间
         $this->assign("article" , json_encode($result['article']));
         $this->assign("register" , json_encode($result['register']));
 
         if($this->request->isAjax()){
-            
             return $this->fetch('main/statistics');
         }else{
             return $this->fetch();

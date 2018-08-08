@@ -12,16 +12,22 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class LinkValidate extends Validate
+class ArticleValidate extends Validate
 {
     protected $rule = [
-        'name' => 'require',
-        'url'  => 'require',
+        'title|标题' => 'require|length:4,50|unique:articles',
+        'info|内容'  => 'require|unique:articles',
+        "category_id|标签" => 'require',
+        "userid|用户"=>'require',
+
     ];
 
     protected $message = [
-        'name.require' => '名称不能为空',
-        'url.require'  => '链接地址不能为空',
+        "userid.require" => "请选择用户！！！"
     ];
 
+    protected $scene = [
+        'insert' => ["title", "info" , "category_id" , "userid"],
+        'update' => ['title|标题' => 'require|length:4,50', 'info|内容'  => 'require', "category_id" , 'userid' ]
+    ];
 }

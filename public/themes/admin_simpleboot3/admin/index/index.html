@@ -67,7 +67,7 @@
         .user-menu li{margin: 10px;font-size: 14px}
 
         /*----------------用户个人信息--------------------*/
-
+        .active{background-color: red!important;}
     </style>
 
     <script>
@@ -190,12 +190,12 @@
             <div class="pull-left" style="position: relative;">
                 <a id="task-pre" class="task-changebt"><i class="fa fa-chevron-left"></i></a>
                 <div id="task-content">
-                    <!--<ul class="nav navbar-nav cmf-component-tab" id="task-content-inner">-->
-                        <!--<li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('main/index')}"-->
-                            <!--app-name="首页">-->
-                            <!--<a class="cmf-tabs-item-text">{:lang('HOME')}</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
+                    <ul class="nav navbar-nav cmf-component-tab" id="task-content-inner">
+                        <li class="cmf-component-tabitem noclose" app-id="0" app-url="{:url('main/index')}"
+                            app-name="首页">
+                            <a class="cmf-tabs-item-text" href="{:url('main/index')}">{:lang('HOME')}</a>
+                        </li>
+                    </ul>
                     <div style="clear:both;"></div>
                 </div>
                 <a id="task-next" class="task-changebt"><i class="fa fa-chevron-right"></i></a>

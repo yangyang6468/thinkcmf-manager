@@ -24,20 +24,20 @@
                     <tbody>
                         <foreach name="categorys" key="k" item="vo">
                             <tr >
-                                <th width="50">{$k+1}</th>
-                                <th width="50">{$vo.id}</th>
-                                <th>{:date('Y-m-d' , $vo.create_at)}</th>
-                                <th>{$vo.name}</th>
-                                <th>{$vo.description}</th>
-                                <th>
+                                <td width="50">{$k+1}</td>
+                                <td width="50">{$vo.id}</td>
+                                <td>{:date('Y-m-d' , $vo.create_at)}</td>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.description}</td>
+                                <td>
                                     <if condition="$vo.status eq 1" >
                                         <span class="label label-success">启用</span>
                                     <else/>
                                         <span class="label label-warning">关闭</span>
                                     </if>
-                                </th>
+                                </td>
 
-                                <th>
+                                <td>
                                     <a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>编辑</a> |
                                     <a href="{:url('delete' , ['id'=>$vo.id , 'type'=>'delete'])}" class="js-ajax-delete"> 删除</a> |
                                     <if condition="$vo.status eq 1" >
@@ -46,7 +46,7 @@
                                         <a href="{:url('delete' , ['id'=>$vo.id , 'status'=>1 , 'type'=>'open'])}" data-msg="确定执行这项操作吗？" class="js-ajax-delete"> 开启</a>
                                     </if>
 
-                                </th>
+                                </td>
                             </tr>
                         </foreach>
                     </tbody>

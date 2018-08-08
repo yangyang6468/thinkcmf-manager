@@ -81,6 +81,7 @@
                         <th class=" text-center">标签</th>
                         <td>
                             <select name="post[category_id]" id="label" class="form-control" style="width: 100px">
+                                <option value="">--请选择--</option>
                                 <foreach name="category" item="vo">
                                     <option value="{$vo['id']}">{$vo.name}</option>
                                 </foreach>
@@ -90,7 +91,8 @@
                 </table>
                 <div class="form-group">
                     <div class="col-sm-offset-5 col-sm-10">
-                        <button type="submit" class="btn btn-info js-ajax-submit">{:lang('ADD')}</button>
+                        <?php $article_id = isset($article['id']) ? $article['id'] : 0 ;?>
+                        <button type="submit" class="btn btn-info js-ajax-submit"><if condition="$article_id gt 0">保存<else/>添加</if></button>
                         <a class="btn btn-default" href="{:url('index')}">{:lang('BACK')}</a>
                     </div>
                 </div>
@@ -126,6 +128,7 @@
         } catch (err) {
         }
 
+        //取消图片
         $('.btn-cancel-thumbnail').click(function () {
             $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
             $('#thumbnail').val('');

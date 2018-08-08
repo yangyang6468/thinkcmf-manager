@@ -54,7 +54,12 @@ class NavController extends AdminBaseController
                                     <a class="js-ajax-delete" href="' . url("Nav/delete", ["id" => $r['id']]) . '">删除</a> ';
 
             }
-            $r["sort"] = $k+1;
+            if($r["parent_id"] == 0){
+                $r["sort"] = $k+1;
+            }else{
+                $r["sort"] = '';
+            }
+
             $r['status'] = $r['status'] ? "<span class='label label-info label-sm'>显示</span>" : "<span class='label label-warning label-sm'>隐藏</span>";
             $r["flag"] = $r['flag'] == 2 ? "<span class='label label-info label-sm'>友情链接</span>" : "<span class='label label-success label-sm'>首部导航</span>";
             $array[] = $r;
