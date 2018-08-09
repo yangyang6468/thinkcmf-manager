@@ -16,7 +16,7 @@ class UserinfoModel extends Model
     protected $updateTime = 'lastlogindate';
     protected $dateFormat = "Y-m-d H:i";
 
-    protected $auto = ["ip" , "updatetime"];
+    protected $auto = ["ip" , "updatetime" , 'flag'];
 
     //设置自动更新IP
     public function setIpAttr(){
@@ -29,9 +29,15 @@ class UserinfoModel extends Model
     }
 
     //时间自动更新
-    public function setUpdatetimeAttr(){
+    public function setUpdatetimeAttr($v){
         return time();
     }
+
+    //设置后台标志
+    public function setFlagAttr(){
+        return 2;
+    }
+
 
     //渲染性别图标
     public function getGenderAttr($v){

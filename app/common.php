@@ -179,10 +179,10 @@ function addSuffix($str , $length , $suffix='...' ,$isStr = true ){
  */
 function showImage($img , $flag){
     if(!empty($img)){
-        if($flag == 1){
-            $img = config("HOME").$img;
-        }else{
+        if($flag > 1){
             $img = config("MANAGER").$img;
+        }else{
+            $img = config("HOME").$img;
         }
     }else{
         return "//cdn.9dcj.com/aliyun/2018-07-31/5b601452b87f1.png";

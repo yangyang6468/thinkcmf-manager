@@ -44,3 +44,16 @@ html, body {
   from { background-position: 0 0; }
   to { background-position: 30000% 0; }
 }
+
+.dynamic-area1 .title{
+  background-color: #eeeeee ;
+  opacity: 0.6 ;
+  width: 40%;
+  text-align: center;
+  height:50px;
+  line-height: 50px;
+  font-size: 32px;
+  position: absolute;
+  top:5%;
+  left: 25%
+}

@@ -2,6 +2,7 @@
 return array (
   'ADMIN_ARTICLE_INDEX' => '文章管理',
   'ADMIN_CATEGORY_INDEX' => '标签管理',
+  'ADMIN_CHAT_INDEX' => '聊天管理',
   'ADMIN_COMMENT_INDEX' => '评论管理',
   'ADMIN_DIALOG_MAP' => '地图',
   'ADMIN_HOOK_INDEX' => '钩子管理',
