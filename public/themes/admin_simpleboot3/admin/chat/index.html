@@ -1,9 +1,11 @@
 ﻿<include file="public@header" />
 
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/font_Icon/iconfont.css?2018">
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/chat.css?111">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/chat.css?201811">
 
+<style>
 
+</style>
 
 </head>
 <body>
@@ -16,42 +18,45 @@
     <!--图标-->
 
     <!--未读消息-->
-    <div class="chat-message-num">10</div>
+    <!--<div class="chat-message-num">10</div>-->
     <!--未读消息-->
 
     <!--用户列表-->
     <div class="chatBox" ref="chatBox">
         <div class="chatBox-head">
             <!--自己的昵称-->
-            <div class="chatBox-head-one">
-                <!--sun66123456-->
-                <div class="chat-close">关闭</div>
-            </div>
+            <div class="chatBox-head-one"><span class="title">消息推送管理</span><div class="chat-close">关闭</div></div>
             <!--自己的昵称-->
         </div>
 
         <div class="chatBox-info">
             <!--用户列表-->
             <div class="chatBox-list" ref="chatBoxlist">
-                <foreach name="userinfo" item="user">
-                    <div class="chat-list-people">
-                        <div><img src="{:showImage($user->headimage , $user->flag)}" alt="头像"></div>
-                        <div class="chat-name">
-                            <p>{$user->nickname}</p>
-                        </div>
-                        <div class="message-num">10</div>
+
+                <foreach name="userinfo" item="users">
+                    <div class="chat-list-people" data-userid="{$users['id']}">
+                        <div><img src="{:showImage($users['headimage'] , $users['flag'])}" alt="{$users['nickname']}"></div>
+                        <div class="chat-name"><p>{$users['nickname']}</p></div>
+                        <div onclick="msg(this,1)"><span class="btn-sm btn-success sendMsg">我的发言</span></div>
+                        <div onclick="msg(this,2)"><span class="btn-sm btn-info getMsg" >我的消息</span></div>
+                        <!--未读消息数-->
+                        <!--<div class="message-num">10</div>-->
+                        <!--未读消息数-->
                     </div>
                 </foreach>
+                <div class="load" ><p>点击加载更多</p></div>
             </div>
             <!--用户列表-->
+
         </div>
     </div>
     <!--用户列表-->
 
     <!--聊天信息列表-->
     <div class="chatBox-infolist" ref="chatBox">
+        <input type="hidden" id="to_userid">
         <div class="chatBox-head">
-            <!--点击用户昵称获取聊天信息-->
+            <!--点击用户昵称获取聊天信息（动态获取）-->
             <div class="chatBox-head-two">
                 <div class="chat-return"></div>
                 <div class="chat-people">
@@ -60,86 +65,18 @@
                 </div>
                 <div class="chat-close">关闭</div>
             </div>
-            <!--点击用户昵称获取聊天信息-->
+            <!--点击用户昵称获取聊天信息（动态获取）-->
         </div>
 
         <div class="chatBox-info">
 
-            <!--聊天信息-->
             <div class="chatBox-kuang" ref="chatBoxkuang">
                 <!--聊天信息-->
                 <div class="chatBox-content">
                     <div class="chatBox-content-demo" id="chatBox-content-demo">
+                        <!--聊天信息列表-->
 
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="left">
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon01.png" alt="头像"></div>
-                                <div class="chat-message">
-                                    给你看张图
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="left">
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon01.png" alt="头像"></div>
-                                <div class="chat-message">
-                                    <img src="__STATIC__/images/1.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="right">
-                                <div class="chat-message">嗯，适合做壁纸</div>
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon02.png" alt="头像"></div>
-                            </div>
-                        </div>
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="right">
-                                <div class="chat-message">嗯，适合做壁纸</div>
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon02.png" alt="头像"></div>
-                            </div>
-                        </div>
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="right">
-                                <div class="chat-message">嗯，适合做壁纸</div>
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon02.png" alt="头像"></div>
-                            </div>
-                        </div>
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="right">
-                                <div class="chat-message">嗯，适合做壁纸</div>
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon02.png" alt="头像"></div>
-                            </div>
-                        </div>
-                        <div class="clearfloat">
-                            <div class="author-name">
-                                <small class="chat-date">2017-12-02 14:26:58</small>
-                            </div>
-                            <div class="right">
-                                <div class="chat-message">嗯，适合做壁纸</div>
-                                <div class="chat-avatars"><img src="__STATIC__/images/icon02.png" alt="头像"></div>
-                            </div>
-                        </div>
+                        <!--聊天信息列表-->
                     </div>
                 </div>
                 <!--聊天信息-->
@@ -194,7 +131,7 @@
                 </div>
                 <!--输入框-->
             </div>
-            <!---->
+
         </div>
     </div>
     <!--聊天列表-->
@@ -202,7 +139,10 @@
 
 
 <script>
+    //设置发送用户
+    var user = {$user};
 
+    //设置用户列表/聊天列表的高度
     screenFuc();
     function screenFuc() {
         var topHeight = $(".chatBox-head").innerHeight();//聊天头部高度
@@ -235,32 +175,29 @@
     })();
 
     //未读信息数量为空时
-    var totalNum = $(".chat-message-num").html();
-    if (totalNum == "") {
-        $(".chat-message-num").css("padding", 0);
-    }
-    $(".message-num").each(function () {
-        var wdNum = $(this).html();
-        if (wdNum == "") {
-            $(this).css("padding", 0);
-        }
-    });
+//    var totalNum = $(".chat-message-num").html();
+//    if (totalNum == "") {
+//        $(".chat-message-num").css("padding", 0);
+//    }
+//    $(".message-num").each(function () {
+//        var wdNum = $(this).html();
+//        if (wdNum == "") {
+//            $(this).css("padding", 0);
+//        }
+//    });
 
 
-    //链接ws
     //创建WebSocket对象
-    var url = "ws:127.0.0.1:9011";
-    var ws = new WebSocket(url);
+    var ws = new WebSocket("ws:127.0.0.1:9011");
 
     //链接ws
     ws.onopen = function(){
-        ws.send(JSON.stringify({'type':'login','uid':5}))
+        ws.send(JSON.stringify({'type':'login','uid':user.id}))
         console.log("已经打开了websocket连接，可以进行实时通信了");
     };
 
     //收到消息
     ws.onmessage = function(e) {
-        
         var reposnse =  JSON.parse( e.data )
         console.log("接受到来自服务器端的数据:" + reposnse['msg']);
     };
@@ -276,63 +213,58 @@
         console.log("websocket关闭连接:" + e.error);
     };
 
-
-
     //打开/关闭聊天框
     $(".chatBtn").click(function () {
-        $(".chatBox").toggle();
+        $(".chatBox").fadeToggle(2000);
+        $(".chatBox-infolist").fadeOut(1000);
     });
-
-    /**
-     *为按钮添加发送信息事件
-     **/
-    $("#send").click(function(){
-        ws.send($("#msg").val());
-        $("#msg").val("");
-    });
-
 
     //关闭对应的层
     $(".chat-close").click(function () {
-        $(this).parent().parent().parent().hide(10);
+        $(this).parent().parent().parent().fadeOut(100);
     })
 
     //进聊天页面
-    $(".chat-list-people").each(function () {
-        $(this).click(function () {
-            var n = $(this).index();
+    function msg(obj , type) {
+        var userid = $(obj).parent().data("userid");
+        //设置发送消息useridi
+        $("#to_userid").val(userid);
 
-            $(".chatBox-infolist").toggle();
-            //传名字
-            $(".ChatInfoName").text($(this).children(".chat-name").children("p").eq(0).html());
+        var msgType = type == 1 ? "(我的发言)" : "(我的消息)";
 
-            //传头像
-            $(".ChatInfoHead>img").attr("src", $(this).children().eq(0).children("img").attr("src"));
+        //打开聊天列表
+        $(".chatBox-infolist").fadeIn(500);
 
+        //传名字
+        $(".ChatInfoName").text($(obj).parent().children(".chat-name").children("p").eq(0).html()+msgType);
+
+        //传头像
+        $(".ChatInfoHead>img").attr("src", $(obj).parent().children().eq(0).children("img").attr("src"));
+
+        //获取该用户所有的聊天信息
+        $.post("{:url('chatlist')}" , {"userid" : userid , 'chatType':type} , function (redata) {
+            $("#chatBox-content-demo").html(redata);
             //聊天框默认最底部
             $(document).ready(function () {
                 $("#chatBox-content-demo").animate({scrollTop: $("#chatBox-content-demo")[0].scrollHeight}, 2000 , 'linear');
             });
         })
-    });
-
-    //返回列表
-//    $(".chat-return").click(function () {
-//        $(".chatBox-head-one").toggle();
-//        $(".chatBox-head-two").toggle();
-//        $(".chatBox-list").fadeToggle();
-//        $(".chatBox-kuang").fadeToggle();
-//    });
+    }
 
     // 发送信息
     $("#chat-fasong").click(function () {
-        var textContent = $(".div-textarea").html().replace(/[\n\r]/g, '<br>')
-        ws.send(textContent);
+        var to_uid = $("#to_userid").val(); //接受用户
+        var from_uid = user.id;                   //发送用户
+        var textContent = $(".div-textarea").html().replace(/[\n\r]/g, '<br>') //发送内容
+
+        var ws_data = {'type':'chat' , 'from_uid' : from_uid , "to_uid" : to_uid , "msg":textContent , 'msgtype':1 , 'flag':2}
+        ws.send(JSON.stringify(ws_data));
+
         if (textContent != "") {
             $(".chatBox-content-demo").append("<div class=\"clearfloat\">" +
-                "<div class=\"author-name\"><small class=\"chat-date\">2017-12-02 14:26:58</small> </div> " +
+                "<div class=\"author-name\"><small class=\"chat-date\">"+ getTime() +"</small> </div> " +
                 "<div class=\"right\"> <div class=\"chat-message\"> " + textContent + " </div> " +
-                "<div class=\"chat-avatars\"><img src=\"img/icon01.png\" alt=\"头像\" /></div> </div> </div>");
+                "<div class=\"chat-avatars\"><img src="+ user.headimage +" alt="+ user.nickname +" /></div> </div> </div>");
             //发送后清空输入框
             $(".div-textarea").html("");
             //聊天框默认最底部
@@ -342,7 +274,7 @@
         }
     });
 
-    //发送表情
+    //打开发送表情层
     $("#chat-biaoqing").click(function (event) {
         $(".biaoqing-photo").toggle();
         event.stopPropagation();//阻止事件
@@ -385,6 +317,18 @@
         };
         reader.readAsDataURL(pic.files[0]);
 
+    }
+
+    //获取当前时间
+    function getTime() {
+        var date=new Date();
+        var year=date.getFullYear();
+        var mon = date.getMonth()+1;
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minu = date.getMinutes();
+        var sec = date.getSeconds();
+        return year+'-'+mon+'-'+day+' '+hours+':'+minu+':'+sec;
     }
 
 

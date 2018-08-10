@@ -1,0 +1,11 @@
+﻿<foreach name="userinfo" item="user">
+    <div class="chat-list-people">
+        <div><img src="{:showImage($user->headimage , $user->flag)}" alt="头像"></div>
+        <div class="chat-name">
+            <p>{$user->nickname}</p>
+        </div>
+        <!--未读消息数-->
+        <!--<div class="message-num">10</div>-->
+        <!--未读消息数-->
+    </div>
+</foreach>

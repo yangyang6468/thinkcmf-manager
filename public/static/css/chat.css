@@ -3,23 +3,32 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 /* 设置滚动条的样式 */
-scrollbar {
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
     width:5px;
 }
+
 /* 滚动槽 */
+/*!*定义滚动条轨道 内阴影+圆角*!*/
 ::-webkit-scrollbar-track {
     border-radius:10px;
 }
+
 /* 滚动条滑块 */
+/*!*定义滑块 内阴影+圆角*!*/
 ::-webkit-scrollbar-thumb {
     border-radius:10px;
     background:#8C85E6;
     -webkit-box-shadow:#8C85E6;
 }
+
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(175, 190, 255, 0.4);
 }
+
+
 /*按钮样式*/
 .btn-default-styles {
     outline: none;
@@ -170,6 +179,12 @@ scrollbar {
     margin: 0px 3px 0 0;
 }
 
+
+.chatBox-head .title{
+    display:inline-block;
+    margin-left: 60px
+}
+
 .chat-people{
     float: left;
 }
@@ -178,7 +193,7 @@ scrollbar {
     display: inline-block;
     vertical-align: middle;
     line-height: 55px;
-    margin-left: 25px;
+    margin-left: 10px;
 }
 .chat-people>div:nth-of-type(1){
     width: 50px;
@@ -242,10 +257,17 @@ scrollbar {
     height: 40px;
 }
 
-
 .chat-name{
-    width: 230px;
+    width: 130px;
 }
+.sendMsg,.getMsg{
+    line-height: 55px;
+    opacity: 0.6;
+}
+.sendMsg:hover,.getMsg:hover{
+    opacity: 0.8;
+}
+
 .chat-name>p{
     margin: 0;
     overflow: hidden;
@@ -385,9 +407,11 @@ scrollbar {
 }
 .clearfloat .left .chat-avatars{
     margin-right: 10px;
+    cursor: pointer;
 }
 .clearfloat .right .chat-avatars{
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .chatBox-send{
@@ -517,4 +541,22 @@ scrollbar {
     .clearfloat .chat-message{
         max-width: 240px;
     }
+}
+
+
+/*加载更多*/
+.load{
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.load p{
+    border-radius:10px;
+    margin-top:15px;
+    display:inline-block;
+    height: 30px;
+    width:100%;
+    background-color: #ccc;
+    opacity: 0.6
 }

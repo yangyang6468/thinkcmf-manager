@@ -1,0 +1,51 @@
+﻿<if condition="$chatType eq 2">
+    <!--我收到的消息demo-->
+    <foreach name="chatlist" item="chat">
+
+            <div class="clearfloat">
+                <div class="author-name">
+                    <small class="chat-date">{$chat->create_time}</small>
+                </div>
+                <div class="left">
+                    <div class="chat-avatars"><img src="{:showImage($chat->fromUser->headimage , $chat->fromUser->flag)}" title="{$chat->fromUser->nickname}" alt="{$chat->fromUser->nickname}"></div>
+                    <div class="chat-message">
+                        <if condition="$chat['msg_type'] eq 1">
+                            <!--文字类型-->
+                            {$chat->msg}
+                        <else/>
+                            <!--图片类型-->
+                            <img src="__STATIC__/images/1.png" alt="">
+                        </if>
+                    </div>
+
+                </div>
+            </div>
+    </foreach>
+    <!--我收到的消息demo-->
+
+<else/>
+    <!--我发送消息的demo-->
+    <foreach name="chatlist" item="chat">
+
+            <div class="clearfloat">
+                <div class="author-name">
+                    <small class="chat-date">{$chat->create_time}</small>
+                </div>
+                <div class="right">
+                    <div class="chat-message" >
+                        <if condition="$chat['msg_type'] eq 1">
+                            <!--文字类型-->
+                            {$chat->msg}
+                        <else/>
+                            <!--图片类型-->
+                            <img src="__STATIC__/images/1.png" alt="">
+                        </if>
+                    </div>
+                    <div class="chat-avatars"><img src="{:showImage($chat->toUser->headimage , $chat->toUser->flag)}" title="{$chat->toUser->nickname}" alt="{$chat->toUser->nickname}"></div>
+                </div>
+            </div>
+
+    </foreach>
+
+    <!--我发送消息的demo-->
+</if>
