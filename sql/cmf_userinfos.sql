@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-08-11 22:47:58
+Date: 2018-08-12 20:15:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,4 +69,4 @@ INSERT INTO `cmf_userinfos` VALUES ('1533805135', '1533805135', '8', '坐在坟�
 INSERT INTO `cmf_userinfos` VALUES ('1533805291', '1533805291', '9', '一觉睡到小时候', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180809/92b5a0215fe8fc36e794539664d8ddd7.jpg', '15512349876', '1', '0', '1', '一觉睡到小时候', '0', '0', '320700', '320000', '127.0.0.1', '1533805291', '0', '1', '2', null);
 INSERT INTO `cmf_userinfos` VALUES ('1533806225', '1533806225', '10', '逗比别闹快吃药', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180803/653268292c34ad2d31911e7b7fa990d0.jpg', '13150580932', '1', '0', '0', '逗比别闹快吃药', '0', '0', '431000', '430000', '127.0.0.1', '1533806225', '0', '1', '2', null);
 INSERT INTO `cmf_userinfos` VALUES ('1533806316', '1533806316', '11', '独闯寡妇村', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180809/c891d24f22e8f070a25b7d5f1956b269.jpg', '13355551234', '1', '0', '2', '独闯寡妇村', '0', '0', '340800', '340000', '127.0.0.1', '1533806316', '0', '1', '2', null);
-INSERT INTO `cmf_userinfos` VALUES ('1533996863', '1533998751', '19', 'yy12345', '13469984690@163.com', '$2y$10$PLNZvIHWFXdW0.kvzn5HgurM0NeYZdKqy1EMUvYWb1KDyarGRmfca', '1533945600', null, 'admin/2018-08-11/144514988903.gif', '13469989999', '1', '0', '1', '流泪的孩子一点也不好玩', '0', '0', '210100', '210000', '127.0.0.1', '1533998658', '0', '1', '1', '9c2dsLkStEnMtA3TEIEb2K3gSqeUIjqoDfgE14jbcVK8eIOtxtXGEcn7GLOw');
+INSERT INTO `cmf_userinfos` VALUES ('1533996863', '1534045975', '19', 'yy12345', '13469984690@163.com', '$2y$10$PLNZvIHWFXdW0.kvzn5HgurM0NeYZdKqy1EMUvYWb1KDyarGRmfca', '1533945600', null, 'admin/20180803/62afbd965a25b765f4deca4c4ca21eb9.jpg', '13469989999', '1', '0', '1', '流泪的孩子一点也不好玩', '0', '0', '210100', '210000', '127.0.0.1', '1534043530', '0', '1', '2', 'jKbPKZkjP2gg0nOgcuFZNQeYhEZqvdM4woN3RAkxjYWMSm25AUl8Ew9VtO9K');
