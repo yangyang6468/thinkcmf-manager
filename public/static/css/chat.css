@@ -115,9 +115,8 @@
 .chatBox-infolist{
     top: 0;
     left: 500px;
+    width: 450px;
 }
-
-
 
 .chatBox-head{
     width: 100%;
@@ -186,6 +185,7 @@
 }
 
 .chat-people{
+    margin-left: 60px;
     float: left;
 }
 .chat-people>div{
@@ -328,6 +328,7 @@
     overflow-y: scroll;
 }
 
+/*消息列表*/
 .clearfloat:after{
     display:block;
     clear:both;
@@ -342,12 +343,14 @@
 .clearfloat .right{
     float: right;
 }
+
+/*发表时间*/
 .author-name{
     text-align: center;
     margin: 15px 0 5px 0;
     color: #888;
 }
-
+/*聊天消息*/
 .clearfloat .chat-message{
     max-width: 252px;
     text-align: left;
@@ -392,6 +395,7 @@
     border-left: 10px solid #8c85e6;
 }
 
+/*聊天图像*/
 .clearfloat .chat-avatars{
     display: inline-block;
     width: 30px;
@@ -401,6 +405,7 @@
     vertical-align: top;
     overflow: hidden;
 }
+
 .clearfloat .chat-avatars>img{
     width: 30px;
     height: 30px;
@@ -413,6 +418,31 @@
     margin-left: 10px;
     cursor: pointer;
 }
+
+/*聊天用户昵称*/
+.clearfloat .chat-nickname{
+    display: inline-block;
+    width: 80px;
+    padding-left:4px;
+    opacity: 0.8;
+    border-radius: 6px;
+    cursor: pointer;
+    margin:0px 4px ;vertical-align:top;
+    height: 36px;
+    line-height: 36px;
+}
+
+/*发送用户的昵称背景*/
+.clearfloat .left .chat-nickname {
+    background-color: #5cb85c;
+}
+
+/*接收用户的昵称背景*/
+.clearfloat .right .chat-nickname {
+    text-align: left;
+    background-color: #5bc0de;
+}
+
 
 .chatBox-send{
     width: 100%;

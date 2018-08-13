@@ -8,13 +8,14 @@
                 </div>
                 <div class="left">
                     <div class="chat-avatars"><img src="{:showImage($chat->fromUser->headimage , $chat->fromUser->flag)}" title="{$chat->fromUser->nickname}" alt="{$chat->fromUser->nickname}"></div>
-                    <div class="chat-message">
+                    <div class="chat-nickname" style="">{:addSuffix($chat->fromUser->nickname , 4)}</div>
+                    <div class="chat-message" style="margin-left: 10px">
                         <if condition="$chat['msg_type'] eq 1">
                             <!--文字类型-->
                             {$chat->msg}
                         <else/>
                             <!--图片类型-->
-                            <img src="__STATIC__/images/1.png" alt="">
+                            <img src="{:showImage($chat->msg , $chat->flag)}">
                         </if>
                     </div>
 
@@ -38,9 +39,10 @@
                             {$chat->msg}
                         <else/>
                             <!--图片类型-->
-                            <img src="__STATIC__/images/1.png" alt="">
+                            <img src="{:showImage($chat->msg , $chat->flag)}">
                         </if>
                     </div>
+                    <div class="chat-nickname">{:addSuffix($chat->toUser->nickname , 4)}</div>
                     <div class="chat-avatars"><img src="{:showImage($chat->toUser->headimage , $chat->toUser->flag)}" title="{$chat->toUser->nickname}" alt="{$chat->toUser->nickname}"></div>
                 </div>
             </div>

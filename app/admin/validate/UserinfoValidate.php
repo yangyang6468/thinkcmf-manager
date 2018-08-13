@@ -16,7 +16,7 @@ class UserinfoValidate extends Validate
 {
     protected $rule = [
         'nickname|用戶名' => 'require|unique:userinfos,nickname|length:4,12',
-        'userpwd|密码' => 'require|length:6,20',
+        'password|密码' => 'require|length:6,20',
         'phone|电话号码'  => 'require|number|length:11|unique:userinfos,phone',
         'signature|个性签名' => 'require|length:4,20',
 
@@ -27,7 +27,7 @@ class UserinfoValidate extends Validate
     ];
 
     protected $scene = [
-        'insert' => ["nickname" , "phone" , "signature" , "userpwd"],
+        'insert' => ["nickname" , "phone" , "signature" , "password"],
         'update' => ["nickname" , "phone" , "signature"]
     ];
 }

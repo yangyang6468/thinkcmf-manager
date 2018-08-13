@@ -24,7 +24,7 @@ class UserinfoModel extends Model
     }
 
     //md5加密
-    public  function setUserpwdAttr($v){
+    public  function setPasswordAttr($v){
         return md5($v);
     }
 
