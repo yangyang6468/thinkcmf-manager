@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-08-13 18:47:28
+Date: 2018-08-14 18:29:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `cmf_chat` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0 不显示 1 显示',
   `isdelete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of cmf_chat
@@ -71,3 +71,4 @@ INSERT INTO `cmf_chat` VALUES ('36', '1534150919', '1534150919', '8', '5', '哈�
 INSERT INTO `cmf_chat` VALUES ('37', '1534151046', '1534151046', '9', '5', '为什么你的没有图像<br>为什么你的没有图像<br>为什么你的没有图像<br>为什么你的没有图像<br>', '1', '2', '1', '0');
 INSERT INTO `cmf_chat` VALUES ('38', '1534151064', '1534151064', '9', '5', '、、、、、', '1', '2', '1', '0');
 INSERT INTO `cmf_chat` VALUES ('39', '1534156491', '1534156491', '10', '5', 'default/20180813/56177578577b5e311017b707639080cd.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('40', '1534239805', '1534239805', '3', '19', '？？？？？', '1', '2', '1', '0');
