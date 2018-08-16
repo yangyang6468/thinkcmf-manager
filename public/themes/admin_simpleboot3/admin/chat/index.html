@@ -1,7 +1,7 @@
 ﻿<include file="public@header" />
 
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/font_Icon/iconfont.css?2018">
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/chat.css?2018">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/chat.css?20181133">
 
 <style>
 
@@ -12,9 +12,9 @@
 
 <div class="chatContainer">
     <!--图标-->
-    <div class="chatBtn">
-        <i class="iconfont icon-xiaoxi1"></i>
-    </div>
+    <!--<div class="chatBtn">-->
+        <!--<i class="iconfont icon-xiaoxi1"></i>-->
+    <!--</div>-->
     <!--图标-->
 
     <!--未读消息-->
@@ -25,7 +25,7 @@
     <div class="chatBox" ref="chatBox">
         <div class="chatBox-head">
             <!--自己的昵称-->
-            <div class="chatBox-head-one"><span class="title">消息推送管理</span><div class="chat-close">关闭</div></div>
+            <div class="chatBox-head-one"><span class="title">消息推送管理</span></div>
             <!--自己的昵称-->
         </div>
 
@@ -34,14 +34,14 @@
             <div class="chatBox-list" ref="chatBoxlist">
 
                 <foreach name="userinfo" item="users">
-                    <div class="chat-list-people" data-userid="{$users['id']}">
+                    <div class="chat-list-people"  data-userid="{$users['id']}">
                         <div><img src="{:showImage($users['headimage'] , $users['flag'])}" alt="{$users['nickname']}"></div>
                         <div class="chat-name"><p>{$users['nickname']}</p></div>
                         <div onclick="msg(this,1)"><span class="btn-sm btn-success sendMsg">我的发言</span></div>
                         <div onclick="msg(this,2)"><span class="btn-sm btn-info getMsg" >我的消息</span></div>
-                        <!--未读消息数-->
-                        <!--<div class="message-num">10</div>-->
-                        <!--未读消息数-->
+                        <!--消息红点-->
+                        <div class="message-num message-num-user-{$users['id']}" ></div>
+                        <!--消息红点-->
                     </div>
                 </foreach>
                 <div class="load" ><p>点击加载更多</p></div>
@@ -140,8 +140,6 @@
 </div>
 
 <script>
-
-
     //设置发送用户
     var user = {$user};
 
@@ -177,19 +175,6 @@
         screenFuc();
     })();
 
-    //未读信息数量为空时
-    //    var totalNum = $(".chat-message-num").html();
-    //    if (totalNum == "") {
-    //        $(".chat-message-num").css("padding", 0);
-    //    }
-    //    $(".message-num").each(function () {
-    //        var wdNum = $(this).html();
-    //        if (wdNum == "") {
-    //            $(this).css("padding", 0);
-    //        }
-    //    });
-
-
     //创建WebSocket对象
     var ws = new WebSocket("ws:127.0.0.1:9011");
 
@@ -203,6 +188,39 @@
     ws.onmessage = function(e) {
         var reposnse =  JSON.parse( e.data )
         console.log("接受到来自服务器端的数据:" + reposnse['msg']);
+        console.log(reposnse);
+
+        var to_userid = $("#to_userid").val()
+        if(reposnse["type"] == "chat"){
+            if(to_userid){
+                //用户打开的对应的聊天框
+                if(reposnse['msg_type'] == 1){
+                    var msg = reposnse['msg'];
+                }else if(reposnse['msg_type'] == 2){
+                    var msg = "<img src=http://www.think.cn/upload/" + reposnse['msg'] + ">";
+                }
+
+                var html = "<div class=\"clearfloat\">" +
+                                "<div class=\"author-name\"><small class=\"chat-date\">"+ reposnse['create_time'] +" </small> </div> " +
+                                "<div class=\"left\"> " +
+                                    "<div class=\"chat-avatars\"><img src="+ reposnse['headimage'] +" alt="+ reposnse['nickname'] +" title="+ reposnse['nickname'] +" /></div>" +
+                                    "<div class=\"chat-nickname\">"+ reposnse['nickname'].slice(0,4) +"...</div>"+
+                                    "<div class=\"chat-message\"> " + msg + " </div> " +
+                                "</div> " +
+                            "</div>"
+
+                $(".chatBox-content-demo").append(html);
+
+                $(document).ready(function () {
+                    $("#chatBox-content-demo").animate({scrollTop: $("#chatBox-content-demo")[0].scrollHeight}, 2000 , 'linear');
+                });
+
+            }else{
+                var ele =  $(".message-num-user-"+user.id).parent();
+                $(".chatBox-list").prepend(ele);
+                $(".message-num-user-"+user.id).css("display" , "inline-block");
+            }
+        }
     };
 
     //连接报错
@@ -216,15 +234,10 @@
         console.log("websocket关闭连接:" + e.error);
     };
 
-    //打开/关闭聊天框
-    $(".chatBtn").click(function () {
-        $(".chatBox").fadeToggle(2000);
-        $(".chatBox-infolist").fadeOut(1000);
-    });
-
-    //关闭对应的层
+    //关闭聊天框
     $(".chat-close").click(function () {
-        $(this).parent().parent().parent().fadeOut(100);
+        $("#to_userid").val('');
+        $(".chatBox-infolist").fadeOut(100);
     })
 
     //进聊天页面
@@ -234,6 +247,10 @@
         $("#to_userid").val(userid);
 
         var msgType = type == 1 ? "(我的发言)" : "(我的消息)";
+
+        if(type == 2){
+            $(".message-num-user-"+userid).hide();
+        }
 
         //打开聊天列表
         $(".chatBox-infolist").fadeIn(500);
@@ -263,6 +280,13 @@
         if(textContent.length == 0){
             Wind.use('layer' , function () {
                 layer.msg("请填写发送内容!!!");
+            })
+            return false;
+        }
+
+        if(to_uid == from_uid){
+            Wind.use('layer' , function () {
+                layer.msg("不可以给自己发消息哦!!!");
             })
             return false;
         }
@@ -301,7 +325,7 @@
             var to_uid = $("#to_userid").val();                                     //接受用户
             var from_uid = user.id;                                                 //发送用户
             var bq = $(this).parent().html();                                       //表情包
-            console.log(bq)
+
 
             var ws_data = {'type':'chat' , 'from_uid' : from_uid , "to_uid" : to_uid , "msg":bq , 'msgtype':1 , 'flag':2}
             ws.send(JSON.stringify(ws_data));
@@ -331,8 +355,10 @@
         if (!pic.files || !pic.files[0]) {
             return;
         }
+
         var reader = new FileReader();
         reader.onload = function (evt) {
+
             // 上传图片到服务器
             Wind.use("ajaxForm" , function () {
                 $('form').ajaxSubmit({
@@ -357,18 +383,17 @@
                                     "<div class=\"right\"> " +
                                         "<div class=\"chat-message\"><img src=" + images + "></div> " +
                                         "<div class=\"chat-nickname\">"+ user.nickname.slice(0,4) +"...</div>"+
-                                        "<div class=\"chat-avatars\"><img src=\"img/icon01.png\" alt=\"头像\" />" + "</div> " +
+                                        "<div class=\"chat-avatars\"><img src="+ user.headimage +" alt="+ user.nickname +" /></div> " +
                                     "</div> " +
                                 "</div>"
 
-            $(".chatBox-content-demo").append();
+            $(".chatBox-content-demo").append(img_content);
             //聊天框默认最底部
             $(document).ready(function () {
                 $("#chatBox-content-demo").animate({scrollTop: $("#chatBox-content-demo")[0].scrollHeight}, 2000 , 'linear');
             });
         };
         reader.readAsDataURL(pic.files[0]);
-
     }
 
     //获取当前时间

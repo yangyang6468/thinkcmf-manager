@@ -109,13 +109,14 @@
     box-shadow: 1px 1px 2px #c0c0c0;
     z-index: 1005;
     margin-left: 20px;
-    display: none;
+
 }
 
 .chatBox-infolist{
     top: 0;
     left: 500px;
     width: 450px;
+    display: none;
 }
 
 .chatBox-head{
@@ -181,7 +182,6 @@
 
 .chatBox-head .title{
     display:inline-block;
-    margin-left: 60px
 }
 
 .chat-people{
@@ -233,6 +233,7 @@
 
 .chat-list-people{
     border-bottom: 1px dashed #cac7c7;
+    position: relative;
 }
 
 .chat-list-people:hover{
@@ -278,22 +279,15 @@
     line-height: 55px;
 }
 .chat-list-people>div.message-num{
-    display: inline-block;
-    height: auto;
-    min-width: 10px;
-    padding: 3px 5px;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    border-radius: 10px;
-    margin-right: 15px;
-    margin-top: 14px;
-    color: #fff;
+    height: 6px;
+    width: 6px;
     background: #f46266;
-    float: right;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 10%;
+    display: none;
+
 }
 .chat-message-num{
     display: inline-block;
