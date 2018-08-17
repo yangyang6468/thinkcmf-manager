@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50640
 File Encoding         : 65001
 
-Date: 2018-08-13 11:22:13
+Date: 2018-08-17 17:25:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `cmf_admin_menu` (
   KEY `status` (`status`),
   KEY `parent_id` (`parent_id`),
   KEY `controller` (`controller`)
-) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of cmf_admin_menu
@@ -142,6 +142,9 @@ INSERT INTO `cmf_admin_menu` VALUES ('168', '6', '1', '1', '10000', 'admin', 'di
 INSERT INTO `cmf_admin_menu` VALUES ('169', '0', '1', '1', '10000', 'admin', 'Icon', 'index', '', '图片管理', 'file-photo-o', '');
 INSERT INTO `cmf_admin_menu` VALUES ('170', '0', '1', '1', '10000', 'admin', 'Main', 'index', '', '统计管理', 'line-chart', '');
 INSERT INTO `cmf_admin_menu` VALUES ('171', '0', '1', '1', '10000', 'admin', 'chat', 'index', '', '聊天管理', '', '');
+INSERT INTO `cmf_admin_menu` VALUES ('172', '0', '1', '1', '10000', 'admin', 'focus', 'index', '', '关注管理', 'eye', '');
+INSERT INTO `cmf_admin_menu` VALUES ('173', '0', '1', '1', '10000', 'admin', 'like ', 'index', '', '点赞管理', 'thumbs-o-up', '');
+INSERT INTO `cmf_admin_menu` VALUES ('174', '0', '1', '1', '10000', 'admin', 'collect', 'index', '', '收藏管理', 'star', '');
 
 -- ----------------------------
 -- Table structure for cmf_articles
@@ -168,13 +171,15 @@ CREATE TABLE `cmf_articles` (
   `rewardcount` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '打赏总人数',
   `flag` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT '前后台标志 1 前台 2 后台',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 -- ----------------------------
 -- Records of cmf_articles
 -- ----------------------------
 INSERT INTO `cmf_articles` VALUES ('1534129967', '1534129967', '1', '3', 'mysql Error Code : 1060 Duplicate column ‘*’', '&lt;p&gt;&lt;span style=&quot;font-family: Helvetica, Tahoma, Arial, sans-serif; background-color: rgb(255, 255, 255); font-size: medium;&quot;&gt;今天遇到了一个异常：mysql Error Code : 1060 Duplicate column name &amp;#39;ID&amp;#39;&amp;nbsp;&lt;br/&gt;上网搜了搜：&lt;/span&gt;&lt;span style=&quot;font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-family: Helvetica, Tahoma, Arial, sans-serif; background-color: rgb(255, 255, 255); font-size: medium;&quot;&gt;这个错误是说有重复的字段ID了，当时以为是表的有重复字段或是数据中有重复ID数据了，其实不是，错误是在sql语句中，&amp;nbsp;&lt;br/&gt;&lt;br/&gt;select * from&amp;nbsp; service_domaintransfer p left join (select * from service_transferwhois )tw&amp;nbsp; on p.domain_name = tw.domain_name where 1=1&amp;nbsp; and p.transfer_type =&amp;nbsp;&amp;nbsp; &amp;#39;02&amp;#39; order by p.agent_code,p.id&amp;nbsp;&lt;br/&gt;&lt;br/&gt;由于前面的select * 中的整个*没有指定是所以抱的错，只要改成想要的就行了（select sd.*或者select sr.*）,&amp;nbsp;&lt;/span&gt;&lt;/p&gt;', 'admin/20180702/4db79dbe69d7583ebb72b8cd4617eca2.png', '0', '0', '0', '19', '0', '0', '0', '1', '0', '0', '0', '2');
 INSERT INTO `cmf_articles` VALUES ('1534130327', '1534130327', '2', '5', 'workman 和swoole 区别 和异同', '&lt;p class=&quot;f16&quot; style=&quot;box-sizing: border-box; outline: 0px; padding: 0px; margin-top: 0px; margin-bottom: 16px; color: rgb(51, 51, 51); line-height: 26px; text-align: justify; word-break: break-all; white-space: normal; text-indent: 2em; font-family: &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;workerman是一个高性能的PHP socket 服务器框架，workerman基于PHP多进程以及libevent事件轮询库，PHP开发者只要实现一两个接口，便可以开发出自己的网络应用，例如Rpc服务、聊天室服务器、手机游戏服务器等。&lt;/p&gt;&lt;p class=&quot;f16&quot; style=&quot;box-sizing: border-box; outline: 0px; padding: 0px; margin-top: 0px; margin-bottom: 16px; color: rgb(51, 51, 51); line-height: 26px; text-align: justify; word-break: break-all; white-space: normal; text-indent: 2em; font-family: &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;workerman的目标是让PHP开发者更容易的开发出基于socket的高性能的应用服务，而不用去了解PHP socket以及PHP多进程细节。 workerman本身是一个PHP多进程服务器框架，具有PHP进程管理以及socket通信的模块，所以不依赖php-fpm、nginx或者apache等这些容器便可以独立运行&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', 'admin/20180813/890b953322ab77a95d452c25331f58ae.jpg', '0', '0', '0', '19', '0', '0', '0', '1', '0', '0', '0', '2');
+INSERT INTO `cmf_articles` VALUES ('1534151540', '1534151540', '3', '6', 'JS截取字符串方法实例', '&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;1.函数：split()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：使用一个指定的分隔符把一个字符串分割存储到数组&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子： str=”jpg|bmp|gif|ico|png”; arr=str.split(”|”);&lt;br/&gt;//arr是一个包含字符值”jpg”、”bmp”、”gif”、”ico”和”png”的数组&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;2.函数：join()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：使用您选择的分隔符将一个数组合并为一个字符串&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子： var delimitedString=myArray.join(delimiter);&lt;br/&gt;var myList=new Array(”jpg”,”bmp”,”gif”,”ico”,”png”);&lt;br/&gt;var portableList=myList.join(”|”);&lt;br/&gt;//结果是jpg|bmp|gif|ico|png&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;3.函数:concat（）&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：将两个数组连接在一起；&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子：arr1=[1,2,3,4]&lt;br/&gt;　　arr2=[5,6,7,8]&lt;br/&gt;　　alert(arr1.concat(arr2)) //结果为[1,2,3,4,5,6,7,8]&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;4.函数:charAt()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：返回指定位置的字符。字符串中第一个字符的下标是 0。如果参数 index 不在 0 与 string.length 之间，该方法将返回一个空字符串。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子:var str=&amp;#39;a,g,i,d,o,v,w,d,k,p&amp;#39;&lt;br/&gt;alert(str.charAt(2)) //结果为g&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;5:函数:charCodeAt()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：charCodeAt() 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;方法 charCodeAt() 与 charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子：var str=&amp;#39;a,g,i,d,o,v,w,d,k,p&amp;#39;&lt;br/&gt;alert(str.charCodeAt(2)) //结果为103。即g的Unicode编码为103&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;6.函数:slice()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;功能：arrayObject.slice(start,end)&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;　　start:必需。规定从何处开始选取。如果是负数，那么它规定从数组尾部开始算起的位置。也就是说，-1 指最后一个元素，-2 指倒数第二个元素，以此类推。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;　　end:可选。规定从何处结束选取。该参数是数组片断结束处的数组下标。如果没有指定该参数，那么切分的数组包含从 start 到数组结束的所有元素。如果这个参数是负数，那么它规定的是从数组尾部开始算起的元素。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;　　返回一个新的数组，包含从start到end（不包括该元素）的arrayobject中的元素。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子：var str=&amp;#39;ahji3o3s4e6p8a0sdewqdasj&amp;#39;&lt;br/&gt;　　alert(str.slice(2,5)) //结果ji3&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;7.函数:substring()&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;定义和用法 substring 方法用于提取字符串中介于两个指定下标之间的字符。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;语法 stringObject.substring(start,stop)&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;start 必需。一个非负的整数，规定要提取的子串的第一个字符在 stringObject 中的位置。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;stop 可选。一个非负的整数，比要提取的子串的最后一个字符在 stringObject 中的位置多 1。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;如果省略该参数，那么返回的子串会一直到字符串的结尾。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;返回 一个新的字符串，该字符串值包含 stringObject 的一个子字符串，其内容是从 start 处到 stop-1 处的所有字符，其长度为 stop 减 start。 说明 substring 方法返回的子串包括 start 处的字符，但不包括 end 处的字符。 如果 start 与 end 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。 如果 start 比 end 大，那么该方法在提取子串之前会先交换这两个参数。 如果 start 或 end 为负数，那么它将被替换为 0。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;例子:var str=&amp;#39;ahji3o3s4e6p8a0sdewqdasj&amp;#39;&lt;br/&gt;alert(str.substring(2,6)) //结果为ji3o3&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;line-height: 25.2px; color: rgb(0, 0, 255);&quot;&gt;8.函数:substr&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;定义和用法 substr 方法用于返回一个从指定位置开始的指定长度的子字符串。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;语法 stringObject.substr(start [, length ])&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;参数 start 必需。所需的子字符串的起始位置。字符串中的第一个字符的索引为 0。&lt;br/&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;length 可选。在返回的子字符串中应包括的字符个数。 说明 如果 length 为 0 或负数，将返回一个空字符串。 如果没有指定该参数，则子字符串将延续到stringObject的最后。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', 'admin/20180806/72c7fea68edb0ceb1a960e4d9adba44a.jpg', '1', '0', '0', '7', '0', '0', '0', '1', '0', '0', '0', '2');
+INSERT INTO `cmf_articles` VALUES ('1534412507', '1534412507', '4', '6', 'jQuery 追加元素的方法如append、prepend、before', '&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;append() 方法在被选元素的结尾插入内容。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;prepend() 方法在被选元素的开头插入内容。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;after() 方法在被选元素之后插入内容。&lt;/p&gt;&lt;p style=&quot;margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; outline: none; font-size: 14px; line-height: 30px; color: rgb(34, 34, 34); font-family: tahoma, arial, &amp;quot;Microsoft YaHei&amp;quot;; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;before() 方法在被选元素之前插入内容。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', 'default/20180813/56177578577b5e311017b707639080cd.jpg', '0', '0', '0', '11', '0', '0', '0', '1', '0', '0', '0', '2');
 
 -- ----------------------------
 -- Table structure for cmf_asset
@@ -195,7 +200,7 @@ CREATE TABLE `cmf_asset` (
   `suffix` varchar(10) NOT NULL DEFAULT '' COMMENT '文件后缀名,不包括点',
   `more` text COMMENT '其它详细信息,JSON格式',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of cmf_asset
@@ -230,6 +235,9 @@ INSERT INTO `cmf_asset` VALUES ('27', '1', '46908', '1533805114', '1', '0', '045
 INSERT INTO `cmf_asset` VALUES ('28', '1', '45923', '1533805281', '1', '0', 'f1dd0aaf6484e0d785bca7a70dd6bb5028ba544f420b2c9846f59ab3cbb55095', 'Y3.jpg', 'admin/20180809/92b5a0215fe8fc36e794539664d8ddd7.jpg', 'f1dd0aaf6484e0d785bca7a70dd6bb50', '1cbd32499ba98b65e0d49882adb3681f7a2352c4', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('29', '1', '47751', '1533806308', '1', '0', 'f5ddf7516338f8f16c5c47d15a30ecc6298714e07cdf91a09aefaa730945f221', 'Y19.jpg', 'admin/20180809/c891d24f22e8f070a25b7d5f1956b269.jpg', 'f5ddf7516338f8f16c5c47d15a30ecc6', '3fa901dee6fda3277cee6de5c7db6bf8b783f95d', 'jpg', null);
 INSERT INTO `cmf_asset` VALUES ('30', '1', '47997', '1534130283', '1', '0', '4ddc47ed190eff52fa58eca054613e3e97720051cf21527562ecea0d3c3ea95e', '1.jpg', 'admin/20180813/890b953322ab77a95d452c25331f58ae.jpg', '4ddc47ed190eff52fa58eca054613e3e', '62c4f9af3e32f16bf3b0d92b64ec2c8f294dcb45', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('31', '1', '45596', '1534155928', '1', '0', 'fffe96a00e463e2e636de92a2e057396da984cc5b27892cf0ab0143f052b4a61', 'Y28.jpg', 'default/20180813/56177578577b5e311017b707639080cd.jpg', 'fffe96a00e463e2e636de92a2e057396', 'c3d8c8ff78419fd36a6f59029129f5bd197f5e84', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('32', '1', '42595', '1534406947', '1', '0', '095679d38bfff8c31b14ad83b41fd1c0556ed2882d7344453043ed9b3b5cbdba', 'Y18.jpg', 'default/20180816/296eeb12452bc2d3698ada7946cbedc5.jpg', '095679d38bfff8c31b14ad83b41fd1c0', '3b6952610df87def4e49c20505cf9d93f67982e2', 'jpg', null);
+INSERT INTO `cmf_asset` VALUES ('33', '1', '59907', '1534407009', '1', '0', '3aa953055cc4de89e2d4ae143e6369fde2301bdffbe683c2494ca8490dd845fe', 'Y27.jpg', 'default/20180816/5db1ffa4de344769a549830226c66b8c.jpg', '3aa953055cc4de89e2d4ae143e6369fd', '2003bb55d95b371b772ea7b9d1b695890f862cac', 'jpg', null);
 
 -- ----------------------------
 -- Table structure for cmf_auth_access
@@ -344,7 +352,7 @@ CREATE TABLE `cmf_auth_rule` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE,
   KEY `module` (`app`,`status`,`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8mb4 COMMENT='权限规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COMMENT='权限规则表';
 
 -- ----------------------------
 -- Records of cmf_auth_rule
@@ -520,6 +528,9 @@ INSERT INTO `cmf_auth_rule` VALUES ('168', '1', 'admin', 'admin_url', 'admin/dia
 INSERT INTO `cmf_auth_rule` VALUES ('169', '1', 'admin', 'admin_url', 'admin/Icon/index', '', '图片管理', '');
 INSERT INTO `cmf_auth_rule` VALUES ('170', '1', 'admin', 'admin_url', 'admin/Main/index', '', '统计管理', '');
 INSERT INTO `cmf_auth_rule` VALUES ('171', '1', 'admin', 'admin_url', 'admin/chat/index', '', '聊天管理', '');
+INSERT INTO `cmf_auth_rule` VALUES ('172', '1', 'admin', 'admin_url', 'admin/focus/index', '', '关注管理', '');
+INSERT INTO `cmf_auth_rule` VALUES ('173', '1', 'admin', 'admin_url', 'admin/like /index', '', '点赞管理', '');
+INSERT INTO `cmf_auth_rule` VALUES ('174', '1', 'admin', 'admin_url', 'admin/collect/index', '', '收藏管理', '');
 
 -- ----------------------------
 -- Table structure for cmf_category
@@ -537,7 +548,7 @@ CREATE TABLE `cmf_category` (
   `isdelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
   `create_at` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='portal应用 文章分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='portal应用 文章分类表';
 
 -- ----------------------------
 -- Records of cmf_category
@@ -547,6 +558,7 @@ INSERT INTO `cmf_category` VALUES ('2', '0', '0', '0', '0', '1001', 'java', '测
 INSERT INTO `cmf_category` VALUES ('3', '0', '0', '1', '0', '1000', 'mysql', 'mysql', '0', '1530698324');
 INSERT INTO `cmf_category` VALUES ('4', '0', '0', '1', '0', '1000', 'php', '分类名称', '1', '1531448939');
 INSERT INTO `cmf_category` VALUES ('5', '0', '0', '1', '0', '1000', 'workerman', 'workman 和swoole 区别 和异同', '0', '1534130193');
+INSERT INTO `cmf_category` VALUES ('6', '0', '0', '1', '0', '1000', 'javascript', 'javascript', '0', '1534151398');
 
 -- ----------------------------
 -- Table structure for cmf_chat
@@ -564,7 +576,7 @@ CREATE TABLE `cmf_chat` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态 0 不显示 1 显示',
   `isdelete` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of cmf_chat
@@ -591,6 +603,71 @@ INSERT INTO `cmf_chat` VALUES ('19', '1533889360', '1533889360', '9', '5', '？�
 INSERT INTO `cmf_chat` VALUES ('20', '1533889407', '1533889407', '4', '2', '发送消息', '1', '2', '1', '0');
 INSERT INTO `cmf_chat` VALUES ('21', '1533889440', '1533889440', '9', '5', '？？？？？？', '1', '2', '1', '0');
 INSERT INTO `cmf_chat` VALUES ('22', '1533897060', '1533897060', '9', '2', '哈哈哈', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('27', '1534147747', '1534147747', '19', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -102px -86px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('28', '1534147798', '1534147798', '19', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -164px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('29', '1534149125', '1534149125', '2', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('30', '1534150497', '1534150497', '2', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('31', '1534150612', '1534150612', '2', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -52px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('32', '1534150645', '1534150645', '19', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -164px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('33', '1534150761', '1534150761', '8', '2', '<span class=\"emoji-picker-image\" style=\"background-position: -40px -52px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('34', '1534150880', '1534150880', '20', '4', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('35', '1534150910', '1534150910', '8', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -164px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('36', '1534150919', '1534150919', '8', '5', '哈哈', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('37', '1534151046', '1534151046', '9', '5', '为什么你的没有图像<br>为什么你的没有图像<br>为什么你的没有图像<br>为什么你的没有图像<br>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('38', '1534151064', '1534151064', '9', '5', '、、、、、', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('39', '1534156491', '1534156491', '10', '5', 'default/20180813/56177578577b5e311017b707639080cd.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('40', '1534239805', '1534239805', '3', '19', '？？？？？', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('41', '1534389683', '1534389683', '4', '19', '????', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('42', '1534400322', '1534400322', '7', '19', '给你一个问候', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('43', '1534403147', '1534403147', '10', '19', '？？？？', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('44', '1534403214', '1534403214', '20', '19', '哈哈', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('45', '1534403277', '1534403277', '2', '19', '再来一句', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('46', '1534403320', '1534403320', '2', '19', '测试发送消息', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('47', '1534403364', '1534403364', '2', '19', '....', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('48', '1534403383', '1534403383', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('49', '1534403413', '1534403413', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -9px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('50', '1534403419', '1534403419', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -40px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('51', '1534403451', '1534403451', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -164px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('52', '1534403459', '1534403459', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -40px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('53', '1534403495', '1534403495', '2', '19', '包情报', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('54', '1534403876', '1534403876', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('55', '1534404058', '1534404058', '2', '11', '？？？？？？', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('56', '1534404080', '1534404080', '2', '19', '消息真的赴欧', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('57', '1534404159', '1534404159', '2', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('58', '1534404210', '1534404210', '6', '19', '33333', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('59', '1534404240', '1534404240', '6', '19', '333<br><br>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('60', '1534404319', '1534404319', '6', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -102px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('61', '1534404340', '1534404340', '6', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -9px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('62', '1534404349', '1534404349', '6', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -40px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('63', '1534404765', '1534404765', '9', '6', '<span class=\"emoji-picker-image\" style=\"background-position: -102px -52px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('64', '1534404804', '1534404804', '9', '19', '？？？？？？', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('65', '1534405955', '1534405955', '5', '5', 'default/20180813/56177578577b5e311017b707639080cd.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('66', '1534405996', '1534405996', '5', '5', '<span class=\"emoji-picker-image\" style=\"background-position: -71px -18px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('67', '1534406054', '1534406054', '2', '2', '我有一颗少女心', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('68', '1534406106', '1534406106', '2', '19', '我有一颗少女心', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('69', '1534406691', '1534406691', '2', '19', '我的少女心', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('70', '1534406708', '1534406708', '19', '2', '我才不信', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('71', '1534406791', '1534406791', '10', '19', 'default/20180813/56177578577b5e311017b707639080cd.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('72', '1534406947', '1534406947', '9', '19', 'default/20180816/296eeb12452bc2d3698ada7946cbedc5.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('73', '1534407009', '1534407009', '7', '19', 'default/20180816/5db1ffa4de344769a549830226c66b8c.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('74', '1534407191', '1534407191', '1', '19', 'default/20180816/5db1ffa4de344769a549830226c66b8c.jpg', '2', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('75', '1534408266', '1534408266', '5', '19', '消息真的多啊', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('76', '1534408328', '1534408328', '5', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -9px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('77', '1534411550', '1534411550', '19', '7', '图片怎么显示的这么慢啊', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('78', '1534411681', '1534411681', '19', '9', '睡你麻痹起来嗨', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('79', '1534411724', '1534411724', '19', '2', '你是逗比吧', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('80', '1534411760', '1534411760', '19', '7', '怎么又是你', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('81', '1534411784', '1534411784', '7', '7', '你是不是喜欢我啊', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('82', '1534411924', '1534411924', '20', '19', '你好啊', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('83', '1534411947', '1534411947', '20', '19', '你为什么不说话', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('84', '1534411962', '1534411962', '19', '20', '好啊 那我们来聊聊', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('85', '1534411985', '1534411985', '20', '19', '聊聊就聊聊 who怕who', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('86', '1534412004', '1534412004', '19', '20', '我要模仿你说话的样子了 哈哈', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('87', '1534412053', '1534412053', '19', '20', '<span class=\"emoji-picker-image\" style=\"background-position: -133px -120px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('88', '1534412087', '1534412087', '20', '19', '<span class=\"emoji-picker-image\" style=\"background-position: -9px -154px;\"></span>', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('89', '1534412171', '1534412171', '20', '19', '还想不想我i离你啦', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('90', '1534412189', '1534412189', '19', '20', '死滚', '1', '2', '1', '0');
+INSERT INTO `cmf_chat` VALUES ('91', '1534412257', '1534412257', '19', '6', '子级', '1', '2', '1', '0');
 
 -- ----------------------------
 -- Table structure for cmf_city
@@ -1345,7 +1422,7 @@ CREATE TABLE `cmf_user` (
 -- ----------------------------
 -- Records of cmf_user
 -- ----------------------------
-INSERT INTO `cmf_user` VALUES ('1', '1', '2', '815155200', '1534129242', '0', '0', '0.00', '1530501418', '1', 'admin', '###1d15478ff12e51291474198554b090c0', 'admin', 'admin@163.com', '', 'admin/20180702/9b43ac8c8845ef77e782490726d51cd0.jpg', '流着泪的孩子', '127.0.0.1', '', '', null);
+INSERT INTO `cmf_user` VALUES ('1', '1', '2', '815155200', '1534493022', '0', '0', '0.00', '1530501418', '1', 'admin', '###1d15478ff12e51291474198554b090c0', 'admin', 'admin@163.com', '', 'admin/20180702/9b43ac8c8845ef77e782490726d51cd0.jpg', '流着泪的孩子', '127.0.0.1', '', '', null);
 
 -- ----------------------------
 -- Table structure for cmf_userinfos
@@ -1393,7 +1470,7 @@ INSERT INTO `cmf_userinfos` VALUES ('1533805135', '1533805135', '8', '坐在坟�
 INSERT INTO `cmf_userinfos` VALUES ('1533805291', '1533805291', '9', '一觉睡到小时候', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180809/92b5a0215fe8fc36e794539664d8ddd7.jpg', '15512349876', '1', '0', '1', '一觉睡到小时候', '0', '0', '320700', '320000', '127.0.0.1', '1533805291', '0', '1', '2', null);
 INSERT INTO `cmf_userinfos` VALUES ('1533806225', '1533806225', '10', '逗比别闹快吃药', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180803/653268292c34ad2d31911e7b7fa990d0.jpg', '13150580932', '1', '0', '0', '逗比别闹快吃药', '0', '0', '431000', '430000', '127.0.0.1', '1533806225', '0', '1', '2', null);
 INSERT INTO `cmf_userinfos` VALUES ('1533806316', '1533806316', '11', '独闯寡妇村', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180809/c891d24f22e8f070a25b7d5f1956b269.jpg', '13355551234', '1', '0', '2', '独闯寡妇村', '0', '0', '340800', '340000', '127.0.0.1', '1533806316', '0', '1', '2', null);
-INSERT INTO `cmf_userinfos` VALUES ('1533996863', '1534045975', '19', 'yy12345', '13469984690@163.com', '$2y$10$PLNZvIHWFXdW0.kvzn5HgurM0NeYZdKqy1EMUvYWb1KDyarGRmfca', '1533945600', null, 'admin/20180803/62afbd965a25b765f4deca4c4ca21eb9.jpg', '13469989999', '1', '0', '1', '流泪的孩子一点也不好玩', '0', '0', '210100', '210000', '127.0.0.1', '1534043530', '0', '1', '2', 'jKbPKZkjP2gg0nOgcuFZNQeYhEZqvdM4woN3RAkxjYWMSm25AUl8Ew9VtO9K');
+INSERT INTO `cmf_userinfos` VALUES ('1533996863', '1534045975', '19', 'yy12345', '13469984690@163.com', '$2y$10$PLNZvIHWFXdW0.kvzn5HgurM0NeYZdKqy1EMUvYWb1KDyarGRmfca', '1533945600', null, 'admin/20180803/62afbd965a25b765f4deca4c4ca21eb9.jpg', '13469989999', '1', '0', '1', '流泪的孩子一点也不好玩', '0', '2', '210100', '210000', '127.0.0.1', '1534043530', '0', '1', '2', 'jKbPKZkjP2gg0nOgcuFZNQeYhEZqvdM4woN3RAkxjYWMSm25AUl8Ew9VtO9K');
 INSERT INTO `cmf_userinfos` VALUES ('1534129737', '1534129737', '20', '俄武器恶趣味', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, 'admin/20180710/fca27c5eea37a9f0c79303dfccc014a6.jpg', '13312345679', '1', '0', '2', '哈哈哈哈哈', '0', '0', '411500', '410000', '127.0.0.1', '1534129737', '0', '1', '2', null);
 
 -- ----------------------------
@@ -1478,6 +1555,26 @@ CREATE TABLE `cmf_user_collect` (
 -- Records of cmf_user_collect
 -- ----------------------------
 INSERT INTO `cmf_user_collect` VALUES ('3', '1', '3', '1532617270', '1532621053', '1');
+
+-- ----------------------------
+-- Table structure for cmf_user_focus
+-- ----------------------------
+DROP TABLE IF EXISTS `cmf_user_focus`;
+CREATE TABLE `cmf_user_focus` (
+  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `id` int(6) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `user_id` int(6) NOT NULL DEFAULT '0' COMMENT '关注用户',
+  `sourceid` int(6) NOT NULL DEFAULT '0' COMMENT '被关注用户',
+  `isfocus` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否关注 1 关注 -1取消关注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of cmf_user_focus
+-- ----------------------------
+INSERT INTO `cmf_user_focus` VALUES ('0', '0', '1', '1', '19', '1');
+INSERT INTO `cmf_user_focus` VALUES ('0', '0', '2', '2', '19', '1');
 
 -- ----------------------------
 -- Table structure for cmf_user_like
