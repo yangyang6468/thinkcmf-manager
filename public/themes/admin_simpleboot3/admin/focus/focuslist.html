@@ -1,0 +1,22 @@
+<table class="table table-hover table-bordered table-list " style="position:relative">
+    <span onclick="tableHide()" class="cha">X</span>
+    <tr>
+        <th rowspan="{:count($list)+1}" width="15">{$title}</th>
+        <th width="15"></th>
+        <th>昵称</th>
+        <th>用户图像</th>
+        <th>关注时间</th>
+    </tr>
+    <foreach name="list" item="vo" key="k">
+        <tr>
+            <td>{$k+1}</td>
+            <th>{$vo['nickname']}</th>
+            <td>
+                <a href=javascript:imagePreviewDialog("{:showImage($vo['headimage'] , $vo['flag'] )}");>
+                    <img src="{:showImage($vo['headimage'] , $vo['flag'] )}" width="40px" class="img-circle">
+                </a>
+            </td>
+            <th>{:date('Y/m/d H:i' , $vo['update_time'])}</th>
+        </tr>
+    </foreach>
+</table>

@@ -45,25 +45,32 @@
 					<th>注册时间</th>
                     <th>最后登录时间</th>
                     <th>最后登录IP</th>
+					<th>我的粉丝</th>
 					<th>状态</th>
 					<th width="130">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<foreach name="users" item="vo" key="k">
-				<tr>
+
                     <td>{$start+$k+1}</td>
 					<td>{$vo.id}</td>
 					<td>{$vo.nickname}{$vo.gender}</td>
-                    <td><if condition="$vo.headimage">
-						    <img src="{:showImage($vo.headimage, $vo.flag)}" width="70px" height="70px" class="img-circle">
-                        </if>
+                    <td>
+						<img src="{:showImage($vo.headimage, $vo.flag)}" width="70px" height="70px" class="img-circle">
                     </td>
 					<td>{$vo.phone}</td>
 					<td>{$vo.signature}</td>
                     <td>{$vo.createtime}</td>
                     <td>{$vo.lastlogindate}</td>
                     <td>{$vo.ip}</td>
+					<th>
+						<if condition="$vo.focusnum gt 0">
+							<a href="{:url('focus/index' , ['id'=>$vo['id']])}">{$vo.focusnum}</a>
+						<else/>
+							{$vo.focusnum}
+						</if>
+					</th>
                     <td>{$vo.status}</td>
                     <th width="130">
 						<a href="javascript:;" onclick=addSaveAddOrder("{:url('add')}","{$vo.id}")>编辑</a>|
